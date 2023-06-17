@@ -1,13 +1,26 @@
-import Image from 'next/image'
+import { useMainComponent } from './mainComponent';
+import { useStartScreen } from './startScreen';
+import { useMiddleScreen } from './middleScreen';
+import { useEndScreen } from './endScreen';
 
 export default function Home() {
+  const { MainComponent } = useMainComponent();
+  const { StartScreen } = useStartScreen();
+  const { MiddleScreen } = useMiddleScreen();
+  const { EndScreen } = useEndScreen();
+
   return (
-    <main>
-      <div className="flex lg:flex-row md:flex-col sm:flex-col sm:h-screen lg:min-h-screen">
-        <div className="bg-[red] lg:basis-2/6 sm:h-1/5 lg:min-h-screen">01</div>
-        <div className="bg-[blue] lg:basis-4/6 sm:h-3/5  lg:min-h-screen">02</div>
-        <div className="bg-[green] lg:basis-2/6 sm:h-1/5 lg:min-h-screen">03</div>
-      </div> 
-    </main>
+    <MainComponent>
+      <StartScreen className=''>
+        asdas
+      </StartScreen>
+      <MiddleScreen className=''>
+        asdas
+      </MiddleScreen>
+
+      <EndScreen className=''>
+        asdas
+      </EndScreen>
+    </MainComponent>
   )
 }
