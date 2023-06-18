@@ -9,6 +9,7 @@ import { useEndScreen } from './layoutComponents/endScreen';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskDetail from './components/TaskDetail/TaskDetail';
+import TaskList from './components/TaskList/TaskList';
 
 
 export default function Home() {
@@ -34,7 +35,7 @@ export default function Home() {
   return (
     <MainComponent>
       <StartScreen className=''>
-
+        <TaskList tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
       </StartScreen>
       <MiddleScreen className=''>
         <TaskDetail
