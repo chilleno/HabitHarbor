@@ -21,11 +21,15 @@ export default function Home() {
   const { EndScreen } = useEndScreen();
 
   const nextTask = () => {
-    setCurrentTask(currentTask + 1);
+    if ((currentTask + 1) < jsonData.data.tasks.length) {
+      setCurrentTask(currentTask + 1);
+    }
   };
 
   const previousTask = () => {
-    setCurrentTask(currentTask - 1);
+    if ((currentTask - 1) >= 0) {
+      setCurrentTask(currentTask - 1);
+    }
   };
 
   useEffect(() => {
@@ -35,7 +39,12 @@ export default function Home() {
   return (
     <MainComponent>
       <StartScreen className=''>
-        <TaskList tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
+        <div className=''>
+          <Clock />
+        </div>
+        <div className=''>
+          <PomodoroTimer />
+        </div>
       </StartScreen>
       <MiddleScreen className=''>
         <TaskDetail
@@ -46,12 +55,7 @@ export default function Home() {
         />
       </MiddleScreen>
       <EndScreen className=''>
-        <div className=''>
-          <Clock />
-        </div>
-        <div className=''>
-          <PomodoroTimer />
-        </div>
+        <TaskList tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
       </EndScreen>
     </MainComponent>
   )
