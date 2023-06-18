@@ -5,6 +5,7 @@ import { useStartScreen } from './layoutComponents/startScreen';
 import { useMiddleScreen } from './layoutComponents/middleScreen';
 import { useEndScreen } from './layoutComponents/endScreen';
 import { useClockComponent } from './components/Clock/Clock';
+import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 
 export default function Home() {
   const { MainComponent } = useMainComponent();
@@ -16,14 +17,18 @@ export default function Home() {
   return (
     <MainComponent>
       <StartScreen className=''>
-        asdas
+        
       </StartScreen>
       <MiddleScreen className=''>
-        asdas
+        
       </MiddleScreen>
-
       <EndScreen className=''>
-        <Clock />
+        <div className='mb-4'>
+          <Clock />
+        </div>
+        <div className='mb-4'>
+          <PomodoroTimer />
+        </div>
       </EndScreen>
     </MainComponent>
   )
