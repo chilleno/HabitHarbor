@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 
 const Clock: React.FC = () => {
@@ -32,9 +34,4 @@ const Clock: React.FC = () => {
     );
 };
 
-export const useClockComponent = () => {
-    const component = {
-        Clock,
-    };
-    return component;
-};
+export default Clock;

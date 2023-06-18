@@ -1,6 +1,5 @@
 {
     "data": {
-        "dev": "next dev",
         "tasks": [
             {
                 "id": 1,
@@ -144,7 +143,7 @@
             },
             {
                 "id": 21,
-                "header": "Juar con los perritos 45 min",
+                "header": "Jugar con los perritos 45 min",
                 "description": "n/a",
                 "order": 20,
                 "subtasks": []
