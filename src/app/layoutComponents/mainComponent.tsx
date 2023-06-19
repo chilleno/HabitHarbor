@@ -10,7 +10,7 @@ export const useMainComponent = () => {
 const MainComponent: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <main>
-      <div className="flex lg:flex-row md:flex-col sm:flex-col sm:h-screen lg:min-h-screen">
+      <div className="flex lg:flex-row md:flex-col sm:flex-col sm:h-screen " >
         {children}
       </div>
     </main>

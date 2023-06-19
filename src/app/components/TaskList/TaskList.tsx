@@ -33,7 +33,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
     }, [currentTaskIndex]);
 
     return (
-        <div className="flex flex-col h-screen -z-50 overflow-y-auto">
+        <div className="flex flex-col h-screen max-h-fit -z-50 overflow-y-auto sm:max-h-[100%]">
             {tasks.map((task, index) => (
                 <div
                     key={task.id}
