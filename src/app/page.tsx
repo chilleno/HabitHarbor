@@ -6,6 +6,7 @@ import { useMainComponent } from './layoutComponents/mainComponent';
 import { useStartScreen } from './layoutComponents/startScreen';
 import { useMiddleScreen } from './layoutComponents/middleScreen';
 import { useEndScreen } from './layoutComponents/endScreen';
+import CookieModal from './components/CookieModal/CookieModal';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskDetail from './components/TaskDetail/TaskDetail';
@@ -38,6 +39,7 @@ export default function Home() {
 
   return (
     <MainComponent>
+      <CookieModal />
       <StartScreen className=''>
         <div className=''>
           <Clock />
