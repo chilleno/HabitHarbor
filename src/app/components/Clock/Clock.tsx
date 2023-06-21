@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { ClockIcon } from '@heroicons/react/24/outline';
+import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 
 const Clock: React.FC = () => {
     const [dateState, setDateState] = useState<Date>(new Date());
@@ -11,23 +13,20 @@ const Clock: React.FC = () => {
     }, []);
 
     return (
-        <div className="flex items-center justify-center h-28 bg-gray-900 text-white text-5xl font-bold">
-            <div className="flex items-center">
-                <span className="mr-2">
-                    🕒 {' '}
-                    {dateState.toLocaleString('en-US', {
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true,
-                    })}
-                </span>
-            </div>
-            <div className="text-lg">
-                📆 {' '}
+        <div className="h-auto bg-gray-900 text-white font-bold p-2">
+            <div className="flex justify-end text-xl">
                 {dateState.toLocaleDateString('en-GB', {
+                    weekday: 'short',
                     day: 'numeric',
                     month: 'short',
-                    year: 'numeric',
+                })}
+            </div>
+            <div className="flex justify-end text-5xl">
+                <ClockIcon className="h-12 w-12 text-white-500 mr-1" />
+                {dateState.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,
                 })}
             </div>
         </div>
