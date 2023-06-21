@@ -11,8 +11,10 @@ import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskDetail from './components/TaskDetail/TaskDetail';
 import TaskList from './components/TaskList/TaskList';
 import CookieModal from './components/CookieModal/CookieModal';
+import { useCookies } from 'react-cookie'
 
 export default function Home() {
+  const [cookies, setCookie] = useCookies(['acceptCookies'])
   const [currentTask, setCurrentTask] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
   const { MainComponent } = useMainComponent();
@@ -36,7 +38,6 @@ export default function Home() {
     setTask(jsonData.data.tasks[currentTask]);
   }, [currentTask, task]);
 
-
   return (
     <MainComponent>
       <CookieModal />
@@ -45,7 +46,7 @@ export default function Home() {
           <Clock />
         </div>
         <div className=''>
-          <PomodoroTimer />
+              <PomodoroTimer />
         </div>
       </StartScreen>
       <MiddleScreen className=''>
@@ -59,6 +60,6 @@ export default function Home() {
       <EndScreen className=''>
         <TaskList tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
       </EndScreen>
-    </MainComponent>
+    </MainComponent >
   )
 }

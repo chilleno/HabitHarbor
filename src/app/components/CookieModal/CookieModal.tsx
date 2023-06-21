@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie'
 
 const Modal = () => {
-    const cookieCutter = require('cookie-cutter');
+    const [cookies, setCookie] = useCookies(['acceptCookies', 'pomodoroDuration', 'shortBreakDuration', 'longBreakDuration', 'pomodorosForLongBreak']);
     const [showModal, setShowModal] = useState(false);
 
     const handleAccept = () => {
         // Save data in cookies
-        cookieCutter.set('acceptCookies', 'true')
-
+        setCookie('acceptCookies', 'true')
+        setCookie('pomodoroDuration', 25);
+        setCookie('shortBreakDuration', 5);
+        setCookie('longBreakDuration', 15);
+        setCookie('pomodorosForLongBreak', 4);
+     
         // Close the modal
         setShowModal(false);
         window.location.reload();
@@ -20,7 +25,7 @@ const Modal = () => {
 
     useEffect(() => {
         // Check if the acceptCookies value is set to true
-        const acceptCookies = cookieCutter.get('acceptCookies');
+        const acceptCookies = cookies.acceptCookies;
         // Set the showModal state based on the acceptCookies value
         setShowModal(!acceptCookies);
     }, []);
