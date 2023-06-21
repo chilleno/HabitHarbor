@@ -6,14 +6,16 @@ import { useMainComponent } from './layoutComponents/mainComponent';
 import { useStartScreen } from './layoutComponents/startScreen';
 import { useMiddleScreen } from './layoutComponents/middleScreen';
 import { useEndScreen } from './layoutComponents/endScreen';
-import CookieModal from './components/CookieModal/CookieModal';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskDetail from './components/TaskDetail/TaskDetail';
 import TaskList from './components/TaskList/TaskList';
+import cookieCutter from 'cookie-cutter';
+import CookieModal from './components/CookieModal/CookieModal';
 
 
 export default function Home() {
+  const [coockieAccepted, setCookieAccepted] = useState('false');
   const [currentTask, setCurrentTask] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
   const { MainComponent } = useMainComponent();
@@ -36,6 +38,7 @@ export default function Home() {
   useEffect(() => {
     setTask(jsonData.data.tasks[currentTask]);
   }, [currentTask, task]);
+
 
   return (
     <MainComponent>

@@ -1,7 +1,6 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from 'react';
-import cookieCutter from 'cookie-cutter';
 
 interface TimerConfig {
     pomodoroDuration?: number;
@@ -11,17 +10,13 @@ interface TimerConfig {
 }
 
 const PomodoroTimer: React.FC<TimerConfig> = ({
-    pomodoroDuration: initialPomodoroDuration = cookieCutter.get('pomodoroDuration') > 0 ? cookieCutter.get('pomodoroDuration') : 25,
-    shortBreakDuration: initialShortBreakDuration = cookieCutter.get('shortBreakDuration') > 0 ? cookieCutter.get('shortBreakDuration') : 5,
-    longBreakDuration: initialLongBreakDuration = cookieCutter.get('longBreakDuration') > 0 ? cookieCutter.get('longBreakDuration') : 15,
-    pomodorosForLongBreak: initialPomodorosForLongBreak = cookieCutter.get('pomodorosForLongBreak') > 0 ? cookieCutter.get('pomodorosForLongBreak') : 4,
+    pomodoroDuration: initialPomodoroDuration = 25,
+    shortBreakDuration: initialShortBreakDuration = 5,
+    longBreakDuration: initialLongBreakDuration = 15,
+    pomodorosForLongBreak: initialPomodorosForLongBreak = 4,
 }) => {
-    const [pomodoroDuration, setPomodoroDuration] = useState(initialPomodoroDuration);
-    const [shortBreakDuration, setShortBreakDuration] = useState(initialShortBreakDuration);
-    const [longBreakDuration, setLongBreakDuration] = useState(initialLongBreakDuration);
-    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState(initialPomodorosForLongBreak);
-    const [minutes, setMinutes] = useState(pomodoroDuration);
     const [seconds, setSeconds] = useState(0);
+    const [minutes, setMinutes] = useState(initialPomodoroDuration);
     const [isActive, setIsActive] = useState(false);
     const [isBreak, setIsBreak] = useState(false);
     const [isShortBreak, setIsShortBreak] = useState(false);
@@ -31,9 +26,14 @@ const PomodoroTimer: React.FC<TimerConfig> = ({
     const [shortBreakCount, setShortBreakCount] = useState(0);
     const [longBreakCount, setLongBreakCount] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [pomodoroDuration, setPomodoroDuration] = useState(initialPomodoroDuration);
+    const [shortBreakDuration, setShortBreakDuration] = useState(initialShortBreakDuration);
+    const [longBreakDuration, setLongBreakDuration] = useState(initialLongBreakDuration);
+    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState(initialPomodorosForLongBreak);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
+
         if (isActive) {
             interval = setInterval(() => {
                 if (seconds === 0 && minutes === 0) {
@@ -41,121 +41,16 @@ const PomodoroTimer: React.FC<TimerConfig> = ({
                     handleTimerFinish();
                     playSound();
                 } else if (seconds === 0) {
-                    setMinutes((prevMinutes: number) => prevMinutes - 1);
+                    setMinutes((prevMinutes) => prevMinutes - 1);
                     setSeconds(59);
                 } else {
-                    setSeconds((prevSeconds: number) => prevSeconds - 1);
+                    setSeconds((prevSeconds) => prevSeconds - 1);
                 }
             }, 1000);
         }
+
         return () => clearInterval(interval);
     }, [isActive, minutes, seconds]);
-
-    const initializeFromCookies = () => {
-        const savedPomodoroDuration = cookieCutter.get('pomodoroDuration');
-        const savedShortBreakDuration = cookieCutter.get('shortBreakDuration');
-        const savedLongBreakDuration = cookieCutter.get('longBreakDuration');
-        const savedPomodorosForLongBreak = cookieCutter.get('pomodorosForLongBreak');
-        const savedIsBreak = cookieCutter.get('isBreak');
-        const savedIsShortBreak = cookieCutter.get('isShortBreak');
-        const savedIsLongBreak = cookieCutter.get('isLongBreak');
-        const savedPomodoroCount = cookieCutter.get('pomodoroCount');
-        const savedPomodoroTotalCount = cookieCutter.get('pomodoroTotalCount');
-        const savedShortBreakCount = cookieCutter.get('shortBreakCount');
-        const savedLongBreakCount = cookieCutter.get('longBreakCount');
-
-        if (savedPomodoroDuration) {
-            setPomodoroDuration(Number(savedPomodoroDuration));
-        }
-        if (savedShortBreakDuration) {
-            setShortBreakDuration(Number(savedShortBreakDuration));
-        }
-        if (savedLongBreakDuration) {
-            setLongBreakDuration(Number(savedLongBreakDuration));
-        }
-        if (savedPomodorosForLongBreak) {
-            setPomodorosForLongBreak(Number(savedPomodorosForLongBreak));
-        }
-        if (savedIsBreak) {
-            setIsBreak(savedIsBreak === 'true');
-        }
-        if (savedIsShortBreak) {
-            setIsShortBreak(savedIsShortBreak === 'true');
-        }
-        if (savedIsLongBreak) {
-            setIsLongBreak(savedIsLongBreak === 'true');
-        }
-        if (savedPomodoroCount) {
-            setPomodoroCount(Number(savedPomodoroCount));
-        }
-        if (savedPomodoroTotalCount) {
-            setPomodoroTotalCount(Number(savedPomodoroTotalCount));
-        }
-        if (savedShortBreakCount) {
-            setShortBreakCount(Number(savedShortBreakCount));
-        }
-        if (savedLongBreakCount) {
-            setLongBreakCount(Number(savedLongBreakCount));
-        }
-    };
-
-    useEffect(() => {
-        initializeFromCookies();
-    }, []);
-
-    useEffect(() => {
-        if (cookieCutter.get('acceptCookies') === 'true') {
-            // Save updated values to cookies
-            cookieCutter.set('pomodoroDuration', pomodoroDuration.toString());
-            cookieCutter.set('shortBreakDuration', shortBreakDuration.toString());
-            cookieCutter.set('longBreakDuration', longBreakDuration.toString());
-            cookieCutter.set('pomodorosForLongBreak', pomodorosForLongBreak.toString());
-            cookieCutter.set('isBreak', isBreak.toString());
-            cookieCutter.set('isShortBreak', isShortBreak.toString());
-            cookieCutter.set('isLongBreak', isLongBreak.toString());
-            cookieCutter.set('pomodoroCount', pomodoroCount.toString());
-            cookieCutter.set('pomodoroTotalCount', pomodoroTotalCount.toString());
-            cookieCutter.set('shortBreakCount', shortBreakCount.toString());
-            cookieCutter.set('longBreakCount', longBreakCount.toString());
-        }
-    }, [
-        pomodoroDuration,
-        shortBreakDuration,
-        longBreakDuration,
-        pomodorosForLongBreak,
-        isBreak,
-        isShortBreak,
-        isLongBreak,
-        pomodoroCount,
-        pomodoroTotalCount,
-        shortBreakCount,
-        longBreakCount,
-    ]);
-
-    useEffect(() => {
-        if (isActive) {
-            // Handle page reload or navigation
-            const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-                event.preventDefault();
-                event.returnValue = '';
-            };
-
-            window.addEventListener('beforeunload', handleBeforeUnload);
-            return () => {
-                window.removeEventListener('beforeunload', handleBeforeUnload);
-            };
-        }
-    }, [isActive]);
-
-    const confirmPageReload = () => {
-        const confirmMessage = 'Are you sure you want to leave? Your current progress will be lost.';
-        if (!isActive && (minutes !== pomodoroDuration || seconds !== 0)) {
-            if (!window.confirm(confirmMessage)) {
-                return;
-            }
-        }
-        resetTimer();
-    };
 
     const startTimer = () => {
         setIsActive(true);
@@ -199,12 +94,13 @@ const PomodoroTimer: React.FC<TimerConfig> = ({
                 setMinutes(shortBreakDuration);
                 setIsShortBreak(true);
                 setIsLongBreak(false);
-                setPomodoroCount(pomodoroCount + 1);
+                setPomodoroCount(pomodoroCount + 1)
             }
-            setPomodoroTotalCount(pomodoroTotalCount + 1);
+            setPomodoroTotalCount(pomodoroTotalCount + 1)
         }
         setSeconds(0);
     };
+
 
     const formatTime = (time: number): string => {
         return time < 10 ? `0${time}` : time.toString();
@@ -234,8 +130,7 @@ const PomodoroTimer: React.FC<TimerConfig> = ({
     return (
         <div className="flex flex-col items-center justify-center h-56 bg-gray-900 text-white text-xl font-bold">
             <div className="text-xl">
-                {isBreak ? (isLongBreak ? 'Break Largo' : 'Break Corto') : 'Pomodoro'} - {formatTime(minutes)}:
-                {formatTime(seconds)}
+                {isBreak ? isLongBreak ? 'Break Largo' : 'Break Corto' : 'Pomodoro'} - {formatTime(minutes)}:{formatTime(seconds)}
             </div>
             <div className="flex flex-wrap gap-4 mt-4">
                 <div className="flex flex-col gap-2">
@@ -319,7 +214,10 @@ const PomodoroTimer: React.FC<TimerConfig> = ({
                             >
                                 Save
                             </button>
-                            <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white" onClick={closeModal}>
+                            <button
+                                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white"
+                                onClick={closeModal}
+                            >
                                 Cancel
                             </button>
                         </div>

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import cookieCutter from 'cookie-cutter';
 
 const Modal = () => {
     const [showModal, setShowModal] = useState(false);
 
     const handleAccept = () => {
         // Save data in cookies
-        document.cookie = 'acceptCookies=true';
+        cookieCutter.set('acceptCookies', 'true')
 
         // Close the modal
         setShowModal(false);
+        window.location.reload();
     };
 
     const handleClose = () => {
@@ -18,11 +20,7 @@ const Modal = () => {
 
     useEffect(() => {
         // Check if the acceptCookies value is set to true
-        const cookies = document.cookie.split(';');
-        const acceptCookies = cookies.some((cookie) =>
-            cookie.trim().startsWith('acceptCookies=true')
-        );
-
+        const acceptCookies = cookieCutter.get('acceptCookies');
         // Set the showModal state based on the acceptCookies value
         setShowModal(!acceptCookies);
     }, []);
