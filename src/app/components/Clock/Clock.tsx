@@ -13,7 +13,7 @@ const Clock: React.FC = () => {
     }, []);
 
     return (
-        <div className="sm:flex sm:items-center sm:justify-end lg:items-end lg:justify-end lg:flex-col h-auto bg-gray-900 text-white font-bold p-2">
+        <div className="sm:flex sm:items-center sm:justify-end lg:items-end lg:justify-end lg:flex-col h-auto text-white font-bold p-2">
             <div className="flex justify-end lg:text-xl sm:text-xs">
                 {dateState.toLocaleDateString('en-GB', {
                     weekday: 'short',

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
-
 const PomodoroTimer = () => {
     const [cookies, setCookie] = useCookies(['acceptCookies', 'pomodoroDuration', 'shortBreakDuration', 'longBreakDuration', 'pomodorosForLongBreak', 'isBreak', 'isShortBreak', 'isLongBreak', 'pomodoroCount', 'pomodoroTotalCount', 'shortBreakCount', 'longBreakCount'])
     const [pomodoroDuration, setPomodoroDuration] = useState(cookies.pomodoroDuration);
@@ -232,7 +231,7 @@ const PomodoroTimer = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-56 bg-gray-900 text-white text-xl font-bold">
+        <div className="flex flex-col items-center justify-center h-56 text-white text-xl font-bold">
             <div className="text-xl">
                 {isBreak ? (isLongBreak ? 'Break Largo' : 'Break Corto') : 'Pomodoro'} - {' ' + formattedTime}
             </div>
