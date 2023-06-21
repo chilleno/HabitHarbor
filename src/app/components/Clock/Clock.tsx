@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { ClockIcon } from '@heroicons/react/24/outline';
-import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 
 const Clock: React.FC = () => {
     const [dateState, setDateState] = useState<Date>(new Date());

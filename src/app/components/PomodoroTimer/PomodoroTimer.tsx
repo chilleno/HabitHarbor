@@ -1,6 +1,11 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import { PlayIcon } from '@heroicons/react/24/solid';
+import { StopIcon } from '@heroicons/react/24/solid';
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid';
+import { CogIcon } from '@heroicons/react/24/solid';
+
 import { useCookies } from 'react-cookie';
 
 const PomodoroTimer = () => {
@@ -231,46 +236,61 @@ const PomodoroTimer = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-56 text-white text-xl font-bold">
-            <div className="text-xl">
-                {isBreak ? (isLongBreak ? 'Break Largo' : 'Break Corto') : 'Pomodoro'} - {' ' + formattedTime}
-            </div>
-            <div className="flex flex-wrap gap-4 mt-4">
-                <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-center justify-center h-64 bg-red-700 text-white font-bold p-5 ">
+            <div className="flex items-center">
+                <div className="flex flex-col w-1/2 items-center">
+                    <div className="text-3xl">
+                        {'[ '+ (isBreak ? (isLongBreak ? 'Long break' : 'Short break') : 'Pomodoro') + ' ]'}
+                    </div>
+                    <div className="text-7xl mt-6">
+                        {formattedTime}
+                    </div>
+                    <div className="text-sm mt-6">
+                        <div className="w-full flex justify-center items-center">
+                            Pomodoros: {pomodoroTotalCount}
+                        </div>
+                        <div className="w-full flex justify-center">
+                            Short Breaks: {shortBreakCount} |  Long Breaks: {longBreakCount}
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-wrap w-1/2 gap-2 justify-center">
                     <button
-                        className="w-full sm:w-auto bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white"
+                        className="w-2/3 bg-green-500 hover:bg-green-600 px-4 py-2 text-white rounded-full flex justify-center items-center"
                         onClick={startTimer}
                     >
-                        Start
+                        <span className="flex items-center justify-center">
+                            <PlayIcon className="sm:hidden lg:inline lg:h-5 lg:w-5 text-white-500 mr-1" />
+                            Start
+                        </span>
                     </button>
                     <button
-                        className="w-full sm:w-auto bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white"
+                        className="w-2/3 bg-red-500 hover:bg-red-600 px-4 py-2  rounded-full text-white flex justify-center items-center"
                         onClick={stopTimer}
                     >
+                        <StopIcon className="sm:hidden lg:inline lg:h-5 lg:w-5 text-white-500 mr-1" />
                         Stop
                     </button>
-                </div>
-                <div className="flex flex-col gap-2">
                     <button
-                        className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white"
+                        className="w-2/3 bg-blue-500 hover:bg-blue-600 px-4 py-2  rounded-full text-white flex justify-center items-center"
                         onClick={resetTimer}
                     >
+                        <ArrowUturnLeftIcon className="sm:hidden lg:inline lg:h-5 lg:w-5 text-white-500 mr-1" />
                         Reset
                     </button>
                     <button
-                        className="w-full sm:w-auto bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded text-white"
+                        className="w-2/3 bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded-full text-white flex justify-center items-center"
                         onClick={openModal}
                     >
-                        Edit Durations
+                        <CogIcon className="sm:hidden lg:inline lg:h-5 lg:w-5 text-white-500 mr-1" />
+                        Config
                     </button>
                 </div>
             </div>
-            <div className="mt-4">
-                Pomodoros: {pomodoroTotalCount} | Short Breaks: {shortBreakCount} | Long Breaks: {longBreakCount}
-            </div>
+
             {showModal && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-4 rounded shadow w-auto sm:w-80 text-black">
+                    <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white">
                         <h2 className="text-xl font-bold mb-4">Edit Durations</h2>
                         <div className="flex flex-col gap-2">
                             <label htmlFor="pomodoroDurationInput">Pomodoro Duration (minutes)</label>
@@ -280,7 +300,7 @@ const PomodoroTimer = () => {
                                 min="1"
                                 value={pomodoroDuration}
                                 onChange={(e) => setPomodoroDuration(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                             <label htmlFor="shortBreakDurationInput">Short Break Duration (minutes)</label>
                             <input
@@ -289,7 +309,7 @@ const PomodoroTimer = () => {
                                 min="1"
                                 value={shortBreakDuration}
                                 onChange={(e) => setShortBreakDuration(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                             <label htmlFor="longBreakDurationInput">Long Break Duration (minutes)</label>
                             <input
@@ -298,7 +318,7 @@ const PomodoroTimer = () => {
                                 min="1"
                                 value={longBreakDuration}
                                 onChange={(e) => setLongBreakDuration(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                             <label htmlFor="pomodorosForLongBreakInput">Pomodoros for Long Break</label>
                             <input
@@ -307,17 +327,17 @@ const PomodoroTimer = () => {
                                 min="1"
                                 value={pomodorosForLongBreak}
                                 onChange={(e) => setPomodorosForLongBreak(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                         </div>
                         <div className="flex justify-end mt-4">
                             <button
-                                className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white mr-2"
+                                className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-full text-white mr-2"
                                 onClick={handleSave}
                             >
                                 Save
                             </button>
-                            <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white" onClick={closeModal}>
+                            <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-full text-white" onClick={closeModal}>
                                 Cancel
                             </button>
                         </div>
