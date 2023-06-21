@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import cookieCutter from 'cookie-cutter';
 
+;
 interface TimerConfig {
     pomodoroDuration?: number;
     shortBreakDuration?: number;
@@ -11,15 +11,13 @@ interface TimerConfig {
 }
 
 const PomodoroTimer: React.FC<TimerConfig> = ({
-    pomodoroDuration: initialPomodoroDuration = cookieCutter.get('pomodoroDuration') > 0 ? cookieCutter.get('pomodoroDuration') : 25,
-    shortBreakDuration: initialShortBreakDuration = cookieCutter.get('shortBreakDuration') > 0 ? cookieCutter.get('shortBreakDuration') : 5,
-    longBreakDuration: initialLongBreakDuration = cookieCutter.get('longBreakDuration') > 0 ? cookieCutter.get('longBreakDuration') : 15,
-    pomodorosForLongBreak: initialPomodorosForLongBreak = cookieCutter.get('pomodorosForLongBreak') > 0 ? cookieCutter.get('pomodorosForLongBreak') : 4,
+ 
 }) => {
-    const [pomodoroDuration, setPomodoroDuration] = useState(initialPomodoroDuration);
-    const [shortBreakDuration, setShortBreakDuration] = useState(initialShortBreakDuration);
-    const [longBreakDuration, setLongBreakDuration] = useState(initialLongBreakDuration);
-    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState(initialPomodorosForLongBreak);
+    const cookieCutter = require('cookie-cutter');
+    const [pomodoroDuration, setPomodoroDuration] = useState(cookieCutter.get('pomodoroDuration') > 0 ? cookieCutter.get('pomodoroDuration') : 25);
+    const [shortBreakDuration, setShortBreakDuration] = useState(cookieCutter.get('shortBreakDuration') > 0 ? cookieCutter.get('shortBreakDuration') : 5);
+    const [longBreakDuration, setLongBreakDuration] = useState(cookieCutter.get('longBreakDuration') > 0 ? cookieCutter.get('longBreakDuration') : 15);
+    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState(cookieCutter.get('pomodorosForLongBreak') > 0 ? cookieCutter.get('pomodorosForLongBreak') : 4);
     const [minutes, setMinutes] = useState(pomodoroDuration);
     const [seconds, setSeconds] = useState(0);
     const [isActive, setIsActive] = useState(false);

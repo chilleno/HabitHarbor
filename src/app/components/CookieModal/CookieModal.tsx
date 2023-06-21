@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import cookieCutter from 'cookie-cutter';
 
 const Modal = () => {
+    const cookieCutter = require('cookie-cutter');
     const [showModal, setShowModal] = useState(false);
 
     const handleAccept = () => {
