@@ -238,14 +238,14 @@ const PomodoroTimer = () => {
     return (
         <div className="flex flex-col items-center justify-center lg:h-64 text-white font-bold lg:p-5 sm:p-1">
             <div className="flex items-center">
-                <div className="flex flex-col w-1/2 items-center">
-                    <div className="lg:text-3xl sm:text-md">
+                <div className="flex flex-col w-2/3 items-center">
+                    <div className="lg:text-xl sm:text-md">
                         {'[ ' + (isBreak ? (isLongBreak ? 'Long break' : 'Short break') : 'Pomodoro') + ' ]'}
                     </div>
-                    <div className="lg:text-7xl lg:mt-6 sm:text-4xl">
+                    <div className="lg:text-6xl lg:mt-6 sm:text-4xl">
                         {formattedTime}
                     </div>
-                    <div className="lg:text-sm sm:text-[10px] lg:mt-6">
+                    <div className="lg:text-xs sm:text-[10px] lg:mt-6">
                         <div className="w-full flex justify-center items-center">
                             Pomodoros: {pomodoroTotalCount}
                         </div>
@@ -254,36 +254,32 @@ const PomodoroTimer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-wrap w-1/2 lg:gap-2 sm:gap-1 justify-center">
+                <div className="flex flex-wrap w-1/3 lg:gap-2 sm:gap-1 justify-center">
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-green-500 hover:bg-green-600 lg:px-4 lg:py-2 sm:p-3 text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/3 bg-green-500 hover:bg-green-600 lg:px-2 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
                         onClick={startTimer}
                     >
                         <span className="flex items-center justify-center">
                             <PlayIcon className="h-5 w-5 text-white-500" />
-                            <span className="sm:hidden lg:inline">Start</span>
                         </span>
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-red-500 hover:bg-red-600 lg:px-4 lg:py-2 sm:p-3 text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/3 bg-red-500 hover:bg-red-600 lg:px-4 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
                         onClick={stopTimer}
                     >
                         <StopIcon className="h-5 w-5 text-white-500" />
-                        <span className="sm:hidden lg:inline">Stop</span>
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-blue-500 hover:bg-blue-600 lg:px-4 lg:py-2 sm:p-3  text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/3 bg-blue-500 hover:bg-blue-600 lg:px-4 lg:py-1 sm:p-3  text-white rounded-full flex justify-center items-center"
                         onClick={resetTimer}
                     >
                         <ArrowUturnLeftIcon className="h-5 w-5 text-white-500" />
-                        <span className="sm:hidden lg:inline">Reset</span>
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded-full text-white flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/3 bg-purple-500 hover:bg-purple-600 px-4 py-1 rounded-full text-white flex justify-center items-center"
                         onClick={openModal}
                     >
                         <CogIcon className="h-5 w-5 text-white-500" />
-                        <span className="sm:hidden lg:inline">Config</span>
                     </button>
                 </div>
             </div>
