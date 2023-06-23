@@ -1,3 +1,8 @@
 
 import React from 'react';
-export default () => <h1>Changelog</h1>;
+
+
+const Changelog = () => {
+    <h1>Changelog</h1>
+}
+export default Changelog;
