@@ -281,7 +281,7 @@ const PomodoroTimer = () => {
     return (
         <div className="flex flex-col items-center justify-center lg:h-64 text-white font-bold lg:p-5 sm:p-1">
             <div className="flex items-center">
-                <div className="flex flex-col w-2/3 items-center">
+                <div className="flex flex-col lg:w-2/3 sm:w-1/2 items-center">
                     <div className="lg:text-xl sm:text-md xl:text-3xl">
                         {'[ ' + (isBreak ? (isLongBreak ? 'Long break' : 'Short break') : 'Pomodoro') + ' ]'}
                     </div>
@@ -297,9 +297,9 @@ const PomodoroTimer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-wrap w-1/3 lg:gap-2 sm:gap-1 justify-center">
+                <div className="flex flex-wrap lg:w-1/3  sm:w-1/2 lg:gap-2 sm:gap-1 justify-center">
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-green-500 hover:bg-green-600 lg:px-2 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/6 bg-green-500 hover:bg-green-600 lg:px-2 xl:py-2 lg:py-1 sm:p-1 text-white rounded-full flex justify-center items-center"
                         onClick={startTimer}
                     >
                         <span className="flex items-center justify-center">
@@ -307,28 +307,36 @@ const PomodoroTimer = () => {
                         </span>
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-red-500 hover:bg-red-600 lg:px-4 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/6 bg-red-500 hover:bg-red-600 lg:px-4 xl:py-2 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
                         onClick={stopTimer}
                     >
-                        <StopIcon className="h-5 w-5 text-white-500" />
+                        <span className="flex items-center justify-center">
+                            <StopIcon className="h-5 w-5 text-white-500" />
+                        </span>
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-blue-500 hover:bg-blue-600 lg:px-4 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/6 bg-blue-500 hover:bg-blue-600 lg:px-4 xl:py-2 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
                         onClick={nextTimer}
                     >
-                        <ForwardIcon className="h-5 w-5 text-white-500" />
+                        <span className="flex items-center justify-center">
+                            <ForwardIcon className="h-5 w-5 text-white-500" />
+                        </span>
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-yellow-500 hover:bg-yellow-600 lg:px-4 lg:py-1 sm:p-3  text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/6 bg-yellow-500 hover:bg-yellow-600 lg:px-4 xl:py-2 lg:py-1 sm:p-3  text-white rounded-full flex justify-center items-center"
                         onClick={resetTimer}
                     >
-                        <ArrowUturnLeftIcon className="h-5 w-5 text-white-500" />
+                        <span className="flex items-center justify-center">
+                            <ArrowUturnLeftIcon className="h-5 w-5 text-white-500" />
+                        </span>
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-purple-500 hover:bg-purple-600 px-4 py-1 rounded-full text-white flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/6 bg-purple-500 hover:bg-purple-600 px-4 xl:py-2 lg:py-1 rounded-full text-white flex justify-center items-center"
                         onClick={openModal}
                     >
-                        <CogIcon className="h-5 w-5 text-white-500" />
+                        <span className="flex items-center justify-center">
+                            <CogIcon className="h-5 w-5 text-white-500" />
+                        </span>
                     </button>
                 </div>
             </div>
