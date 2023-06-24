@@ -27,7 +27,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ header, description, nextTask, 
     }, [header, description]);
 
     return (
-        <div className="xl:p-10 lg:p-5 sm:p-2 h-screen bg-blue-900">
+        <div className="xl:p-10 lg:p-5 sm:p-2 h-screen">
             <div className="flex">
                 <div className="xl:w-3/5 lg:w-3/5 sm:w-4/6">
                     <h1 className="bg-white text-gray-900 rounded-full px-4 xl:py-2 lg:py-2 sm:py-2 xl:text-4xl lg:text-md sm:text-xs font-bold shadow-md shadow-gray-900">{headerState}</h1>
