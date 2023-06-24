@@ -193,14 +193,16 @@ const PomodoroTimer = () => {
     };
 
     const resetTimer = () => {
-        setIsActive(false);
-        setMinutes(pomodoroDuration);
-        setSeconds(0);
-        setIsBreak(false);
-        setPomodoroCount(0);
-        setPomodoroTotalCount(0);
-        setShortBreakCount(0);
-        setLongBreakCount(0);
+        if (window.confirm('Are you sure you want to reset all the data?')) {
+            setIsActive(false);
+            setMinutes(pomodoroDuration);
+            setSeconds(0);
+            setIsBreak(false);
+            setPomodoroCount(0);
+            setPomodoroTotalCount(0);
+            setShortBreakCount(0);
+            setLongBreakCount(0);
+        }
     };
 
     const handleTimerFinish = () => {
