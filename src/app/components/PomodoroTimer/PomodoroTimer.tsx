@@ -239,13 +239,13 @@ const PomodoroTimer = () => {
         <div className="flex flex-col items-center justify-center lg:h-64 text-white font-bold lg:p-5 sm:p-1">
             <div className="flex items-center">
                 <div className="flex flex-col w-2/3 items-center">
-                    <div className="lg:text-xl sm:text-md">
+                    <div className="lg:text-xl sm:text-md xl:text-3xl">
                         {'[ ' + (isBreak ? (isLongBreak ? 'Long break' : 'Short break') : 'Pomodoro') + ' ]'}
                     </div>
-                    <div className="lg:text-6xl lg:mt-6 sm:text-4xl">
+                    <div className="lg:text-6xl lg:mt-6 sm:text-4xl xl:text-8xl">
                         {formattedTime}
                     </div>
-                    <div className="lg:text-xs sm:text-[10px] lg:mt-6">
+                    <div className="lg:text-xs sm:text-[10px] lg:mt-6 xl:text-lg">
                         <div className="w-full flex justify-center items-center">
                             Pomodoros: {pomodoroTotalCount}
                         </div>
