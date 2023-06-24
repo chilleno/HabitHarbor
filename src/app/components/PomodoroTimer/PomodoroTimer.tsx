@@ -40,6 +40,7 @@ const PomodoroTimer = () => {
     const [longBreakCount, setLongBreakCount] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [formattedTime, setFormattedTime] = useState('00:00');
+    const [today, setToday] = useState(new Date());
 
 
     useEffect(() => {
@@ -120,7 +121,6 @@ const PomodoroTimer = () => {
         if (cookies.acceptCookies === 'true') {
             // Save updated values to cookies
             let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
-            let today = new Date();
             if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
                 setPomodoroCount(0);
                 setCookie('pomodoroCount', 0);
@@ -244,11 +244,24 @@ const PomodoroTimer = () => {
     };
 
     const handleSave = () => {
-        setMinutes(pomodoroDuration);
-        setShortBreakDuration(shortBreakDuration);
-        setLongBreakDuration(longBreakDuration);
-        setPomodorosForLongBreak(pomodorosForLongBreak);
-        closeModal();
+        if (window.confirm('This action will reset all the counters. Are you sure?')) {
+            setPomodoroCount(0);
+            setCookie('pomodoroCount', 0);
+            setPomodoroTotalCount(0);
+            setCookie('pomodoroTotalCount', 0);
+            setShortBreakCount(0);
+            setCookie('shortBreakCount', 0);
+            setLongBreakCount(0);
+            setCookie('longBreakCount', 0);
+            setCookie('firstPomodoroCountDate', today);
+            resetTimer();
+
+            setMinutes(pomodoroDuration);
+            setShortBreakDuration(shortBreakDuration);
+            setLongBreakDuration(longBreakDuration);
+            setPomodorosForLongBreak(pomodorosForLongBreak);
+            closeModal();
+        }
     };
 
     const playSound = () => {
