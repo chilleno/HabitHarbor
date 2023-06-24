@@ -9,7 +9,21 @@ import { CogIcon } from '@heroicons/react/24/solid';
 import { useCookies } from 'react-cookie';
 
 const PomodoroTimer = () => {
-    const [cookies, setCookie] = useCookies(['acceptCookies', 'pomodoroDuration', 'shortBreakDuration', 'longBreakDuration', 'pomodorosForLongBreak', 'isBreak', 'isShortBreak', 'isLongBreak', 'pomodoroCount', 'pomodoroTotalCount', 'shortBreakCount', 'longBreakCount'])
+    const [cookies, setCookie] = useCookies([
+        'acceptCookies',
+        'pomodoroDuration',
+        'shortBreakDuration',
+        'longBreakDuration',
+        'pomodorosForLongBreak',
+        'isBreak',
+        'isShortBreak',
+        'isLongBreak',
+        'pomodoroCount',
+        'pomodoroTotalCount',
+        'shortBreakCount',
+        'longBreakCount',
+        'firstPomodoroCountDate'
+    ]);
     const [pomodoroDuration, setPomodoroDuration] = useState(cookies.pomodoroDuration);
     const [shortBreakDuration, setShortBreakDuration] = useState(cookies.shortBreakDuration);
     const [longBreakDuration, setLongBreakDuration] = useState(cookies.longBreakDuration);
@@ -105,6 +119,19 @@ const PomodoroTimer = () => {
     useEffect(() => {
         if (cookies.acceptCookies === 'true') {
             // Save updated values to cookies
+            let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
+            let today = new Date();
+            if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
+                setPomodoroCount(0);
+                setCookie('pomodoroCount', 0);
+                setPomodoroTotalCount(0);
+                setCookie('pomodoroTotalCount', 0);
+                setShortBreakCount(0);
+                setCookie('shortBreakCount', 0);
+                setLongBreakCount(0);
+                setCookie('longBreakCount', 0);
+                setCookie('firstPomodoroCountDate', today);
+            }
             setCookie('pomodoroDuration', pomodoroDuration.toString());
             setCookie('shortBreakDuration', shortBreakDuration.toString());
             setCookie('longBreakDuration', longBreakDuration.toString());
@@ -116,6 +143,10 @@ const PomodoroTimer = () => {
             setCookie('pomodoroTotalCount', pomodoroTotalCount.toString());
             setCookie('shortBreakCount', shortBreakCount.toString());
             setCookie('longBreakCount', longBreakCount.toString());
+            if (pomodoroCount === 1) {
+                setCookie('firstPomodoroCountDate', today);
+            }
+
         }
     }, [
         pomodoroDuration,
@@ -145,16 +176,6 @@ const PomodoroTimer = () => {
             };
         }
     }, [isActive]);
-
-    const confirmPageReload = () => {
-        const confirmMessage = 'Are you sure you want to leave? Your current progress will be lost.';
-        if (!isActive && (minutes !== pomodoroDuration || seconds !== 0)) {
-            if (!window.confirm(confirmMessage)) {
-                return;
-            }
-        }
-        resetTimer();
-    };
 
     const startTimer = () => {
         setIsActive(true);
