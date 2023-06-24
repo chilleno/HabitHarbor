@@ -7,6 +7,7 @@ import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid';
 import { CogIcon } from '@heroicons/react/24/solid';
 
 import { useCookies } from 'react-cookie';
+import { ForwardIcon } from '@heroicons/react/24/solid';
 
 const PomodoroTimer = () => {
     const [cookies, setCookie] = useCookies([
@@ -185,6 +186,12 @@ const PomodoroTimer = () => {
         setIsActive(false);
     };
 
+    const nextTimer = () => {
+        if (window.confirm('Are you sure you want to skip this timer?')) {
+            handleTimerFinish();
+        }
+    };
+
     const resetTimer = () => {
         setIsActive(false);
         setMinutes(pomodoroDuration);
@@ -304,7 +311,13 @@ const PomodoroTimer = () => {
                         <StopIcon className="h-5 w-5 text-white-500" />
                     </button>
                     <button
-                        className="lg:w-2/3 sm:w-1/3 bg-blue-500 hover:bg-blue-600 lg:px-4 lg:py-1 sm:p-3  text-white rounded-full flex justify-center items-center"
+                        className="lg:w-2/3 sm:w-1/3 bg-blue-500 hover:bg-blue-600 lg:px-4 lg:py-1 sm:p-3 text-white rounded-full flex justify-center items-center"
+                        onClick={nextTimer}
+                    >
+                        <ForwardIcon className="h-5 w-5 text-white-500" />
+                    </button>
+                    <button
+                        className="lg:w-2/3 sm:w-1/3 bg-yellow-500 hover:bg-yellow-600 lg:px-4 lg:py-1 sm:p-3  text-white rounded-full flex justify-center items-center"
                         onClick={resetTimer}
                     >
                         <ArrowUturnLeftIcon className="h-5 w-5 text-white-500" />
