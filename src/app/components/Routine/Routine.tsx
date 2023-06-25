@@ -44,6 +44,7 @@ const Routine: React.FC<RoutineProps> = ({ tasks, currentTaskIndex }) => {
                     <div className="flex flex-col items-center">
                         {tasks.map((task, index) => (
                             <ArcherElement
+                                key={task.id}
                                 id={task.order.toString()}
                                 relations={[
                                     {
