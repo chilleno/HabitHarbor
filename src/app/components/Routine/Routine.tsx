@@ -39,7 +39,12 @@ const Routine: React.FC<RoutineProps> = ({ tasks, currentTaskIndex }) => {
 
     return (
         <>
-            <div className="flex flex-col h-screen max-h-fit -z-50 overflow-y-auto sm:max-h-[100%] pt-10">
+            <div className="flex justify-center p-5">
+                <h1 className="text-white xl:text-4xl lg:text-md sm:text-xs font-bold underline underline-offset-7">
+                    Daily Routine
+                </h1>
+            </div>
+            <div className="flex flex-col h-screen max-h-fit -z-50 overflow-y-auto sm:max-h-[100%] pt-5">
                 <ArcherContainer>
                     <div className="flex flex-col items-center">
                         {tasks.map((task, index) => (

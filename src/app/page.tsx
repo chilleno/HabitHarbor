@@ -47,7 +47,7 @@ export default function Home() {
           <Clock />
         </div>
         <div className=''>
-              <PomodoroTimer />
+          <PomodoroTimer />
         </div>
       </StartScreen>
       <MiddleScreen className=''>
