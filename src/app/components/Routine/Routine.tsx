@@ -40,7 +40,7 @@ const Routine: React.FC<RoutineProps> = ({ tasks, currentTaskIndex }) => {
     return (
         <>
             <div className="flex justify-center p-5">
-                <h1 className="text-white xl:text-4xl lg:text-md sm:text-xs font-bold underline underline-offset-7">
+                <h1 className="text-white xl:text-4xl lg:text-3xl sm:text2xl font-bold underline underline-offset-7">
                     Daily Routine
                 </h1>
             </div>
