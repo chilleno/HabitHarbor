@@ -30,7 +30,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ header, description, nextTask, 
         <div className="xl:p-10 lg:p-5 sm:p-2 h-screen">
             <div className="flex">
                 <div className="xl:w-3/5 lg:w-3/5 sm:w-4/6">
-                    <h1 className="bg-white text-gray-900 rounded-full px-4 xl:py-2 lg:py-2 sm:py-2 xl:text-4xl lg:text-md sm:text-xs font-bold shadow-md shadow-gray-900">{headerState}</h1>
+                    <h1 className="bg-white text-gray-900 rounded-full px-4 xl:py-2 lg:py-2 sm:py-2 xl:text-4xl lg:text-md sm:text-xs font-bold shadow-md shadow-gray-900 xl:min-h-[56px] lg:min-h-[32px] sm:min-h-[32px]">{headerState}</h1>
                 </div>
                 <div className="xl:w-2/5 lg:w-2/5 sm:w-2/6 flex flex-col justify-center">
                     <div className="flex justify-center">
