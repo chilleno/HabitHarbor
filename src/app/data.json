@@ -10,8 +10,8 @@
             },
             {
                 "id": 2,
-                "header": "Ducharse",
-                "description": "Recordar usar jabon de cara",
+                "header": "Inciar el dia",
+                "description": "Abrir las ventanas y ordenar la cama",
                 "order": 1,
                 "subtasks": []
             },

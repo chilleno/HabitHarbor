@@ -19,6 +19,7 @@
     "next": "^13.4.7",
     "postcss": "8.4.24",
     "react": "^18.2.0",
+    "react-archer": "^4.2.3",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "tailwindcss": "3.3.2",

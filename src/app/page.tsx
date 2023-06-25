@@ -10,6 +10,7 @@ import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskDetail from './components/TaskDetail/TaskDetail';
 import TaskList from './components/TaskList/TaskList';
+import Routine from './components/Routine/Routine';
 import CookieModal from './components/CookieModal/CookieModal';
 import { useCookies } from 'react-cookie'
 
@@ -58,7 +59,7 @@ export default function Home() {
         />
       </MiddleScreen>
       <EndScreen className=''>
-        <TaskList tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
+        <Routine tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
       </EndScreen>
     </MainComponent >
   )
