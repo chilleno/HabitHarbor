@@ -9,10 +9,10 @@ import { useEndScreen } from './layoutComponents/endScreen';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskDetail from './components/TaskDetail/TaskDetail';
-import TaskList from './components/TaskList/TaskList';
 import Routine from './components/Routine/Routine';
 import CookieModal from './components/CookieModal/CookieModal';
 import { useCookies } from 'react-cookie'
+import WaterTracker from './components/WaterTracker/WaterTracker';
 
 export default function Home() {
   const [cookies, setCookie] = useCookies(['acceptCookies'])
@@ -48,6 +48,9 @@ export default function Home() {
         </div>
         <div className=''>
           <PomodoroTimer />
+        </div>
+        <div className=''>
+          <WaterTracker />
         </div>
       </StartScreen>
       <MiddleScreen className=''>

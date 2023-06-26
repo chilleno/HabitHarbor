@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import TaskList from '../TaskList/TaskList';
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import { CheckIcon } from '@heroicons/react/24/solid';
+
+import jsonData from '../../data.json';
 
 interface TaskDetailProps {
     header: string;
@@ -12,6 +15,7 @@ interface TaskDetailProps {
 const TaskDetail: React.FC<TaskDetailProps> = ({ header, description, nextTask, previousTask }) => {
     const [headerState, setHeaderState] = useState('');
     const [descriptionState, setDescriptionState] = useState('');
+    const [currentTask, setCurrentTask] = useState(0);
 
     const handleNextTask = () => {
         nextTask();
@@ -21,6 +25,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ header, description, nextTask, 
         previousTask();
     };
 
+    
     useEffect(() => {
         setHeaderState(header);
         setDescriptionState(description);
@@ -48,6 +53,9 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ header, description, nextTask, 
                 <p className="bg-white text-gray-900 max-h-16 min-h-[300px] sm:min-h-[150px] rounded-3xl px-5 py-3 xl:text-2xl lg:text-sm sm:text-[12px] font-bold shadow-md shadow-gray-900 overflow-y-auto">
                     {descriptionState}
                 </p>
+            </div>
+            <div className="mt-5">
+                <TaskList tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
             </div>
         </div>
     );
