@@ -40,7 +40,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                     Task List
                 </h1>
             </div>
-            <div className="flex flex-col h-screen max-h-fit -z-50 overflow-y-auto sm:max-h-[100%] pt-5">
+            <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
                 <ArcherContainer>
                     <div className="flex flex-col items-center">
                         {tasks.map((task, index) => (
