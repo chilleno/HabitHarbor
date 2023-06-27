@@ -44,7 +44,6 @@ const WaterTracker = () => {
     };
 
     const updateTrackMode = (newTrackMode: React.SetStateAction<string>) => {
-        window.alert(newTrackMode);
         if (window.confirm('This action will reset the water count, are you sure you want to continue?')) {
             if(newTrackMode === "bottle"){
                 setMaxWaterAmount(3);
