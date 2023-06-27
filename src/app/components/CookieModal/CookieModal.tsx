@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie'
 
 const Modal = () => {
-    const [cookies, setCookie] = useCookies(['acceptCookies', 'pomodoroDuration', 'shortBreakDuration', 'longBreakDuration', 'pomodorosForLongBreak']);
+    const [cookies, setCookie] = useCookies([
+            'acceptCookies',
+            'pomodoroDuration',
+            'shortBreakDuration',
+            'longBreakDuration',
+            'pomodorosForLongBreak',
+            'waterDrinkAmount',
+            'maxWaterAmount',
+            'waterTrackMethod',
+        ]);
     const [showModal, setShowModal] = useState(false);
 
     const handleAccept = () => {
@@ -12,7 +21,9 @@ const Modal = () => {
         setCookie('shortBreakDuration', 5);
         setCookie('longBreakDuration', 15);
         setCookie('pomodorosForLongBreak', 4);
-     
+        setCookie('waterDrinkAmount', 0);
+        setCookie('waterTrackMethod', 'glass');
+
         // Close the modal
         setShowModal(false);
         window.location.reload();
@@ -32,7 +43,7 @@ const Modal = () => {
 
     return (
         <div
-            className={`fixed inset-0 flex items-center justify-center bg-opacity-75 bg-black ${showModal ? 'block' : 'hidden'
+            className={`z-50 fixed inset-0 flex items-center justify-center bg-opacity-75 bg-black ${showModal ? 'block' : 'hidden'
                 }`}
         >
             <div className="bg-white text-black px-8 py-6 max-w-md">
