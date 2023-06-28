@@ -51,14 +51,14 @@ const Routine: React.FC<RoutineProps> = ({ tasks, currentTaskIndex }) => {
                             <ArcherElement
                                 key={task.id}
                                 id={task.order.toString()}
-                                relations={[
+                                relations={(task.order + 1) < tasks.length ? [
                                     {
                                         targetId: (task.order + 1).toString(),
                                         targetAnchor: 'top',
                                         sourceAnchor: 'bottom',
                                         style: { strokeColor: 'white', strokeWidth: 5, endMarker: false, noCurves: true, },
                                     },
-                                ]}
+                                ] : []}
                             >
                                 <div
                                     key={task.id}
