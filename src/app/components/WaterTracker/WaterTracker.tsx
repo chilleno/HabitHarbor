@@ -45,9 +45,9 @@ const WaterTracker = () => {
 
     const updateTrackMode = (newTrackMode: React.SetStateAction<string>) => {
         if (window.confirm('This action will reset the water count, are you sure you want to continue?')) {
-            if(newTrackMode === "bottle"){
+            if (newTrackMode === "bottle") {
                 setMaxWaterAmount(3);
-            }else if(newTrackMode === "glass"){
+            } else if (newTrackMode === "glass") {
                 setMaxWaterAmount(12);
             }
             setTrackMode(newTrackMode);
@@ -62,15 +62,15 @@ const WaterTracker = () => {
         for (let i = 1; i <= maxWaterAmount; i++) {
             if (trackMode === 'glass') {
                 if (waterAmount >= (i)) {
-                    icons.push(<img src="/icons/filledGlass.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<img key={'wte-' + i} src="/icons/filledGlass.svg" className={iconClass} alt="Glass Icon" />);
                 } else {
-                    icons.push(<img src="/icons/glass.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<img key={'wte-' + i} src="/icons/glass.svg" className={iconClass} alt="Glass Icon" />);
                 }
             } else if (trackMode === 'bottle') {
                 if (waterAmount >= (i)) {
-                    icons.push(<img src="/icons/filledBottle.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<img key={'wte-' + i} src="/icons/filledBottle.svg" className={iconClass} alt="Glass Icon" />);
                 } else {
-                    icons.push(<img src="/icons/bottle.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<img key={'wte-' + i} src="/icons/bottle.svg" className={iconClass} alt="Glass Icon" />);
                 }
             }
         }
@@ -96,9 +96,9 @@ const WaterTracker = () => {
     ]);
 
     useEffect(() => {
-        if(cookies.waterTrackMethod === "bottle"){
+        if (cookies.waterTrackMethod === "bottle") {
             setMaxWaterAmount(3);
-        }else if(cookies.waterTrackMethod === "glass"){
+        } else if (cookies.waterTrackMethod === "glass") {
             setMaxWaterAmount(12);
         }
         setInitialRenderComplete(true);
@@ -135,10 +135,10 @@ const WaterTracker = () => {
 
                 {showModal && (
                     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white">
+                        <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                             <h2 className="text-xl font-bold mb-4">Edit Water Tacker</h2>
-                            <div className="flex flex-col gap-2">
-                                <select className="text-black rounded-full p-2" value={trackMode} onChange={(e) => updateTrackMode(e.target.value)}>
+                            <div className="flex flex-col">
+                                <select className="text-black rounded-full py-2" value={trackMode} onChange={(e) => updateTrackMode(e.target.value)}>
                                     <option value="glass">Glasses</option>
                                     <option value="bottle">Bottles</option>
                                 </select>
