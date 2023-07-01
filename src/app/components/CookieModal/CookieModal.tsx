@@ -11,6 +11,7 @@ const Modal = () => {
             'waterDrinkAmount',
             'maxWaterAmount',
             'waterTrackMethod',
+            'soundEffect',
         ]);
     const [showModal, setShowModal] = useState(false);
 
@@ -23,6 +24,7 @@ const Modal = () => {
         setCookie('pomodorosForLongBreak', 4);
         setCookie('waterDrinkAmount', 0);
         setCookie('waterTrackMethod', 'glass');
+        setCookie('soundEffect', 'wow');
 
         // Close the modal
         setShowModal(false);
