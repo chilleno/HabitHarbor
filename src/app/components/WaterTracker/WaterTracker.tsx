@@ -91,16 +91,22 @@ const WaterTracker = () => {
                 setCookie('firstWaterDate', today);
             }
         }
-    }, [
-        waterAmount,
-    ]);
+    }, [waterAmount]);
 
     useEffect(() => {
-        if (cookies.waterTrackMethod === "bottle") {
-            setMaxWaterAmount(3);
-        } else if (cookies.waterTrackMethod === "glass") {
-            setMaxWaterAmount(12);
+        if (cookies.acceptCookies === 'true') {
+            // Save updated values to cookies
+            let firstRepaymentDate = new Date(cookies.firstWaterDate);
+            if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
+                setWaterAmount(0);
+            }
+            if (cookies.waterTrackMethod === "bottle") {
+                setMaxWaterAmount(3);
+            } else if (cookies.waterTrackMethod === "glass") {
+                setMaxWaterAmount(12);
+            }
         }
+
         setInitialRenderComplete(true);
     }, []);
 
