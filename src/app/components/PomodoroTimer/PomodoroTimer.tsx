@@ -23,8 +23,10 @@ const PomodoroTimer = () => {
         'pomodoroTotalCount',
         'shortBreakCount',
         'longBreakCount',
-        'firstPomodoroCountDate'
+        'firstPomodoroCountDate',
+        'soundEffect',
     ]);
+    const [soundEffect, setSoundEffect] = useState(cookies.soundEffect);
     const [pomodoroDuration, setPomodoroDuration] = useState(cookies.pomodoroDuration);
     const [shortBreakDuration, setShortBreakDuration] = useState(cookies.shortBreakDuration);
     const [longBreakDuration, setLongBreakDuration] = useState(cookies.longBreakDuration);
@@ -41,7 +43,7 @@ const PomodoroTimer = () => {
     const [longBreakCount, setLongBreakCount] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [formattedTime, setFormattedTime] = useState('00:00');
-    const [today, setToday] = useState(new Date());
+    const [today] = useState(new Date());
 
 
     useEffect(() => {
@@ -52,7 +54,10 @@ const PomodoroTimer = () => {
                 if (seconds === 0 && minutes === 0) {
                     clearInterval(interval);
                     handleTimerFinish();
-                    playSound();
+                    if (soundEffect === 'wow')
+                        playSoundWow();
+                    if (soundEffect === 'oot')
+                        playSoundOOT();
                 } else if (seconds === 0) {
                     setMinutes((prevMinutes: number) => prevMinutes - 1);
                     setSeconds(59);
@@ -78,6 +83,7 @@ const PomodoroTimer = () => {
         const savedPomodoroTotalCount = cookies.pomodoroTotalCount;
         const savedShortBreakCount = cookies.shortBreakCount;
         const savedLongBreakCount = cookies.longBreakCount;
+        const savedSoundEffect = cookies.soundEffect;
 
         if (savedPomodoroDuration) {
             setPomodoroDuration(Number(savedPomodoroDuration));
@@ -112,6 +118,9 @@ const PomodoroTimer = () => {
         if (savedLongBreakCount) {
             setLongBreakCount(Number(savedLongBreakCount));
         }
+        if (savedSoundEffect) {
+            setSoundEffect(String(savedSoundEffect));
+        }
     };
 
     useEffect(() => {
@@ -144,6 +153,7 @@ const PomodoroTimer = () => {
             setCookie('pomodoroTotalCount', pomodoroTotalCount.toString());
             setCookie('shortBreakCount', shortBreakCount.toString());
             setCookie('longBreakCount', longBreakCount.toString());
+            setCookie('soundEffect', soundEffect);
             if (pomodoroCount === 1) {
                 setCookie('firstPomodoroCountDate', today);
             }
@@ -273,8 +283,13 @@ const PomodoroTimer = () => {
         }
     };
 
-    const playSound = () => {
+    const playSoundWow = () => {
         const audio = new Audio('/static/sounds/soundEffect.ogg');
+        audio.play();
+    };
+
+    const playSoundOOT = () => {
+        const audio = new Audio('/static/sounds/OOT_soundEffect.wav');
         audio.play();
     };
 
@@ -382,6 +397,16 @@ const PomodoroTimer = () => {
                                 onChange={(e) => setPomodorosForLongBreak(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
+                            <label htmlFor="pomodorosForLongBreakInput">Sound Effect</label>
+                            <select
+                                id="soundEffectSelect"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                defaultValue={soundEffect}
+                                onChange={(e) => setSoundEffect(String(e.target.value))}
+                            >
+                                <option value={'wow'}>World of Warcraft</option>
+                                <option value={'oot'}>Zelda: Ocarina of Time</option>
+                            </select>
                         </div>
                         <div className="flex justify-end mt-4">
                             <button
