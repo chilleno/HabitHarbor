@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArcherContainer, ArcherElement, } from 'react-archer';
 
 interface Task {
     id: number;
@@ -17,7 +16,14 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
     const [taskList, setTaskList] = useState<Task[]>(tasks);
 
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
     const handleCheckboxChange = (taskId: number) => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+
         setTaskList(prevTasks => {
             const updatedTasks = prevTasks.map(task => {
                 if (task.id === taskId) {
@@ -32,9 +38,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
         });
 
         // Remove the checked task after 3 seconds
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
             setTaskList(prevTasks => prevTasks.filter(task => task.id !== taskId));
-        }, 3000);
+        }, 5000);
     };
 
     return (
