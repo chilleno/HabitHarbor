@@ -33,9 +33,9 @@ const PomodoroTimer = () => {
     const [minutes, setMinutes] = useState(pomodoroDuration);
     const [seconds, setSeconds] = useState(0);
     const [isActive, setIsActive] = useState(false);
-    const [isBreak, setIsBreak] = useState(false);
-    const [isShortBreak, setIsShortBreak] = useState(false);
-    const [isLongBreak, setIsLongBreak] = useState(false);
+    const [isBreak, setIsBreak] = useState(cookies.isBreak);
+    const [isShortBreak, setIsShortBreak] = useState(cookies.isShortBreak);
+    const [isLongBreak, setIsLongBreak] = useState(cookies.isLongBreak);
     const [pomodoroCount, setPomodoroCount] = useState(0);
     const [pomodoroTotalCount, setPomodoroTotalCount] = useState(0);
     const [shortBreakCount, setShortBreakCount] = useState(0);
@@ -96,14 +96,14 @@ const PomodoroTimer = () => {
         if (savedPomodorosForLongBreak) {
             setPomodorosForLongBreak(Number(savedPomodorosForLongBreak));
         }
-        if (savedIsBreak) {
-            setIsBreak(savedIsBreak === 'true');
+        if (savedIsBreak !== null) {
+            setIsBreak(savedIsBreak);
         }
-        if (savedIsShortBreak) {
-            setIsShortBreak(savedIsShortBreak === 'true');
+        if (savedIsShortBreak !== null) {
+            setIsShortBreak(savedIsShortBreak);
         }
-        if (savedIsLongBreak) {
-            setIsLongBreak(savedIsLongBreak === 'true');
+        if (savedIsLongBreak !== null) {
+            setIsLongBreak(savedIsLongBreak);
         }
         if (savedPomodoroCount) {
             setPomodoroCount(Number(savedPomodoroCount));
@@ -137,9 +137,9 @@ const PomodoroTimer = () => {
             setCookie('shortBreakDuration', shortBreakDuration.toString());
             setCookie('longBreakDuration', longBreakDuration.toString());
             setCookie('pomodorosForLongBreak', pomodorosForLongBreak.toString());
-            setCookie('isBreak', isBreak.toString());
-            setCookie('isShortBreak', isShortBreak.toString());
-            setCookie('isLongBreak', isLongBreak.toString());
+            setCookie('isBreak', isBreak);
+            setCookie('isShortBreak', isShortBreak);
+            setCookie('isLongBreak', isLongBreak);
             setCookie('pomodoroCount', pomodoroCount.toString());
             setCookie('pomodoroTotalCount', pomodoroTotalCount.toString());
             setCookie('shortBreakCount', shortBreakCount.toString());
@@ -300,7 +300,7 @@ const PomodoroTimer = () => {
             <div className="flex items-center">
                 <div className="flex flex-col lg:w-2/3 sm:w-1/2 items-center">
                     <div className="lg:text-xl sm:text-md xl:text-3xl">
-                        {'[ ' + (isBreak ? (isLongBreak ? 'Long break' : 'Short break') : 'Pomodoro') + ' ]'}
+                        {'[ ' + (isBreak == true ? (isLongBreak == true ? 'Long break' : isShortBreak == true ? 'Short break' : null) : 'Pomodoro') + ' ]'}
                     </div>
                     <div className="lg:text-6xl lg:mt-6 sm:text-4xl xl:text-8xl">
                         {formattedTime}
