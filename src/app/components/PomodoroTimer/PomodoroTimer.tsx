@@ -295,6 +295,12 @@ const PomodoroTimer = () => {
         audio.play();
     };
 
+    const handlePomodorosForLongBreakChange = (value: number): void => {
+        if(value >= 2){
+            setPomodorosForLongBreak(value);
+        }
+    }
+
     return (
         <div className="flex flex-col items-center justify-center lg:h-64 text-white font-bold lg:p-5 sm:p-1">
             <div className="flex items-center">
@@ -386,9 +392,9 @@ const PomodoroTimer = () => {
                             <input
                                 id="pomodorosForLongBreakInput"
                                 type="number"
-                                min="1"
+                                min="2"
                                 value={pomodorosForLongBreak}
-                                onChange={(e) => setPomodorosForLongBreak(Number(e.target.value))}
+                                onChange={(e) => handlePomodorosForLongBreakChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                             <label htmlFor="pomodorosForLongBreakInput">Sound Effect</label>
