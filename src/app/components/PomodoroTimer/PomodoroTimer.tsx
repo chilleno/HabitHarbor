@@ -202,6 +202,10 @@ const PomodoroTimer = () => {
                 setLongBreakDuration(15);
                 setPomodorosForLongBreak(4);
                 setSoundEffect('wow');
+                setIsActive(false);
+                setSeconds(0);
+                setIsBreak(false);
+                setMinutes(25);
             }
             if (!defaultValues) {
                 setPomodoroCount(0);
@@ -392,7 +396,7 @@ const PomodoroTimer = () => {
                         </div>
                         <div className="flex mt-4">
                             <div className="flex w-1/2 justify-start">
-                                <button className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-full text-white" onClick={() => resetTimer(true, true)}>
+                                <button className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-full text-white" onClick={() => (resetTimer(true, true), closeModal())}>
                                     Reset
                                 </button>
                             </div>
