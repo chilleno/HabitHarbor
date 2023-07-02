@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { StopIcon } from '@heroicons/react/24/solid';
-import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid';
 import { CogIcon } from '@heroicons/react/24/solid';
 
 import { useCookies } from 'react-cookie';
@@ -132,15 +131,7 @@ const PomodoroTimer = () => {
             // Save updated values to cookies
             let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
             if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-                setPomodoroCount(0);
-                setCookie('pomodoroCount', 0);
-                setPomodoroTotalCount(0);
-                setCookie('pomodoroTotalCount', 0);
-                setShortBreakCount(0);
-                setCookie('shortBreakCount', 0);
-                setLongBreakCount(0);
-                setCookie('longBreakCount', 0);
-                setCookie('firstPomodoroCountDate', today);
+                resetTimer();
             }
             setCookie('pomodoroDuration', pomodoroDuration.toString());
             setCookie('shortBreakDuration', shortBreakDuration.toString());
@@ -171,6 +162,7 @@ const PomodoroTimer = () => {
         pomodoroTotalCount,
         shortBreakCount,
         longBreakCount,
+        soundEffect
     ]);
 
     useEffect(() => {
@@ -202,18 +194,37 @@ const PomodoroTimer = () => {
         }
     };
 
-    const resetTimer = () => {
-        if (window.confirm('Are you sure you want to reset all the data?')) {
-            setIsActive(false);
-            setMinutes(pomodoroDuration);
-            setSeconds(0);
-            setIsBreak(false);
-            setPomodoroCount(0);
-            setPomodoroTotalCount(0);
-            setShortBreakCount(0);
-            setLongBreakCount(0);
+    function resetTimer(showConfirm: boolean = true, defaultValues: boolean = false): void {
+        if (showConfirm == false || window.confirm('Are you sure you want to reset all the data?')) {
+            if (defaultValues) {
+                setPomodoroDuration(25);
+                setShortBreakDuration(5);
+                setLongBreakDuration(15);
+                setPomodorosForLongBreak(4);
+                setSoundEffect('wow');
+            }
+            if (!defaultValues) {
+                setPomodoroCount(0);
+                setPomodoroTotalCount(0);
+                setShortBreakCount(0);
+                setLongBreakCount(0);
+                setIsActive(false);
+                setSeconds(0);
+                setIsBreak(false);
+                setMinutes(pomodoroDuration);
+                setShortBreakDuration(shortBreakDuration);
+                setLongBreakDuration(longBreakDuration);
+                setPomodorosForLongBreak(pomodorosForLongBreak);
+            }
         }
     };
+
+    const handleSave = () => {
+        if (window.confirm('this action will reset the current data, you want to continue?')) {
+            resetTimer(false, false);
+            closeModal();
+        }
+    }
 
     const handleTimerFinish = () => {
         setIsActive(false);
@@ -260,27 +271,6 @@ const PomodoroTimer = () => {
 
     const closeModal = () => {
         setShowModal(false);
-    };
-
-    const handleSave = () => {
-        if (window.confirm('This action will reset all the counters. Are you sure?')) {
-            setPomodoroCount(0);
-            setCookie('pomodoroCount', 0);
-            setPomodoroTotalCount(0);
-            setCookie('pomodoroTotalCount', 0);
-            setShortBreakCount(0);
-            setCookie('shortBreakCount', 0);
-            setLongBreakCount(0);
-            setCookie('longBreakCount', 0);
-            setCookie('firstPomodoroCountDate', today);
-            resetTimer();
-
-            setMinutes(pomodoroDuration);
-            setShortBreakDuration(shortBreakDuration);
-            setLongBreakDuration(longBreakDuration);
-            setPomodorosForLongBreak(pomodorosForLongBreak);
-            closeModal();
-        }
     };
 
     const playSoundWow = () => {
@@ -335,14 +325,6 @@ const PomodoroTimer = () => {
                     >
                         <span className="flex items-center justify-center">
                             <ForwardIcon className="h-5 w-5 text-white-500" />
-                        </span>
-                    </button>
-                    <button
-                        className="lg:w-2/3 sm:w-1/6 bg-yellow-500 hover:bg-yellow-600 lg:px-4 xl:py-2 lg:py-1 sm:p-3  text-white rounded-full flex justify-center items-center"
-                        onClick={resetTimer}
-                    >
-                        <span className="flex items-center justify-center">
-                            <ArrowUturnLeftIcon className="h-5 w-5 text-white-500" />
                         </span>
                     </button>
                     <button
@@ -401,23 +383,27 @@ const PomodoroTimer = () => {
                             <select
                                 id="soundEffectSelect"
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
-                                defaultValue={soundEffect}
-                                onChange={(e) => setSoundEffect(String(e.target.value))}
+                                value={soundEffect}
+                                onChange={(e) => setSoundEffect(e.target.value)}
                             >
                                 <option value={'wow'}>World of Warcraft</option>
                                 <option value={'oot'}>Zelda: Ocarina of Time</option>
                             </select>
                         </div>
-                        <div className="flex justify-end mt-4">
-                            <button
-                                className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-full text-white mr-2"
-                                onClick={handleSave}
-                            >
-                                Save
-                            </button>
-                            <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-full text-white" onClick={closeModal}>
-                                Cancel
-                            </button>
+                        <div className="flex mt-4">
+                            <div className="flex w-1/2 justify-start">
+                                <button className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-full text-white" onClick={() => resetTimer(true, true)}>
+                                    Reset
+                                </button>
+                            </div>
+                            <div className="flex w-1/2 justify-end gap-2">
+                                <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-full text-white" onClick={() => handleSave()}>
+                                    save
+                                </button>
+                                <button className="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded-full text-white" onClick={closeModal}>
+                                    Close
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
