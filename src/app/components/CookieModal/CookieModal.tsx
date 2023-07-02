@@ -3,16 +3,19 @@ import { useCookies } from 'react-cookie'
 
 const Modal = () => {
     const [cookies, setCookie] = useCookies([
-            'acceptCookies',
-            'pomodoroDuration',
-            'shortBreakDuration',
-            'longBreakDuration',
-            'pomodorosForLongBreak',
-            'waterDrinkAmount',
-            'maxWaterAmount',
-            'waterTrackMethod',
-            'soundEffect',
-        ]);
+        'acceptCookies',
+        'pomodoroDuration',
+        'shortBreakDuration',
+        'longBreakDuration',
+        'pomodorosForLongBreak',
+        'waterDrinkAmount',
+        'maxWaterAmount',
+        'waterTrackMethod',
+        'soundEffect',
+        'isBreak',
+        'isShortBreak',
+        'isLongBreak',
+    ]);
     const [showModal, setShowModal] = useState(false);
 
     const handleAccept = () => {
@@ -25,6 +28,9 @@ const Modal = () => {
         setCookie('waterDrinkAmount', 0);
         setCookie('waterTrackMethod', 'glass');
         setCookie('soundEffect', 'wow');
+        setCookie('isBreak', false);
+        setCookie('isShortBreak', false);
+        setCookie('isLongBreak', false);
 
         // Close the modal
         setShowModal(false);
