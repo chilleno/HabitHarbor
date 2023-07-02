@@ -4,8 +4,8 @@ import { ArcherContainer, ArcherElement, } from 'react-archer';
 interface Task {
     id: number;
     header: string;
-    description: string;
     order: number;
+    checked: boolean;
     subtasks: any[];
 }
 
@@ -15,23 +15,27 @@ interface TaskListProps {
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
-    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-    const taskRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [taskList, setTaskList] = useState<Task[]>(tasks);
 
-    const handleTaskClick = (task: Task) => {
-        setSelectedTask(task);
+    const handleCheckboxChange = (taskId: number) => {
+        setTaskList(prevTasks => {
+            const updatedTasks = prevTasks.map(task => {
+                if (task.id === taskId) {
+                    return {
+                        ...task,
+                        checked: !task.checked
+                    };
+                }
+                return task;
+            });
+            return updatedTasks;
+        });
+
+        // Remove the checked task after 3 seconds
+        setTimeout(() => {
+            setTaskList(prevTasks => prevTasks.filter(task => task.id !== taskId));
+        }, 3000);
     };
-
-    const closeModal = () => {
-        setSelectedTask(null);
-    };
-
-    useEffect(() => {
-        const currentTaskRef = taskRefs.current[currentTaskIndex];
-        if (currentTaskRef) {
-            currentTaskRef.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-    }, [currentTaskIndex]);
 
     return (
         <>
@@ -40,71 +44,36 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                     Task List
                 </h1>
             </div>
-            <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
-                <ArcherContainer>
-                    <div className="flex flex-col items-center">
-                        {tasks.map((task, index) => (
-                            <ArcherElement
-                                key={task.id}
-                                id={task.order.toString()}
-                                relations={(task.order + 1) < tasks.length ? [
-                                    {
-                                        targetId: (task.order + 1).toString(),
-                                        targetAnchor: 'top',
-                                        sourceAnchor: 'bottom',
-                                        style: { strokeColor: 'white', strokeWidth: 5, endMarker: false, noCurves: true, },
-                                    },
-                                ] : []}
-                            >
-                                <div
-                                    key={task.id}
-                                    className={` border border-gray-100 rounded-md p-4 mb-4 cursor-pointer ${index === currentTaskIndex ? 'bg-blue-200' : ''
-                                        }`}
-                                    onClick={() => handleTaskClick(task)}
-                                    ref={(ref) => {
-                                        taskRefs.current[index] = ref;
-                                    }}
-                                >
-                                    <h2 className="font-bold text-xl">{task.header}</h2>
-                                </div>
-                            </ArcherElement>
-                        ))}
-                    </div>
-                </ArcherContainer>
+            <div className="flex py-5">
+                <h6 className={`text-white text-md font-bold hover:cursor-pointer underline hover:underline underline-offset-7 hover:underline-offset-7`}>
+                    Wake up routine
+                </h6>
             </div>
-
-            {
-                selectedTask && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-4 rounded-md">
-                            <div className="ml-5 mr-5 mt-5 h-auto">
-                                <div className="flex">
-                                    <h1 className="bg-white text-black rounded-full px-4 py-2 text-3xl font-bold">
-                                        {selectedTask.header}
-                                    </h1>
-                                </div>
-                                <div className="mt-5">
-                                    <p className="bg-white text-black rounded-full px-4 py-2 text-xl font-bold">
-                                        {selectedTask.description}
-                                    </p>
-                                </div>
-                            </div>
-                            <button
-                                className="mt-4 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm"
-                                onClick={closeModal}
+            <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
+                {
+                    taskList.map((task, index) => (
+                        <div
+                            key={'task_content_' + index}
+                            className={`flex items-center transition-opacity ${task.checked ? 'duration-[3000ms] opacity-0' : 'opacity-100'}`}
+                        >
+                            <input
+                                checked={task.checked || false}
+                                onChange={() => handleCheckboxChange(task.id)}
+                                id={'task_' + index}
+                                type='checkbox'
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            />
+                            <label
+                                className="ml-2"
+                                style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
+                                htmlFor={'task_' + index}
                             >
-                                Close
-                            </button>
-                            <button
-                                className="ml-5 mt-4 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm"
-                                onClick={closeModal}
-                            >
-                                Change
-                            </button>
+                                {task.header}
+                            </label>
                         </div>
-                    </div>
-                )
-            }
+                    ))
+                }
+            </div>
         </>
     );
 };
