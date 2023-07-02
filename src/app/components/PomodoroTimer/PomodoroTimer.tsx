@@ -131,7 +131,7 @@ const PomodoroTimer = () => {
             // Save updated values to cookies
             let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
             if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-                resetTimer();
+                resetTimer(false, false);
             }
             setCookie('pomodoroDuration', pomodoroDuration.toString());
             setCookie('shortBreakDuration', shortBreakDuration.toString());
