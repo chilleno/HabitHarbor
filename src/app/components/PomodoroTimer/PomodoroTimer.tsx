@@ -296,8 +296,26 @@ const PomodoroTimer = () => {
     };
 
     const handlePomodorosForLongBreakChange = (value: number): void => {
-        if(value >= 2){
+        if (value >= 2) {
             setPomodorosForLongBreak(value);
+        }
+    }
+
+    const handlePomodoroDurationChange = (value: number): void => {
+        if (value >= 1) {
+            setPomodoroDuration(value);
+        }
+    }
+
+    const handleShortBreakDurationChange = (value: number): void => {
+        if (value >= 1) {
+            setShortBreakDuration(value);
+        }
+    }
+
+    const handleLongBreakDurationChange = (value: number): void => {
+        if (value >= 1) {
+            setLongBreakDuration(value);
         }
     }
 
@@ -367,7 +385,7 @@ const PomodoroTimer = () => {
                                 type="number"
                                 min="1"
                                 value={pomodoroDuration}
-                                onChange={(e) => setPomodoroDuration(Number(e.target.value))}
+                                onChange={(e) => handlePomodoroDurationChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                             <label htmlFor="shortBreakDurationInput">Short Break Duration (minutes)</label>
@@ -376,7 +394,7 @@ const PomodoroTimer = () => {
                                 type="number"
                                 min="1"
                                 value={shortBreakDuration}
-                                onChange={(e) => setShortBreakDuration(Number(e.target.value))}
+                                onChange={(e) => handleShortBreakDurationChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                             <label htmlFor="longBreakDurationInput">Long Break Duration (minutes)</label>
@@ -385,7 +403,7 @@ const PomodoroTimer = () => {
                                 type="number"
                                 min="1"
                                 value={longBreakDuration}
-                                onChange={(e) => setLongBreakDuration(Number(e.target.value))}
+                                onChange={(e) => handleLongBreakDurationChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
                             />
                             <label htmlFor="pomodorosForLongBreakInput">Pomodoros for Long Break</label>
