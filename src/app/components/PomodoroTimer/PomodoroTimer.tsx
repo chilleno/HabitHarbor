@@ -206,6 +206,12 @@ const PomodoroTimer = () => {
                 setSeconds(0);
                 setIsBreak(false);
                 setMinutes(25);
+                setIsShortBreak(false);
+                setIsLongBreak(false);
+                setPomodoroCount(0);
+                setPomodoroTotalCount(0);
+                setShortBreakCount(0);
+                setLongBreakCount(0);
             }
             if (!defaultValues) {
                 setPomodoroCount(0);
@@ -215,6 +221,8 @@ const PomodoroTimer = () => {
                 setIsActive(false);
                 setSeconds(0);
                 setIsBreak(false);
+                setIsShortBreak(false);
+                setIsLongBreak(false);
                 setMinutes(pomodoroDuration);
                 setShortBreakDuration(shortBreakDuration);
                 setLongBreakDuration(longBreakDuration);
