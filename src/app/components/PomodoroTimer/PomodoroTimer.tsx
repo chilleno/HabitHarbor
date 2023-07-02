@@ -387,6 +387,7 @@ const PomodoroTimer = () => {
                                 value={pomodoroDuration}
                                 onChange={(e) => handlePomodoroDurationChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="shortBreakDurationInput">Short Break Duration (minutes)</label>
                             <input
@@ -396,6 +397,7 @@ const PomodoroTimer = () => {
                                 value={shortBreakDuration}
                                 onChange={(e) => handleShortBreakDurationChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="longBreakDurationInput">Long Break Duration (minutes)</label>
                             <input
@@ -405,6 +407,7 @@ const PomodoroTimer = () => {
                                 value={longBreakDuration}
                                 onChange={(e) => handleLongBreakDurationChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="pomodorosForLongBreakInput">Pomodoros for Long Break</label>
                             <input
@@ -414,6 +417,7 @@ const PomodoroTimer = () => {
                                 value={pomodorosForLongBreak}
                                 onChange={(e) => handlePomodorosForLongBreakChange(Number(e.target.value))}
                                 className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="pomodorosForLongBreakInput">Sound Effect</label>
                             <select
