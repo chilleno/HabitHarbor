@@ -8,14 +8,12 @@ import { useMiddleScreen } from './layoutComponents/middleScreen';
 import { useEndScreen } from './layoutComponents/endScreen';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
-import TaskDetail from './components/TaskDetail/TaskDetail';
+import TaskDetail from './components/RoutineDetail/RoutineDetail';
 import Routine from './components/Routine/Routine';
 import CookieModal from './components/CookieModal/CookieModal';
-import { useCookies } from 'react-cookie'
 import WaterTracker from './components/WaterTracker/WaterTracker';
 
 export default function Home() {
-  const [cookies, setCookie] = useCookies(['acceptCookies'])
   const [currentTask, setCurrentTask] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
   const { MainComponent } = useMainComponent();
