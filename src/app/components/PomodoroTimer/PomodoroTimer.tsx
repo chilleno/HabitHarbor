@@ -70,7 +70,7 @@ const PomodoroTimer = () => {
         return () => clearInterval(interval);
     }, [isActive, minutes, seconds]);
 
-    const initializeFromCookies = () => {
+    const initializeFromCookies = (): void => {
         const savedPomodoroDuration = cookies.pomodoroDuration;
         const savedShortBreakDuration = cookies.shortBreakDuration;
         const savedLongBreakDuration = cookies.longBreakDuration;
@@ -180,15 +180,15 @@ const PomodoroTimer = () => {
         }
     }, [isActive]);
 
-    const startTimer = () => {
+    const startTimer = (): void => {
         setIsActive(true);
     };
 
-    const stopTimer = () => {
+    const stopTimer = (): void => {
         setIsActive(false);
     };
 
-    const nextTimer = () => {
+    const nextTimer = (): void => {
         if (window.confirm('Are you sure you want to skip this timer?')) {
             handleTimerFinish();
         }
@@ -231,14 +231,14 @@ const PomodoroTimer = () => {
         }
     };
 
-    const handleSave = () => {
+    const handleSave = (): void => {
         if (window.confirm('this action will reset the current data, you want to continue?')) {
             resetTimer(false, false);
             closeModal();
         }
     }
 
-    const handleTimerFinish = () => {
+    const handleTimerFinish = (): void => {
         setIsActive(false);
         if (isBreak) {
             setMinutes(pomodoroDuration);
@@ -277,20 +277,20 @@ const PomodoroTimer = () => {
 
     };
 
-    const openModal = () => {
+    const openModal = (): void => {
         setShowModal(true);
     };
 
-    const closeModal = () => {
+    const closeModal = (): void => {
         setShowModal(false);
     };
 
-    const playSoundWow = () => {
+    const playSoundWow = (): void => {
         const audio = new Audio('/static/sounds/soundEffect.ogg');
         audio.play();
     };
 
-    const playSoundOOT = () => {
+    const playSoundOOT = (): void => {
         const audio = new Audio('/static/sounds/OOT_soundEffect.wav');
         audio.play();
     };
