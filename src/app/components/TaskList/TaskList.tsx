@@ -29,15 +29,15 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
     const [showModal, setShowModal] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const handleCheckboxChange = (taskId: number) => {
+    const handleCheckboxChange = (taskIndex: number) => {
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = null;
         }
 
         setTaskList(prevTasks => {
-            const updatedTasks = prevTasks.map(task => {
-                if (task.id === taskId) {
+            const updatedTasks = prevTasks.map((task, index) => {
+                if (index === taskIndex) {
                     return {
                         ...task,
                         checked: !task.checked
@@ -50,7 +50,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
 
         // Remove the checked task after 3 seconds
         timeoutRef.current = setTimeout(() => {
-            setTaskList(prevTasks => prevTasks.filter(task => task.id !== taskId));
+            setTaskList(prevTasks => prevTasks.filter((task, index) => index !== taskIndex));
         }, 5000);
     };
 
@@ -114,7 +114,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                         >
                             <input
                                 checked={task.checked || false}
-                                onChange={() => handleCheckboxChange(task.id)}
+                                onChange={() => handleCheckboxChange(index)}
                                 id={'task_' + index}
                                 type='checkbox'
                                 className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
