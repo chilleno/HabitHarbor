@@ -3,14 +3,21 @@ import { useCookies } from 'react-cookie'
 
 interface NewTaskListModalProps {
     closeModal: () => void;
+    renderList: (value: boolean) => void;
+}
+interface Task {
+    header: string;
+    checked: boolean;
+    subtasks: any[];
 }
 
 interface TaskList {
     name: string;
+    tasks: Task[];
 }
 
 
-const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal }) => {
+const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderList }) => {
     const [cookies, setCookie] = useCookies([
         'taskLists',
     ]);
@@ -20,6 +27,7 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal }) => {
         const currentTaskLists = cookies.taskLists;
         const newTaskList: TaskList = {
             name: name,
+            tasks: []
         }
         currentTaskLists.push(newTaskList);
         setCookie('taskLists', JSON.stringify(currentTaskLists))

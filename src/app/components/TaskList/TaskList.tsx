@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
+import { useCookies } from 'react-cookie'
 
 interface Task {
-    id: number;
     header: string;
-    order: number;
     checked: boolean;
     subtasks: any[];
 }
@@ -15,7 +14,17 @@ interface TaskListProps {
     currentTaskIndex: number;
 }
 
+interface TaskList {
+    name: string;
+    tasks: Task[];
+}
+
 const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
+    const [cookies, setCookie] = useCookies([
+        'taskLists',
+    ]);
+    const [renderList, setRenderList] = useState<boolean>(false);
+    const [lists, setLists] = useState<TaskList[]>();
     const [taskList, setTaskList] = useState<Task[]>(tasks);
     const [showModal, setShowModal] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -53,11 +62,21 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
         setShowModal(false);
     }
 
+    const renderTaskLists = () => {
+        const currentTaskLists = cookies.taskLists;
+        setLists(currentTaskLists);
+    }
+
+    useEffect(() => {
+        renderTaskLists();
+    }, [cookies])
+
     return (
         <>
             {showModal && (
                 <NewTaskListModal
                     closeModal={closeModal}
+                    renderList={setRenderList}
                 />
             )}
             <div className="flex justify-center p-5">
@@ -71,11 +90,21 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                     />
                 </div>
             </div>
-            <div className="flex py-5">
-                <h6 className={`text-white text-md font-bold hover:cursor-pointer underline hover:underline underline-offset-7 hover:underline-offset-7`}>
-                    Wake up routine
-                </h6>
-            </div>
+            <div className="flex content-center gap-5 justify-center">
+                <div className={`flex content-center justify-center gap-3 w-[100%] overflow-x-auto`}>
+                    {
+                        lists ?
+                            lists.length > 0 ?
+                                lists.map((list, index) => (
+                                    <h6 key={'task_list_' + index} className={`flex text-white text-sm font-bold hover:cursor-pointer hover:underline underline-offset-7 hover:underline-offset-7`}>
+                                        {list.name}
+                                    </h6>
+                                ))
+                                : <i className='text-white text-sm'>No task list are created</i>
+                            : null
+                    }
+                </div>
+            </div >
             <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
                 {
                     taskList.map((task, index) => (
