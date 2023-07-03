@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import NewTaskListModal from './components/NewTaskListModal';
 
 interface Task {
     id: number;
@@ -15,7 +17,7 @@ interface TaskListProps {
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
     const [taskList, setTaskList] = useState<Task[]>(tasks);
-
+    const [showModal, setShowModal] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const handleCheckboxChange = (taskId: number) => {
@@ -43,12 +45,31 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
         }, 5000);
     };
 
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    }
+
     return (
         <>
+            {showModal && (
+                <NewTaskListModal
+                    closeModal={closeModal}
+                />
+            )}
             <div className="flex justify-center p-5">
-                <h1 className="text-white xl:text-4xl lg:text-3xl sm:text2xl font-bold underline underline-offset-7">
+                <h1 className="w-1/2 text-white xl:text-4xl lg:text-3xl sm:text2xl font-bold underline underline-offset-7">
                     Task List
                 </h1>
+                <div>
+                    <PlusIcon
+                        onClick={openModal}
+                        className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
+                    />
+                </div>
             </div>
             <div className="flex py-5">
                 <h6 className={`text-white text-md font-bold hover:cursor-pointer underline hover:underline underline-offset-7 hover:underline-offset-7`}>
