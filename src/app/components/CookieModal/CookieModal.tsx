@@ -15,6 +15,7 @@ const Modal = () => {
         'isBreak',
         'isShortBreak',
         'isLongBreak',
+        'taskLists',
     ]);
     const [showModal, setShowModal] = useState(false);
 
@@ -31,6 +32,7 @@ const Modal = () => {
         setCookie('isBreak', false);
         setCookie('isShortBreak', false);
         setCookie('isLongBreak', false);
+        setCookie('taskLists', JSON.stringify([]));
 
         // Close the modal
         setShowModal(false);
