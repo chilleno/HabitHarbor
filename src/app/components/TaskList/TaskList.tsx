@@ -79,11 +79,11 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                     renderList={setRenderList}
                 />
             )}
-            <div className="flex justify-center p-5">
-                <h1 className="w-1/2 text-white xl:text-4xl lg:text-3xl sm:text2xl font-bold underline underline-offset-7">
+            <div className="flex p-5">
+                <h1 className="flex w-1/2 justify-end text-white xl:text-4xl lg:text-3xl sm:text2xl font-bold underline underline-offset-7">
                     Task List
                 </h1>
-                <div>
+                <div className='flex w-1/2 justify-start ml-5'>
                     <PlusIcon
                         onClick={openModal}
                         className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
@@ -96,7 +96,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                         lists ?
                             lists.length > 0 ?
                                 lists.map((list, index) => (
-                                    <h6 key={'task_list_' + index} className={`flex text-white text-sm font-bold hover:cursor-pointer hover:underline underline-offset-7 hover:underline-offset-7`}>
+                                    <h6 key={'task_list_' + index} className={`${index == currentTaskIndex ? 'underline' : ''} flex text-white text-sm font-bold hover:cursor-pointer hover:underline underline-offset-7 hover:underline-offset-7`}>
                                         {list.name}
                                     </h6>
                                 ))
