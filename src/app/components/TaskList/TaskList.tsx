@@ -93,7 +93,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskListIndex, previo
                     />
                 </div>
             </div>
-            <div className="flex content-center gap-5 justify-center">
+            <div className="flex content-center gap-5 justify-center sm:overflow-y-auto">
                 <div className={`flex content-center justify-center gap-3 w-[100%] overflow-x-auto`}>
                     {
                         lists ?
