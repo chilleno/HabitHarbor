@@ -70,7 +70,8 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskListIndex, previo
     }, [cookies, taskList])
 
     useEffect(() => {
-        setTaskList(cookies.taskLists[currentTaskListIndex]);
+        if (cookies.taskLists && cookies.taskLists.length > 0)
+            setTaskList(cookies.taskLists[currentTaskListIndex]);
     }, [])
 
     return (
