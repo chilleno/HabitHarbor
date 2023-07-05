@@ -8,13 +8,18 @@ import { useMiddleScreen } from './layoutComponents/middleScreen';
 import { useEndScreen } from './layoutComponents/endScreen';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
-import TaskDetail from './components/RoutineDetail/RoutineDetail';
+import TaskList from './components/TaskList/TaskList';
 import Routine from './components/Routine/Routine';
 import CookieModal from './components/CookieModal/CookieModal';
 import WaterTracker from './components/WaterTracker/WaterTracker';
+import { useCookies } from 'react-cookie'
 
 export default function Home() {
+  const [cookies, setCookie] = useCookies([
+    'taskLists',
+  ]);
   const [currentTask, setCurrentTask] = useState(0);
+  const [currentTaskList, setCurrentTaskList] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
   const { MainComponent } = useMainComponent();
   const { StartScreen } = useStartScreen();
@@ -32,6 +37,25 @@ export default function Home() {
       setCurrentTask(currentTask - 1);
     }
   };
+
+  const nextTaskList = () => {
+    if ((currentTaskList + 1) < cookies.taskLists.length) {
+      setCurrentTaskList(currentTaskList + 1);
+    }
+  };
+
+  const previousTaskList = () => {
+    if ((currentTaskList - 1) >= 0) {
+      setCurrentTaskList(currentTaskList - 1);
+    }
+  };
+
+  const changeTaskList = (taskListIndex: number) => {
+    if (taskListIndex >= 0 && taskListIndex < cookies.taskLists.length) {
+      setCurrentTaskList(taskListIndex);
+    }
+  };
+
 
   useEffect(() => {
     setTask(jsonData.data.tasks[currentTask]);
@@ -52,11 +76,12 @@ export default function Home() {
         </div>
       </StartScreen>
       <MiddleScreen className=''>
-        <TaskDetail
-          header={task.header}
-          description={task.description}
-          nextTask={nextTask}
-          previousTask={previousTask}
+        <TaskList
+          tasks={jsonData.data.tasks}
+          currentTaskListIndex={currentTaskList}
+          nextTaskList={nextTaskList}
+          previousTaskList={previousTaskList}
+          changeTaskList={changeTaskList}
         />
       </MiddleScreen>
       <EndScreen className=''>
