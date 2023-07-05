@@ -127,7 +127,6 @@ const PomodoroTimer = () => {
         initializeFromCookies();
         let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-            setCookie('firstPomodoroCountDate', today);
             resetTimer(false, false);
         }
     }, []);
@@ -135,7 +134,6 @@ const PomodoroTimer = () => {
     useEffect(() => {
         if (cookies.acceptCookies === 'true') {
             // Save updated values to cookies
-
             setCookie('pomodoroDuration', pomodoroDuration.toString());
             setCookie('shortBreakDuration', shortBreakDuration.toString());
             setCookie('longBreakDuration', longBreakDuration.toString());
@@ -223,6 +221,7 @@ const PomodoroTimer = () => {
             setPomodoroTotalCount(0);
             setShortBreakCount(0);
             setLongBreakCount(0);
+            setCookie('firstPomodoroCountDate', today);
         }
     };
 
