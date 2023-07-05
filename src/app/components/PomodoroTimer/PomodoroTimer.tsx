@@ -120,19 +120,22 @@ const PomodoroTimer = () => {
         if (savedSoundEffect) {
             setSoundEffect(String(savedSoundEffect));
         }
+
     };
 
     useEffect(() => {
         initializeFromCookies();
+        let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
+        if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
+            setCookie('firstPomodoroCountDate', today);
+            resetTimer(false, false);
+        }
     }, []);
 
     useEffect(() => {
         if (cookies.acceptCookies === 'true') {
             // Save updated values to cookies
-            let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
-            if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-                resetTimer(false, false);
-            }
+
             setCookie('pomodoroDuration', pomodoroDuration.toString());
             setCookie('shortBreakDuration', shortBreakDuration.toString());
             setCookie('longBreakDuration', longBreakDuration.toString());
@@ -202,32 +205,24 @@ const PomodoroTimer = () => {
                 setLongBreakDuration(15);
                 setPomodorosForLongBreak(4);
                 setSoundEffect('wow');
-                setIsActive(false);
-                setSeconds(0);
-                setIsBreak(false);
                 setMinutes(25);
-                setIsShortBreak(false);
-                setIsLongBreak(false);
-                setPomodoroCount(0);
-                setPomodoroTotalCount(0);
-                setShortBreakCount(0);
-                setLongBreakCount(0);
             }
             if (!defaultValues) {
-                setPomodoroCount(0);
-                setPomodoroTotalCount(0);
-                setShortBreakCount(0);
-                setLongBreakCount(0);
-                setIsActive(false);
-                setSeconds(0);
-                setIsBreak(false);
-                setIsShortBreak(false);
-                setIsLongBreak(false);
-                setMinutes(pomodoroDuration);
-                setShortBreakDuration(shortBreakDuration);
-                setLongBreakDuration(longBreakDuration);
-                setPomodorosForLongBreak(pomodorosForLongBreak);
+                setPomodoroDuration(cookies.pomodoroDuration);
+                setShortBreakDuration(cookies.shortBreakDuration);
+                setLongBreakDuration(cookies.longBreakDuration);
+                setPomodorosForLongBreak(cookies.pomodorosForLongBreak);
+                setMinutes(cookies.pomodoroDuration);
             }
+            setIsActive(false);
+            setSeconds(0);
+            setIsBreak(false);
+            setIsShortBreak(false);
+            setIsLongBreak(false);
+            setPomodoroCount(0);
+            setPomodoroTotalCount(0);
+            setShortBreakCount(0);
+            setLongBreakCount(0);
         }
     };
 
@@ -250,18 +245,20 @@ const PomodoroTimer = () => {
                 setLongBreakCount((prevCount) => prevCount + 1);
                 setIsLongBreak(false);
             }
-        } else {
+        }
+        if (!isBreak) {
             setIsBreak(true);
-            if (pomodoroCount + 1 === pomodorosForLongBreak) {
-                setMinutes(longBreakDuration);
-                setIsShortBreak(false);
-                setIsLongBreak(true);
-                setPomodoroCount(0);
-            } else {
+            if ((pomodoroCount + 1) !== pomodorosForLongBreak) {
                 setMinutes(shortBreakDuration);
                 setIsShortBreak(true);
                 setIsLongBreak(false);
                 setPomodoroCount(pomodoroCount + 1);
+            }
+            if ((pomodoroCount + 1) === pomodorosForLongBreak) {
+                setMinutes(longBreakDuration);
+                setIsShortBreak(false);
+                setIsLongBreak(true);
+                setPomodoroCount(0);
             }
             setPomodoroTotalCount(pomodoroTotalCount + 1);
         }
