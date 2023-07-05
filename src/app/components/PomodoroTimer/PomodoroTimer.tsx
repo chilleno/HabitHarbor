@@ -248,10 +248,6 @@ const PomodoroTimer = () => {
         }
         if (!isBreak) {
             const newPomodoroCount: number = pomodoroCount + 1;
-            console.log(newPomodoroCount);
-            console.log(pomodorosForLongBreak);
-            console.log(newPomodoroCount.toString() === pomodorosForLongBreak.toString());
-
             if (newPomodoroCount.toString() === pomodorosForLongBreak.toString()) {
                 console.log('pase por el long');
                 setMinutes(longBreakDuration);
