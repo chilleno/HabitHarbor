@@ -35,24 +35,19 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
             timeoutRef.current = null;
         }
 
-        setTaskList(prevTasks => {
-            const updatedTasks = prevTasks.map((task, index) => {
-                if (index === taskIndex) {
-                    return {
-                        ...task,
-                        checked: !task.checked
-                    };
-                }
-                return task;
-            });
-            return updatedTasks;
+        const updatedTasks = taskList.map((task, index) => {
+            if (index === taskIndex) {
+                return {
+                    ...task,
+                    checked: !task.checked
+                };
+            }
+            return task;
         });
 
-        // Remove the checked task after 3 seconds
-        timeoutRef.current = setTimeout(() => {
-            setTaskList(prevTasks => prevTasks.filter((task, index) => index !== taskIndex));
-        }, 5000);
+        setTaskList(updatedTasks);
     };
+
 
     const openModal = () => {
         setShowModal(true);
@@ -69,7 +64,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
 
     useEffect(() => {
         renderTaskLists();
-    }, [cookies])
+    }, [cookies, taskList])
 
     return (
         <>
@@ -105,31 +100,59 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                     }
                 </div>
             </div >
-            <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
-                {
-                    taskList.map((task, index) => (
-                        <div
-                            key={'task_content_' + index}
-                            className={`flex items-center transition-opacity ${task.checked ? 'duration-[3000ms] opacity-0' : 'opacity-100'}`}
-                        >
-                            <input
-                                checked={task.checked || false}
-                                onChange={() => handleCheckboxChange(index)}
-                                id={'task_' + index}
-                                type='checkbox'
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            />
-                            <label
-                                className="ml-2"
-                                style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
-                                htmlFor={'task_' + index}
+            {
+                <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
+                    {
+                        taskList.map((task, index) => (
+                            task.checked == false &&
+                            <div
+                                key={'task_content_' + index}
+                                className={`flex items-center}`}
                             >
-                                {task.header}
-                            </label>
-                        </div>
-                    ))
-                }
-            </div>
+                                <input
+                                    checked={task.checked || false}
+                                    onChange={() => handleCheckboxChange(index)}
+                                    id={'task_' + index}
+                                    type='checkbox'
+                                    className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                />
+                                <label
+                                    className="ml-2"
+                                    style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
+                                    htmlFor={'task_' + index}
+                                >
+                                    {task.header}
+                                </label>
+                            </div>
+                        ))
+                    }
+                    {
+                        taskList.map((task, index) => (
+                            task.checked === true ?
+                                <div
+                                    key={'task_content_' + index}
+                                    className={`flex items-center}`}
+                                >
+                                    <input
+                                        checked={task.checked || false}
+                                        onChange={() => handleCheckboxChange(index)}
+                                        id={'task_' + index}
+                                        type='checkbox'
+                                        className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    />
+                                    <label
+                                        className="ml-2"
+                                        style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
+                                        htmlFor={'task_' + index}
+                                    >
+                                        {task.header}
+                                    </label>
+                                </div>
+                                : null
+                        ))
+                    }
+                </div>
+            }
         </>
     );
 };
