@@ -25,24 +25,24 @@ const PomodoroTimer = () => {
         'firstPomodoroCountDate',
         'soundEffect',
     ]);
-    const [soundEffect, setSoundEffect] = useState(cookies.soundEffect);
-    const [pomodoroDuration, setPomodoroDuration] = useState(cookies.pomodoroDuration);
-    const [shortBreakDuration, setShortBreakDuration] = useState(cookies.shortBreakDuration);
-    const [longBreakDuration, setLongBreakDuration] = useState(cookies.longBreakDuration);
-    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState(cookies.pomodorosForLongBreak);
-    const [minutes, setMinutes] = useState(pomodoroDuration);
-    const [seconds, setSeconds] = useState(0);
-    const [isActive, setIsActive] = useState(false);
-    const [isBreak, setIsBreak] = useState(cookies.isBreak);
-    const [isShortBreak, setIsShortBreak] = useState(cookies.isShortBreak);
-    const [isLongBreak, setIsLongBreak] = useState(cookies.isLongBreak);
-    const [pomodoroCount, setPomodoroCount] = useState(0);
-    const [pomodoroTotalCount, setPomodoroTotalCount] = useState(0);
-    const [shortBreakCount, setShortBreakCount] = useState(0);
-    const [longBreakCount, setLongBreakCount] = useState(0);
-    const [showModal, setShowModal] = useState(false);
-    const [formattedTime, setFormattedTime] = useState('00:00');
-    const [today] = useState(new Date());
+    const [soundEffect, setSoundEffect] = useState<string>(cookies.soundEffect);
+    const [pomodoroDuration, setPomodoroDuration] = useState<number>(cookies.pomodoroDuration);
+    const [shortBreakDuration, setShortBreakDuration] = useState<number>(cookies.shortBreakDuration);
+    const [longBreakDuration, setLongBreakDuration] = useState<number>(cookies.longBreakDuration);
+    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState<number>(cookies.pomodorosForLongBreak);
+    const [minutes, setMinutes] = useState<number>(pomodoroDuration);
+    const [seconds, setSeconds] = useState<number>(0);
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [isBreak, setIsBreak] = useState<boolean>(cookies.isBreak);
+    const [isShortBreak, setIsShortBreak] = useState<boolean>(cookies.isShortBreak);
+    const [isLongBreak, setIsLongBreak] = useState<boolean>(cookies.isLongBreak);
+    const [pomodoroCount, setPomodoroCount] = useState<number>(0);
+    const [pomodoroTotalCount, setPomodoroTotalCount] = useState<number>(0);
+    const [shortBreakCount, setShortBreakCount] = useState<number>(0);
+    const [longBreakCount, setLongBreakCount] = useState<number>(0);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [formattedTime, setFormattedTime] = useState<string>('00:00');
+    const [today] = useState<Date>(new Date());
 
 
     useEffect(() => {
@@ -134,17 +134,17 @@ const PomodoroTimer = () => {
     useEffect(() => {
         if (cookies.acceptCookies === 'true') {
             // Save updated values to cookies
-            setCookie('pomodoroDuration', pomodoroDuration.toString());
-            setCookie('shortBreakDuration', shortBreakDuration.toString());
-            setCookie('longBreakDuration', longBreakDuration.toString());
-            setCookie('pomodorosForLongBreak', pomodorosForLongBreak.toString());
+            setCookie('pomodoroDuration', pomodoroDuration);
+            setCookie('shortBreakDuration', shortBreakDuration);
+            setCookie('longBreakDuration', longBreakDuration);
+            setCookie('pomodorosForLongBreak', pomodorosForLongBreak);
             setCookie('isBreak', isBreak);
             setCookie('isShortBreak', isShortBreak);
             setCookie('isLongBreak', isLongBreak);
-            setCookie('pomodoroCount', pomodoroCount.toString());
-            setCookie('pomodoroTotalCount', pomodoroTotalCount.toString());
-            setCookie('shortBreakCount', shortBreakCount.toString());
-            setCookie('longBreakCount', longBreakCount.toString());
+            setCookie('pomodoroCount', pomodoroCount);
+            setCookie('pomodoroTotalCount', pomodoroTotalCount);
+            setCookie('shortBreakCount', shortBreakCount);
+            setCookie('longBreakCount', longBreakCount);
             setCookie('soundEffect', soundEffect);
             if (pomodoroCount === 1) {
                 setCookie('firstPomodoroCountDate', today);
@@ -234,6 +234,7 @@ const PomodoroTimer = () => {
 
     const handleTimerFinish = (): void => {
         setIsActive(false);
+        setSeconds(0);
         if (isBreak) {
             setMinutes(pomodoroDuration);
             setIsBreak(false);
@@ -246,22 +247,31 @@ const PomodoroTimer = () => {
             }
         }
         if (!isBreak) {
-            setIsBreak(true);
-            if ((pomodoroCount + 1) !== pomodorosForLongBreak) {
-                setMinutes(shortBreakDuration);
-                setIsShortBreak(true);
-                setIsLongBreak(false);
-                setPomodoroCount(pomodoroCount + 1);
-            }
-            if ((pomodoroCount + 1) === pomodorosForLongBreak) {
+            const newPomodoroCount: number = pomodoroCount + 1;
+            console.log(newPomodoroCount);
+            console.log(pomodorosForLongBreak);
+            console.log(newPomodoroCount.toString() === pomodorosForLongBreak.toString());
+
+            if (newPomodoroCount.toString() === pomodorosForLongBreak.toString()) {
+                console.log('pase por el long');
                 setMinutes(longBreakDuration);
                 setIsShortBreak(false);
                 setIsLongBreak(true);
+                setIsBreak(true);
                 setPomodoroCount(0);
+                setPomodoroTotalCount(pomodoroTotalCount + 1);
             }
-            setPomodoroTotalCount(pomodoroTotalCount + 1);
+            if (newPomodoroCount.toString() !== pomodorosForLongBreak.toString()) {
+                console.log('pase por el short');
+                setMinutes(shortBreakDuration);
+                setIsShortBreak(true);
+                setIsLongBreak(false);
+                setIsBreak(true);
+                setPomodoroCount(newPomodoroCount);
+                setPomodoroTotalCount(pomodoroTotalCount + 1);
+            }
         }
-        setSeconds(0);
+
     };
 
     const formatTime = (time: number): string => {
