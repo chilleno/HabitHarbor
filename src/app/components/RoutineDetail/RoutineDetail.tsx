@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import TaskList from '../TaskList/TaskList';
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import { CheckIcon } from '@heroicons/react/24/solid';
 
@@ -48,9 +47,6 @@ const RoutineDetail: React.FC<TaskDetailProps> = ({ header, description, nextTas
                         </button>
                     </div>
                 </div>
-            </div>
-            <div className="mt-5">
-                <TaskList tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
             </div>
         </div>
     );
