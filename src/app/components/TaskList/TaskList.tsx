@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
-import { useCookies } from 'react-cookie'
+import { useCookies } from 'react-cookie';
 
 interface Task {
     header: string;
@@ -11,7 +11,10 @@ interface Task {
 
 interface TaskListProps {
     tasks: Task[];
-    currentTaskIndex: number;
+    currentTaskListIndex: number;
+    nextTaskList(): void;
+    previousTaskList(): void;
+    changeTaskList(taskListIndex: number): void;
 }
 
 interface TaskList {
@@ -19,13 +22,13 @@ interface TaskList {
     tasks: Task[];
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
     const [cookies, setCookie] = useCookies([
         'taskLists',
     ]);
     const [renderList, setRenderList] = useState<boolean>(false);
     const [lists, setLists] = useState<TaskList[]>();
-    const [taskList, setTaskList] = useState<Task[]>(tasks);
+    const [taskList, setTaskList] = useState<Task[]>([]);
     const [showModal, setShowModal] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -66,6 +69,10 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
         renderTaskLists();
     }, [cookies, taskList])
 
+    useEffect(() => {
+        setTaskList(cookies.taskLists[currentTaskListIndex]);
+    }, [])
+
     return (
         <>
             {showModal && (
@@ -91,7 +98,11 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                         lists ?
                             lists.length > 0 ?
                                 lists.map((list, index) => (
-                                    <h6 key={'task_list_' + index} className={`${index == currentTaskIndex ? 'underline' : ''} flex text-white text-sm font-bold hover:cursor-pointer hover:underline underline-offset-7 hover:underline-offset-7`}>
+                                    <h6
+                                        key={'task_list_' + index}
+                                        className={`${index == currentTaskListIndex ? 'underline' : ''} flex text-white text-sm font-bold hover:cursor-pointer hover:underline underline-offset-7 hover:underline-offset-7`}
+                                        onClick={() => changeTaskList(index)}
+                                    >
                                         {list.name}
                                     </h6>
                                 ))
@@ -103,7 +114,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
             {
                 <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
                     {
-                        taskList.map((task, index) => (
+                        taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked == false &&
                             <div
                                 key={'task_content_' + index}
@@ -124,10 +135,10 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                                     {task.header}
                                 </label>
                             </div>
-                        ))
+                        )) : null
                     }
                     {
-                        taskList.map((task, index) => (
+                        taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked === true ?
                                 <div
                                     key={'task_content_' + index}
@@ -149,7 +160,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskIndex }) => {
                                     </label>
                                 </div>
                                 : null
-                        ))
+                        )) : null
                     }
                 </div>
             }
