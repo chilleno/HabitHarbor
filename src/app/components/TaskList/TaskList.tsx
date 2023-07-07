@@ -10,7 +10,6 @@ interface Task {
 }
 
 interface TaskListProps {
-    tasks: Task[];
     currentTaskListIndex: number;
     nextTaskList(): void;
     previousTaskList(): void;
@@ -22,7 +21,7 @@ interface TaskList {
     tasks: Task[];
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
+const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
     const [cookies, setCookie] = useCookies([
         'taskLists',
     ]);
