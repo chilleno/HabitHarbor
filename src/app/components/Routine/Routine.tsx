@@ -5,6 +5,8 @@ interface Task {
     id: number;
     header: string;
     description: string;
+    pomodoros: number;
+    currentPomodorosCount: number;
     order: number;
     subtasks: any[];
 }
@@ -76,7 +78,7 @@ const Routine: React.FC<RoutineProps> = ({ tasks, currentTaskIndex }) => {
                                             <b>Pomodoros</b>
                                         </div>
                                         <div className="flex h-1/2 justify-center items-center">
-                                            <b>0/5</b>
+                                            <b>{task.currentPomodorosCount + ' / ' + task.pomodoros}</b>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +87,6 @@ const Routine: React.FC<RoutineProps> = ({ tasks, currentTaskIndex }) => {
                     </div>
                 </ArcherContainer>
             </div>
-
             {
                 selectedTask && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
