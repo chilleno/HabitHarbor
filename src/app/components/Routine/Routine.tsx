@@ -62,14 +62,23 @@ const Routine: React.FC<RoutineProps> = ({ tasks, currentTaskIndex }) => {
                             >
                                 <div
                                     key={task.id}
-                                    className={` border border-gray-100 rounded-md p-4 mb-4 cursor-pointer ${index === currentTaskIndex ? 'bg-blue-200' : ''
-                                        }`}
+                                    className={`flex h-20 w-5/6 border border-gray-100 rounded-md mb-4 cursor-pointer ${index === currentTaskIndex && 'bg-blue-200'}`}
                                     onClick={() => handleTaskClick(task)}
                                     ref={(ref) => {
                                         taskRefs.current[index] = ref;
                                     }}
                                 >
-                                    <h2 className="font-bold text-xl">{task.header}</h2>
+                                    <div className='w-4/6 flex justify-center items-center p-3'>
+                                        <h6 className="font-bold text-md justify-center flex">{task.header}</h6>
+                                    </div>
+                                    <div className='w-2/6 flex-col border-l-2'>
+                                        <div className="border-b-2 h-1/2 p-1 flex justify-center items-center">
+                                            <b>Pomodoros</b>
+                                        </div>
+                                        <div className="flex h-1/2 justify-center items-center">
+                                            <b>0/5</b>
+                                        </div>
+                                    </div>
                                 </div>
                             </ArcherElement>
                         ))}
