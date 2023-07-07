@@ -5,7 +5,8 @@
                 "id": 1,
                 "header": "Levantarse",
                 "description": "Levantarse de la cama prender PC para completar tarea",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 0,
                 "subtasks": []
             },
@@ -13,7 +14,8 @@
                 "id": 2,
                 "header": "Inciar el dia",
                 "description": "Abrir las ventanas y ordenar la cama",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 1,
                 "subtasks": []
             },
@@ -21,7 +23,8 @@
                 "id": 3,
                 "header": "Ducharse",
                 "description": "Recordar usar jabon de cara",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 2,
                 "subtasks": []
             },
@@ -29,7 +32,8 @@
                 "id": 4,
                 "header": "Lavarse los dientes",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 3,
                 "subtasks": []
             },
@@ -37,7 +41,8 @@
                 "id": 5,
                 "header": "Leer",
                 "description": "Meditar 20 min para activar el cerebro",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 4,
                 "subtasks": []
             },
@@ -45,7 +50,8 @@
                 "id": 6,
                 "header": "Meditar",
                 "description": "Meditar 20 min para activar el cerebro",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 5,
                 "subtasks": []
             },
@@ -53,7 +59,8 @@
                 "id": 7,
                 "header": "Desayunar",
                 "description": "Comer porsion de frutos secos, una fruta, cafe",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 6,
                 "subtasks": []
             },
@@ -61,14 +68,16 @@
                 "id": 8,
                 "header": "Aseo",
                 "description": "Aseo al departamento 45 minutos",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 7,
                 "subtasks": []
             },
             {
                 "id": 9,
                 "header": "Daily ticroom",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "description": "n/a",
                 "order": 8,
                 "subtasks": []
@@ -76,7 +85,8 @@
             {
                 "id": 10,
                 "header": "Daily Imagemaker",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "description": "n/a",
                 "order": 9,
                 "subtasks": []
@@ -84,7 +94,8 @@
             {
                 "id": 11,
                 "header": "Daily Scotiabank",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "description": "n/a",
                 "order": 10,
                 "subtasks": []
@@ -92,7 +103,8 @@
             {
                 "id": 12,
                 "header": "Trabajo tarea Scotiabank 45 min",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "description": "n/a",
                 "order": 11,
                 "subtasks": []
@@ -101,7 +113,8 @@
                 "id": 13,
                 "header": "Preparar almuerzo",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 12,
                 "subtasks": []
             },
@@ -109,7 +122,8 @@
                 "id": 14,
                 "header": "Almorzar",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 13,
                 "subtasks": []
             },
@@ -117,7 +131,8 @@
                 "id": 15,
                 "header": "Trabajo tareas Scotiabank 45 min",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 14,
                 "subtasks": []
             },
@@ -125,7 +140,8 @@
                 "id": 16,
                 "header": "Trabajo tareas Ticroom  45 min",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 15,
                 "subtasks": []
             },
@@ -133,7 +149,8 @@
                 "id": 17,
                 "header": "Trabajo tareas Scotiabank 45 min",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 16,
                 "subtasks": []
             },
@@ -141,7 +158,8 @@
                 "id": 18,
                 "header": "Trabajo en contenido audiovisual 45 min",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 17,
                 "subtasks": []
             },
@@ -149,7 +167,8 @@
                 "id": 19,
                 "header": "Tomar 11 ",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 18,
                 "subtasks": []
             },
@@ -157,7 +176,8 @@
                 "id": 20,
                 "header": "Estudio 45 min",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 19,
                 "subtasks": []
             },
@@ -165,7 +185,8 @@
                 "id": 21,
                 "header": "Jugar con los perritos 45 min",
                 "description": "n/a",
-                "checked": false,
+                "pomodoros": 5,
+                "currentPomodorosCount": 0,
                 "order": 20,
                 "subtasks": []
             }
