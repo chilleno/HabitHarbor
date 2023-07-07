@@ -77,7 +77,6 @@ export default function Home() {
       </StartScreen>
       <MiddleScreen className=''>
         <TaskList
-          tasks={jsonData.data.tasks}
           currentTaskListIndex={currentTaskList}
           nextTaskList={nextTaskList}
           previousTaskList={previousTaskList}
