@@ -321,8 +321,8 @@ const PomodoroTimer = () => {
 
     return (
         <div className="flex flex-col items-center justify-center lg:h-64 text-white font-bold lg:p-5 sm:p-1">
-            <div className="flex items-center">
-                <div className="flex flex-col lg:w-2/3 sm:w-1/2 items-center sm:ml-24">
+            <div className="flex items-center w-full">
+                <div className="flex flex-col xl:w-2/3 lg:w-2/3 sm:w-1/2 items-center">
                     <div className="lg:text-xl sm:text-md xl:text-3xl">
                         {'[ ' + (isBreak == true ? (isLongBreak == true ? 'Long break' : isShortBreak == true ? 'Short break' : null) : 'Pomodoro') + ' ]'}
                     </div>
@@ -338,8 +338,8 @@ const PomodoroTimer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex lg:w-1/3 sm:w-1/2 justify-center">
-                    <div className='flex xl:flex-col lg:flex-col sm:flex-row gap-3 px-20 sm:mr-10'>
+                <div className="xl:w-1/3 lg:w-1/3 sm:w-1/2">
+                    <div className='flex xl:flex-col lg:flex-col sm:flex-row gap-3'>
                         <span className="flex items-center justify-center hover:cursor-pointer">
                             <PlayIcon onClick={startTimer} className="h-5 w-5 text-white-500" />
                         </span>
