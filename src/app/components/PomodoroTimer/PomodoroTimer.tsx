@@ -249,7 +249,6 @@ const PomodoroTimer = () => {
         if (!isBreak) {
             const newPomodoroCount: number = pomodoroCount + 1;
             if (newPomodoroCount.toString() === pomodorosForLongBreak.toString()) {
-                console.log('pase por el long');
                 setMinutes(longBreakDuration);
                 setIsShortBreak(false);
                 setIsLongBreak(true);
@@ -258,7 +257,6 @@ const PomodoroTimer = () => {
                 setPomodoroTotalCount(pomodoroTotalCount + 1);
             }
             if (newPomodoroCount.toString() !== pomodorosForLongBreak.toString()) {
-                console.log('pase por el short');
                 setMinutes(shortBreakDuration);
                 setIsShortBreak(true);
                 setIsLongBreak(false);
