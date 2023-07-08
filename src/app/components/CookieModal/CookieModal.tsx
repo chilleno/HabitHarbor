@@ -21,7 +21,7 @@ const Modal = () => {
 
     const handleAccept = () => {
         // Save data in cookies
-        setCookie('acceptCookies', 'true')
+        setCookie('acceptCookies', true)
         setCookie('pomodoroDuration', 25);
         setCookie('shortBreakDuration', 5);
         setCookie('longBreakDuration', 15);
