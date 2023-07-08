@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
@@ -24,6 +26,7 @@ interface TaskList {
 const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
     const [cookies, setCookie] = useCookies([
         'taskLists',
+        'acceptCookies'
     ]);
     const [renderList, setRenderList] = useState<boolean>(false);
     const [lists, setLists] = useState<TaskList[]>();
@@ -32,6 +35,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const newTaskRef = useRef<any>(null);
     const [showNewTaskLabel, setShowNewTaskLabel] = useState<boolean>(true);
+    const [showCreateTaskInput, setShowCreateTaskInput] = useState<boolean>(false);
 
     const handleCheckboxChange = (taskIndex: number) => {
         if (timeoutRef.current) {
@@ -57,33 +61,63 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         setShowModal(true);
     };
 
-    const closeModal = () => {
+    const closeModal = (): void => {
         setShowModal(false);
     }
 
-    const renderTaskLists = () => {
+    const renderTaskLists = (): void => {
         const currentTaskLists = cookies.taskLists;
         setLists(currentTaskLists);
     }
 
     useEffect(() => {
         renderTaskLists();
+        if (cookies.taskLists && cookies.taskLists.length > 0) {
+            setShowCreateTaskInput(true);
+        }
     }, [cookies, taskList])
 
     useEffect(() => {
         if (cookies.taskLists && cookies.taskLists.length > 0)
-            setTaskList(cookies.taskLists[currentTaskListIndex]);
-    }, [])
+            setTaskList(cookies.taskLists[currentTaskListIndex].tasks);
+    }, [cookies])
 
-    function handleShowNewTaskInput() {
+    const handleShowNewTaskInput = (): void => {
         setShowNewTaskLabel(false);
         setTimeout(() => {
+            newTaskRef.current.value = 'Create a new task here...';
             newTaskRef.current.focus();
         }, (1))
     }
 
-    function handleHideNewTaskInput() {
+    const handleHideNewTaskInput = (): void => {
         setShowNewTaskLabel(true);
+    }
+
+    const addNewTask = (newTask: string): void => {
+        if (cookies.taskLists.length > 0) {
+            let newTaskList: TaskList[] = cookies.taskLists;
+            let newTaskObject: Task = {
+                "header": newTask,
+                "checked": false,
+                "subtasks": [],
+            }
+            newTaskList[currentTaskListIndex].tasks.push(newTaskObject);
+            setCookie('taskLists', newTaskList);
+
+            setTimeout(() => {
+                newTaskRef.current.value = '';
+                newTaskRef.current.focus();
+            }, (1))
+        } else {
+            window.alert('You need to create a new list first.')
+        }
+    }
+
+    const handlePressEnterButton = (event: any) => {
+        if (event.key === 'Enter') {
+            addNewTask(event.target.value);
+        }
     }
 
     return (
@@ -134,7 +168,33 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
 
             </div >
             {
-                <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
+                <div className="flex flex-col h-screen max-h-[80%] overflow-y-auto -z-50 pt-5">
+                    <div className={`flex items-center`} style={showCreateTaskInput === false ? { display: 'none' } : {}} >
+                        <input
+                            checked={false}
+                            onChange={(e) => e.preventDefault()}
+                            type='checkbox'
+                            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        />
+                        <label
+                            hidden={!showNewTaskLabel}
+                            className="ml-2 text-gray-500"
+                            onClick={handleShowNewTaskInput}
+                        >
+                            <i>Create a new task here...</i>
+                        </label>
+                        <input
+                            hidden={showNewTaskLabel}
+                            ref={newTaskRef}
+                            id="newTaskInput"
+                            type='text'
+                            onFocus={(e) => e.target.select()}
+                            onBlur={handleHideNewTaskInput}
+                            onKeyDown={handlePressEnterButton}
+                            className="ml-3 bg-transparent text-white"
+                            defaultValue={'Create a new task here...'}
+                        />
+                    </div>
                     {
                         taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked == false &&
@@ -159,6 +219,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                             </div>
                         )) : null
                     }
+
                     {
                         taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked === true ?
@@ -184,33 +245,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                 : null
                         )) : null
                     }
-                    <div
-                        className={`flex items-center}`}
-                    >
-                        <input
-                            checked={false}
-                            onChange={(e) => e.preventDefault()}
-                            type='checkbox'
-                            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        />
-                        <label
-                            hidden={!showNewTaskLabel}
-                            className="ml-2 text-gray-500"
-                            onClick={handleShowNewTaskInput}
-                        >
-                            <i>Create a new task here...</i>
-                        </label>
-                        <input
-                            hidden={showNewTaskLabel}
-                            ref={newTaskRef}
-                            id="newTaskInput"
-                            type='text'
-                            onFocus={(e) => e.target.select()}
-                            onBlur={handleHideNewTaskInput}
-                            className="ml-3 bg-transparent text-white"
-                            defaultValue={'Create a new task here...'}
-                        />
-                    </div>
+
                 </div>
             }
         </>
