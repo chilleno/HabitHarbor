@@ -1,4 +1,7 @@
 ## Chaintask
+<i>
+<b>Note:</b> no releases yet, when I finish the main idea I will create the first release and start creating features in specific branches.
+</i>
 
 App inspired in the "atomic habits" book. 📖
 
@@ -9,8 +12,6 @@ After looking a lot of tools in the market only found tools that give me more di
 That's the reason that I start this repo, to create a simple tool with all the little tools that I use on my day to day and avoid to have a lot of tabs in browser for the same purpouse. 😵‍💫
 
 I hope this tool help someone else as I expect it help to me. 🎉
-
-
 
 
 This is a [Next.js](https://nextjs.org/) project 
