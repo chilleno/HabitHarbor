@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
 import { useCookies } from 'react-cookie';
-import { render } from 'react-dom';
 
 interface Task {
     header: string;
@@ -42,6 +41,8 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
 
 
     const handleCheckboxChange = (taskIndex: number) => {
+        const currentCookieTaskLists = cookies.taskLists;
+
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = null;
@@ -56,8 +57,9 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
             }
             return task;
         });
-
-        setTaskList(updatedTasks);
+        currentCookieTaskLists[currentTaskListIndex].tasks = updatedTasks;
+        setCookie('taskLists', currentCookieTaskLists);
+        renderTaskLists();
     };
 
 
@@ -216,7 +218,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     </b>
 
                     {
-                        taskList.length > 0 ? taskList.map((task, index) => (
+                        taskList && taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked == false &&
                             <div
                                 key={'task_content_' + index}
@@ -241,7 +243,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     }
 
                     {
-                        taskList.length > 0 ? taskList.map((task, index) => (
+                        taskList && taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked === true ?
                                 <div
                                     key={'task_content_' + index}
