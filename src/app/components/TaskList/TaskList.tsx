@@ -85,31 +85,40 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                 <h1 className="flex w-1/2 justify-end text-white xl:text-4xl lg:text-3xl sm:text2xl font-bold underline underline-offset-7">
                     Task List
                 </h1>
-                <div className='flex w-1/2 justify-start ml-5'>
+
+            </div>
+            <div className="flex content-center justify-center">
+                <div className="w-3/6 border-2 rounded-xl relative after:content-['▼'] after:right-5 after:top-3 after:text-white after:absolute after:pointer-events-none">
+                    <select
+                        className="w-[100%] p-3 text-white text-xl bg-transparent appearance-none"
+                        value={currentTaskListIndex}
+                        onChange={(e) => changeTaskList(Number(e.target.value))}
+                    >
+                        {
+                            lists &&
+                                lists.length > 0 ?
+                                lists.map((list, index) => (
+                                    <option
+                                        key={'task_list_' + index}
+                                        value={index}
+                                    >
+                                        {list.name}
+                                    </option>
+                                ))
+                                :
+                                <option>
+                                    No task list are created
+                                </option>
+                        }
+                    </select>
+                </div>
+                <div className='flex w-1/6 justify-start ml-5 mt-auto mb-auto'>
                     <PlusIcon
                         onClick={openModal}
                         className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
                     />
                 </div>
-            </div>
-            <div className="flex content-center gap-5 justify-center sm:overflow-y-auto">
-                <div className={`flex content-center justify-center gap-3 w-[100%] overflow-x-auto`}>
-                    {
-                        lists ?
-                            lists.length > 0 ?
-                                lists.map((list, index) => (
-                                    <h6
-                                        key={'task_list_' + index}
-                                        className={`${index == currentTaskListIndex ? 'underline' : ''} flex text-white text-sm font-bold hover:cursor-pointer hover:underline underline-offset-7 hover:underline-offset-7`}
-                                        onClick={() => changeTaskList(index)}
-                                    >
-                                        {list.name}
-                                    </h6>
-                                ))
-                                : <i className='text-white text-sm'>No task list are created</i>
-                            : null
-                    }
-                </div>
+
             </div >
             {
                 <div className="flex flex-col h-screen max-h-fit -z-50 pt-5">
