@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
 import { useCookies } from 'react-cookie';
+import { render } from 'react-dom';
 
 interface Task {
     header: string;
@@ -80,7 +81,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     useEffect(() => {
         if (cookies.taskLists && cookies.taskLists.length > 0)
             setTaskList(cookies.taskLists[currentTaskListIndex].tasks);
-    }, [cookies])
+    }, [cookies, currentTaskListIndex])
 
     const handleShowNewTaskInput = (): void => {
         setShowNewTaskLabel(false);
@@ -139,7 +140,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     <select
                         className="w-[100%] p-3 text-white text-xl bg-transparent appearance-none"
                         defaultValue={lists && lists.length > 0 ? currentTaskListIndex : 'error'}
-                        onChange={(e) => changeTaskList(Number(e.target.value))}
+                        onChange={(e) => changeTaskList(Number(e.target.value)) }
                     >
                         {
                             lists &&
