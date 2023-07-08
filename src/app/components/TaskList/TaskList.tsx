@@ -24,6 +24,7 @@ interface TaskList {
     tasks: Task[];
 }
 
+
 const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
     const [cookies, setCookie] = useCookies([
         'taskLists',
@@ -37,6 +38,8 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     const newTaskRef = useRef<any>(null);
     const [showNewTaskLabel, setShowNewTaskLabel] = useState<boolean>(true);
     const [showCreateTaskInput, setShowCreateTaskInput] = useState<boolean>(false);
+    const [showError, setShowError] = useState<boolean>(false);
+
 
     const handleCheckboxChange = (taskIndex: number) => {
         if (timeoutRef.current) {
@@ -95,7 +98,18 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         setShowNewTaskLabel(true);
     }
 
+    const handleInputError = (): void => {
+        setShowError(true);
+        setTimeout(() => {
+            setShowError(false);
+        }, (1000))
+    }
+
     const addNewTask = (newTask: string): void => {
+        if (newTask.length <= 3 || newTask === "Create a new task here...") {
+            return handleInputError();
+        }
+
         if (cookies.taskLists.length > 0) {
             let newTaskList: TaskList[] = cookies.taskLists;
             let newTaskObject: Task = {
@@ -140,7 +154,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     <select
                         className="w-[100%] p-3 text-white text-xl bg-transparent appearance-none"
                         defaultValue={lists && lists.length > 0 ? currentTaskListIndex : 'error'}
-                        onChange={(e) => changeTaskList(Number(e.target.value)) }
+                        onChange={(e) => changeTaskList(Number(e.target.value))}
                     >
                         {
                             lists &&
@@ -192,10 +206,15 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                             onFocus={(e) => e.target.select()}
                             onBlur={handleHideNewTaskInput}
                             onKeyDown={handlePressEnterButton}
-                            className="ml-3 bg-transparent text-white"
+                            className={`ml-3 bg-transparent text-white ${showError && 'shake-error'}`}
                             defaultValue={'Create a new task here...'}
                         />
                     </div>
+
+                    <b className={`ml-5 mt-2 mb-2 text-red-600 transition-opacity duration-150 ${showError ? 'opacity-100' : 'opacity-0'}`}>
+                        <i>Please add a text longer than 3 characters.</i>
+                    </b>
+
                     {
                         taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked == false &&
