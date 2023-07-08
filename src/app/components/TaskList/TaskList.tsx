@@ -30,6 +30,8 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     const [taskList, setTaskList] = useState<Task[]>([]);
     const [showModal, setShowModal] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const newTaskRef = useRef<any>(null);
+    const [showNewTaskLabel, setShowNewTaskLabel] = useState<boolean>(true);
 
     const handleCheckboxChange = (taskIndex: number) => {
         if (timeoutRef.current) {
@@ -73,6 +75,17 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
             setTaskList(cookies.taskLists[currentTaskListIndex]);
     }, [])
 
+    function handleShowNewTaskInput() {
+        setShowNewTaskLabel(false);
+        setTimeout(() => {
+            newTaskRef.current.focus();
+        }, (1))
+    }
+
+    function handleHideNewTaskInput() {
+        setShowNewTaskLabel(true);
+    }
+
     return (
         <>
             {showModal && (
@@ -91,7 +104,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                 <div className="w-3/6 border-2 rounded-xl relative after:content-['▼'] after:right-5 after:top-3 after:text-white after:absolute after:pointer-events-none">
                     <select
                         className="w-[100%] p-3 text-white text-xl bg-transparent appearance-none"
-                        value={currentTaskListIndex}
+                        defaultValue={lists && lists.length > 0 ? currentTaskListIndex : 'error'}
                         onChange={(e) => changeTaskList(Number(e.target.value))}
                     >
                         {
@@ -106,7 +119,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                     </option>
                                 ))
                                 :
-                                <option>
+                                <option value={'error'} disabled>
                                     No task list are created
                                 </option>
                         }
@@ -171,6 +184,33 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                 : null
                         )) : null
                     }
+                    <div
+                        className={`flex items-center}`}
+                    >
+                        <input
+                            checked={false}
+                            onChange={(e) => e.preventDefault()}
+                            type='checkbox'
+                            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        />
+                        <label
+                            hidden={!showNewTaskLabel}
+                            className="ml-2 text-gray-500"
+                            onClick={handleShowNewTaskInput}
+                        >
+                            <i>Create a new task here...</i>
+                        </label>
+                        <input
+                            hidden={showNewTaskLabel}
+                            ref={newTaskRef}
+                            id="newTaskInput"
+                            type='text'
+                            onFocus={(e) => e.target.select()}
+                            onBlur={handleHideNewTaskInput}
+                            className="ml-3 bg-transparent text-white"
+                            defaultValue={'Create a new task here...'}
+                        />
+                    </div>
                 </div>
             }
         </>
