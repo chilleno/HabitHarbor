@@ -79,12 +79,10 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }, [])
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-            if (currentCookieTaskLists && currentCookieTaskLists.length > 0) {
-                setTaskList(currentCookieTaskLists[currentTaskListIndex].tasks);
-                setShowCreateTaskInput(true);
-            }
+        const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+        if (currentCookieTaskLists && currentCookieTaskLists.length > 0) {
+            setTaskList(currentCookieTaskLists[currentTaskListIndex].tasks);
+            setShowCreateTaskInput(true);
         }
     }, [currentTaskListIndex])
 
@@ -123,7 +121,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                 newTaskLists[currentTaskListIndex].tasks.push(newTaskObject);
 
                 localStorage.setItem('taskLists', JSON.stringify(newTaskLists));
-                
+
                 setTaskList(newTaskLists[currentTaskListIndex].tasks);
                 setLists(newTaskLists);
 
