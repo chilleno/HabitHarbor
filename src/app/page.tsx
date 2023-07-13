@@ -51,7 +51,7 @@ export default function Home() {
   };
 
   const changeTaskList = (taskListIndex: number) => {
-    if (taskListIndex >= 0 && taskListIndex < cookies.taskLists.length) {
+    if (taskListIndex >= 0 && taskListIndex < JSON.parse(localStorage.getItem('taskLists') || '[]').length) {
       setCurrentTaskList(taskListIndex);
     }
   };
