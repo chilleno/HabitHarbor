@@ -36,13 +36,14 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
 
 
     const handleCheckboxChange = (taskIndex: number) => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+
         if (typeof window !== 'undefined') {
             const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
 
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-                timeoutRef.current = null;
-            }
 
             const updatedTasks = taskList.map((task, index) => {
                 if (index === taskIndex) {
@@ -69,29 +70,23 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }
 
     const renderTaskLists = (): void => {
-        if (typeof window !== 'undefined') {
-            const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-            setLists(currentTaskLists);
-        }
+        const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+        setLists(currentTaskLists);
     }
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            renderTaskLists();
-            const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-            if (currentCookieTaskLists && currentCookieTaskLists.length > 0) {
-                setShowCreateTaskInput(true);
-            }
-        }
-    }, [taskList])
+        renderTaskLists();
+    }, [])
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-            if (currentCookieTaskLists && currentCookieTaskLists.length > 0)
+            if (currentCookieTaskLists && currentCookieTaskLists.length > 0) {
                 setTaskList(currentCookieTaskLists[currentTaskListIndex].tasks);
+                setShowCreateTaskInput(true);
+            }
         }
-    }, [taskList, currentTaskListIndex])
+    }, [currentTaskListIndex])
 
     const handleShowNewTaskInput = (): void => {
         setShowNewTaskLabel(false);
@@ -113,21 +108,24 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }
 
     const addNewTask = (newTask: string): void => {
+        if (newTask.length <= 3 || newTask === "Create a new task here...") {
+            return handleInputError();
+        }
+
         if (typeof window !== 'undefined') {
-            if (newTask.length <= 3 || newTask === "Create a new task here...") {
-                return handleInputError();
-            }
-            let newTaskList: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
-            if (newTaskList.length > 0) {
+            let newTaskLists: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (newTaskLists.length > 0) {
                 let newTaskObject: Task = {
                     "header": newTask,
                     "checked": false,
                     "subtasks": [],
                 }
-                newTaskList[currentTaskListIndex].tasks.push(newTaskObject);
+                newTaskLists[currentTaskListIndex].tasks.push(newTaskObject);
 
-                localStorage.setItem('taskLists', JSON.stringify(newTaskList));
-                setLists(newTaskList);
+                localStorage.setItem('taskLists', JSON.stringify(newTaskLists));
+                
+                setTaskList(newTaskLists[currentTaskListIndex].tasks);
+                setLists(newTaskLists);
 
                 setTimeout(() => {
                     newTaskRef.current.value = '';
