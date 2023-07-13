@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
-import { useCookies } from 'react-cookie';
 
 interface Task {
     header: string;
@@ -25,10 +24,6 @@ interface TaskList {
 
 
 const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
-    const [cookies, setCookie] = useCookies([
-        'taskLists',
-        'acceptCookies'
-    ]);
     const [renderList, setRenderList] = useState<boolean>(false);
     const [lists, setLists] = useState<TaskList[]>();
     const [taskList, setTaskList] = useState<Task[]>([]);
@@ -41,25 +36,27 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
 
 
     const handleCheckboxChange = (taskIndex: number) => {
-        const currentCookieTaskLists = cookies.taskLists;
+        if (typeof window !== 'undefined') {
+            const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
 
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = null;
-        }
-
-        const updatedTasks = taskList.map((task, index) => {
-            if (index === taskIndex) {
-                return {
-                    ...task,
-                    checked: !task.checked
-                };
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
             }
-            return task;
-        });
-        currentCookieTaskLists[currentTaskListIndex].tasks = updatedTasks;
-        setCookie('taskLists', currentCookieTaskLists);
-        renderTaskLists();
+
+            const updatedTasks = taskList.map((task, index) => {
+                if (index === taskIndex) {
+                    return {
+                        ...task,
+                        checked: !task.checked
+                    };
+                }
+                return task;
+            });
+            currentCookieTaskLists[currentTaskListIndex].tasks = updatedTasks;
+            localStorage.setItem('taskLists', JSON.stringify(currentCookieTaskLists));
+            renderTaskLists();
+        }
     };
 
 
@@ -72,21 +69,29 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }
 
     const renderTaskLists = (): void => {
-        const currentTaskLists = cookies.taskLists;
-        setLists(currentTaskLists);
+        if (typeof window !== 'undefined') {
+            const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            setLists(currentTaskLists);
+        }
     }
 
     useEffect(() => {
-        renderTaskLists();
-        if (cookies.taskLists && cookies.taskLists.length > 0) {
-            setShowCreateTaskInput(true);
+        if (typeof window !== 'undefined') {
+            renderTaskLists();
+            const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (currentCookieTaskLists && currentCookieTaskLists.length > 0) {
+                setShowCreateTaskInput(true);
+            }
         }
-    }, [cookies, taskList])
+    }, [taskList])
 
     useEffect(() => {
-        if (cookies.taskLists && cookies.taskLists.length > 0)
-            setTaskList(cookies.taskLists[currentTaskListIndex].tasks);
-    }, [cookies, currentTaskListIndex])
+        if (typeof window !== 'undefined') {
+            const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (currentCookieTaskLists && currentCookieTaskLists.length > 0)
+                setTaskList(currentCookieTaskLists[currentTaskListIndex].tasks);
+        }
+    }, [taskList, currentTaskListIndex])
 
     const handleShowNewTaskInput = (): void => {
         setShowNewTaskLabel(false);
@@ -108,26 +113,29 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }
 
     const addNewTask = (newTask: string): void => {
-        if (newTask.length <= 3 || newTask === "Create a new task here...") {
-            return handleInputError();
-        }
-
-        if (cookies.taskLists.length > 0) {
-            let newTaskList: TaskList[] = cookies.taskLists;
-            let newTaskObject: Task = {
-                "header": newTask,
-                "checked": false,
-                "subtasks": [],
+        if (typeof window !== 'undefined') {
+            if (newTask.length <= 3 || newTask === "Create a new task here...") {
+                return handleInputError();
             }
-            newTaskList[currentTaskListIndex].tasks.push(newTaskObject);
-            setCookie('taskLists', newTaskList);
+            let newTaskList: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (newTaskList.length > 0) {
+                let newTaskObject: Task = {
+                    "header": newTask,
+                    "checked": false,
+                    "subtasks": [],
+                }
+                newTaskList[currentTaskListIndex].tasks.push(newTaskObject);
 
-            setTimeout(() => {
-                newTaskRef.current.value = '';
-                newTaskRef.current.focus();
-            }, (1))
-        } else {
-            window.alert('You need to create a new list first.')
+                localStorage.setItem('taskLists', JSON.stringify(newTaskList));
+                setLists(newTaskList);
+
+                setTimeout(() => {
+                    newTaskRef.current.value = '';
+                    newTaskRef.current.focus();
+                }, (1))
+            } else {
+                window.alert('You need to create a new list first.')
+            }
         }
     }
 
@@ -142,7 +150,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
             {showModal && (
                 <NewTaskListModal
                     closeModal={closeModal}
-                    renderList={setRenderList}
+                    renderList={renderTaskLists}
                 />
             )}
             <div className="flex p-5">
