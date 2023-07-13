@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useCookies } from 'react-cookie'
 
 interface NewTaskListModalProps {
     closeModal: () => void;
-    renderList: (value: boolean) => void;
+    renderList: () => void;
 }
 interface Task {
     header: string;
@@ -18,20 +17,20 @@ interface TaskList {
 
 
 const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderList }) => {
-    const [cookies, setCookie] = useCookies([
-        'taskLists',
-    ]);
     const [name, setName] = useState('');
 
     const createNewTaskList = (): void => {
-        const currentTaskLists = cookies.taskLists;
-        const newTaskList: TaskList = {
-            name: name,
-            tasks: []
+        if (typeof window !== 'undefined') {
+            const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            const newTaskList: TaskList = {
+                name: name,
+                tasks: []
+            }
+            currentTaskLists.push(newTaskList);
+            localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
+            renderList();
+            closeModal();
         }
-        currentTaskLists.push(newTaskList);
-        setCookie('taskLists', JSON.stringify(currentTaskLists))
-        closeModal();
     }
 
     return (
