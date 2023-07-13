@@ -56,6 +56,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
             });
             currentCookieTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentCookieTaskLists));
+            setTaskList(updatedTasks);
             renderTaskLists();
         }
     };
