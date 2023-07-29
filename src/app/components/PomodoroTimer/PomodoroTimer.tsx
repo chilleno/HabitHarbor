@@ -5,37 +5,20 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 import { StopIcon } from '@heroicons/react/24/solid';
 import { CogIcon } from '@heroicons/react/24/solid';
 
-import { useCookies } from 'react-cookie';
 import { ForwardIcon } from '@heroicons/react/24/solid';
 
 const PomodoroTimer = () => {
-    const [cookies, setCookie] = useCookies([
-        'acceptCookies',
-        'pomodoroDuration',
-        'shortBreakDuration',
-        'longBreakDuration',
-        'pomodorosForLongBreak',
-        'isBreak',
-        'isShortBreak',
-        'isLongBreak',
-        'pomodoroCount',
-        'pomodoroTotalCount',
-        'shortBreakCount',
-        'longBreakCount',
-        'firstPomodoroCountDate',
-        'soundEffect',
-    ]);
-    const [soundEffect, setSoundEffect] = useState<string>(cookies.soundEffect);
-    const [pomodoroDuration, setPomodoroDuration] = useState<number>(cookies.pomodoroDuration);
-    const [shortBreakDuration, setShortBreakDuration] = useState<number>(cookies.shortBreakDuration);
-    const [longBreakDuration, setLongBreakDuration] = useState<number>(cookies.longBreakDuration);
-    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState<number>(cookies.pomodorosForLongBreak);
+    const [soundEffect, setSoundEffect] = useState<string>('');
+    const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
+    const [shortBreakDuration, setShortBreakDuration] = useState<number>(5);
+    const [longBreakDuration, setLongBreakDuration] = useState<number>(15);
+    const [pomodorosForLongBreak, setPomodorosForLongBreak] = useState<number>(4);
     const [minutes, setMinutes] = useState<number>(pomodoroDuration);
     const [seconds, setSeconds] = useState<number>(0);
     const [isActive, setIsActive] = useState<boolean>(false);
-    const [isBreak, setIsBreak] = useState<boolean>(cookies.isBreak);
-    const [isShortBreak, setIsShortBreak] = useState<boolean>(cookies.isShortBreak);
-    const [isLongBreak, setIsLongBreak] = useState<boolean>(cookies.isLongBreak);
+    const [isBreak, setIsBreak] = useState<boolean>(false);
+    const [isShortBreak, setIsShortBreak] = useState<boolean>(false);
+    const [isLongBreak, setIsLongBreak] = useState<boolean>(false);
     const [pomodoroCount, setPomodoroCount] = useState<number>(0);
     const [pomodoroTotalCount, setPomodoroTotalCount] = useState<number>(0);
     const [shortBreakCount, setShortBreakCount] = useState<number>(0);
@@ -70,22 +53,23 @@ const PomodoroTimer = () => {
         return () => clearInterval(interval);
     }, [isActive, minutes, seconds]);
 
-    const initializeFromCookies = (): void => {
-        const savedPomodoroDuration = cookies.pomodoroDuration;
-        const savedShortBreakDuration = cookies.shortBreakDuration;
-        const savedLongBreakDuration = cookies.longBreakDuration;
-        const savedPomodorosForLongBreak = cookies.pomodorosForLongBreak;
-        const savedIsBreak = cookies.isBreak;
-        const savedIsShortBreak = cookies.isShortBreak;
-        const savedIsLongBreak = cookies.isLongBreak;
-        const savedPomodoroCount = cookies.pomodoroCount;
-        const savedPomodoroTotalCount = cookies.pomodoroTotalCount;
-        const savedShortBreakCount = cookies.shortBreakCount;
-        const savedLongBreakCount = cookies.longBreakCount;
-        const savedSoundEffect = cookies.soundEffect;
+    const initializeFromLocalstorage = (): void => {
+        const savedPomodoroDuration = localStorage.pomodoroDuration;
+        const savedShortBreakDuration = localStorage.shortBreakDuration;
+        const savedLongBreakDuration = localStorage.longBreakDuration;
+        const savedPomodorosForLongBreak = localStorage.pomodorosForLongBreak;
+        const savedIsBreak = localStorage.isBreak;
+        const savedIsShortBreak = localStorage.isShortBreak;
+        const savedIsLongBreak = localStorage.isLongBreak;
+        const savedPomodoroCount = localStorage.pomodoroCount;
+        const savedPomodoroTotalCount = localStorage.pomodoroTotalCount;
+        const savedShortBreakCount = localStorage.shortBreakCount;
+        const savedLongBreakCount = localStorage.longBreakCount;
+        const savedSoundEffect = localStorage.soundEffect;
 
         if (savedPomodoroDuration) {
             setPomodoroDuration(Number(savedPomodoroDuration));
+            setMinutes(Number(savedPomodoroDuration))
         }
         if (savedShortBreakDuration) {
             setShortBreakDuration(Number(savedShortBreakDuration));
@@ -97,13 +81,13 @@ const PomodoroTimer = () => {
             setPomodorosForLongBreak(Number(savedPomodorosForLongBreak));
         }
         if (savedIsBreak !== null) {
-            setIsBreak(savedIsBreak);
+            setIsBreak(savedIsBreak === "true");
         }
         if (savedIsShortBreak !== null) {
-            setIsShortBreak(savedIsShortBreak);
+            setIsShortBreak(savedIsShortBreak === "true");
         }
         if (savedIsLongBreak !== null) {
-            setIsLongBreak(savedIsLongBreak);
+            setIsLongBreak(savedIsLongBreak === "true");
         }
         if (savedPomodoroCount) {
             setPomodoroCount(Number(savedPomodoroCount));
@@ -120,36 +104,35 @@ const PomodoroTimer = () => {
         if (savedSoundEffect) {
             setSoundEffect(String(savedSoundEffect));
         }
-
+     
     };
 
     useEffect(() => {
-        initializeFromCookies();
-        let firstRepaymentDate = new Date(cookies.firstPomodoroCountDate);
+        let firstRepaymentDate = new Date(localStorage.firstPomodoroCountDate);
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
             resetTimer(false, false);
         }
     }, []);
 
     useEffect(() => {
-        if (cookies.acceptCookies === 'true') {
-            // Save updated values to cookies
-            setCookie('pomodoroDuration', pomodoroDuration);
-            setCookie('shortBreakDuration', shortBreakDuration);
-            setCookie('longBreakDuration', longBreakDuration);
-            setCookie('pomodorosForLongBreak', pomodorosForLongBreak);
-            setCookie('isBreak', isBreak);
-            setCookie('isShortBreak', isShortBreak);
-            setCookie('isLongBreak', isLongBreak);
-            setCookie('pomodoroCount', pomodoroCount);
-            setCookie('pomodoroTotalCount', pomodoroTotalCount);
-            setCookie('shortBreakCount', shortBreakCount);
-            setCookie('longBreakCount', longBreakCount);
-            setCookie('soundEffect', soundEffect);
-            if (pomodoroCount === 1) {
-                setCookie('firstPomodoroCountDate', today);
-            }
+        initializeFromLocalstorage();
+    }, []);
 
+    useEffect(() => {
+        localStorage.setItem('pomodoroDuration', pomodoroDuration.toString());
+        localStorage.setItem('shortBreakDuration', shortBreakDuration.toString());
+        localStorage.setItem('longBreakDuration', longBreakDuration.toString());
+        localStorage.setItem('pomodorosForLongBreak', pomodorosForLongBreak.toString());
+        localStorage.setItem('isBreak', isBreak ? "true" : "false");
+        localStorage.setItem('isShortBreak', isBreak ? "true" : "false");
+        localStorage.setItem('isLongBreak', isBreak ? "true" : "false");
+        localStorage.setItem('pomodoroCount', pomodoroCount.toString());
+        localStorage.setItem('pomodoroTotalCount', pomodoroTotalCount.toString());
+        localStorage.setItem('shortBreakCount', shortBreakCount.toString());
+        localStorage.setItem('longBreakCount', longBreakCount.toString());
+        localStorage.setItem('soundEffect', soundEffect);
+        if (pomodoroCount === 1) {
+            localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
     }, [
         pomodoroDuration,
@@ -206,11 +189,11 @@ const PomodoroTimer = () => {
                 setMinutes(25);
             }
             if (!defaultValues) {
-                setPomodoroDuration(cookies.pomodoroDuration);
-                setShortBreakDuration(cookies.shortBreakDuration);
-                setLongBreakDuration(cookies.longBreakDuration);
-                setPomodorosForLongBreak(cookies.pomodorosForLongBreak);
-                setMinutes(cookies.pomodoroDuration);
+                setPomodoroDuration(Number(localStorage.pomodoroDuration));
+                setShortBreakDuration(Number(localStorage.shortBreakDuration));
+                setLongBreakDuration(Number(localStorage.longBreakDuration));
+                setPomodorosForLongBreak(Number(localStorage.pomodorosForLongBreak));
+                setMinutes(Number(localStorage.pomodoroDuration));
             }
             setIsActive(false);
             setSeconds(0);
@@ -221,7 +204,7 @@ const PomodoroTimer = () => {
             setPomodoroTotalCount(0);
             setShortBreakCount(0);
             setLongBreakCount(0);
-            setCookie('firstPomodoroCountDate', today);
+            localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
     };
 
@@ -269,12 +252,7 @@ const PomodoroTimer = () => {
     };
 
     const formatTime = (time: number): string => {
-        if (cookies.acceptCookies) {
-            return time < 10 ? `0${time}` : time.toString();
-        } else {
-            return '00';
-        }
-
+        return time < 10 ? `0${time}` : time.toString();
     };
 
     const openModal = (): void => {
