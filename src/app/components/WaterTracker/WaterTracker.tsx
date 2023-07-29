@@ -1,21 +1,13 @@
 "use client"
-import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie'
 import { CogIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
 
 const WaterTracker = () => {
     const [today] = useState(new Date());
-    const [cookies, setCookie] = useCookies([
-        'acceptCookies',
-        'firstWaterDate',
-        'waterDrinkAmount',
-        'waterTrackMethod',
-    ]);
-    const [waterAmount, setWaterAmount] = useState(parseInt(cookies.waterDrinkAmount));
-    const [maxWaterAmount, setMaxWaterAmount] = useState(0);
-    const [trackMode, setTrackMode] = useState(cookies.waterTrackMethod);
-    const [showModal, setShowModal] = useState(false);
+    const [waterAmount, setWaterAmount] = useState<number>(0);
+    const [maxWaterAmount, setMaxWaterAmount] = useState<number>(12);
+    const [trackMode, setTrackMode] = useState<string>('glass');
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const [initialRenderComplete, setInitialRenderComplete] = React.useState(false);
 
@@ -28,12 +20,11 @@ const WaterTracker = () => {
     }
 
     const handleWaterAmountChange = (newAmount: number, effect: boolean) => {
-        if (cookies.acceptCookies === 'true') {
-            if (newAmount >= 0 && newAmount <= maxWaterAmount) {
-                setWaterAmount(newAmount);
-                if (effect) {
-                    playSound();
-                }
+        if (newAmount >= 0 && newAmount <= maxWaterAmount) {
+            setWaterAmount(newAmount);
+            localStorage.setItem('waterDrinkAmount', newAmount.toString());
+            if (effect) {
+                playSound();
             }
         }
     }
@@ -51,7 +42,7 @@ const WaterTracker = () => {
                 setMaxWaterAmount(12);
             }
             setTrackMode(newTrackMode);
-            setCookie('waterTrackMethod', newTrackMode);
+            localStorage.setItem('waterTrackMethod', newTrackMode.toString());
             setWaterAmount(0);
         }
     }
@@ -79,34 +70,33 @@ const WaterTracker = () => {
 
 
     useEffect(() => {
-        if (cookies.acceptCookies === 'true') {
-            // Save updated values to cookies
-            let firstRepaymentDate = new Date(cookies.firstWaterDate);
-            if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-                setCookie('waterDrinkAmount', 0);
-                setCookie('firstWaterDate', today);
-            }
-            setCookie('waterDrinkAmount', waterAmount);
-            if (waterAmount === 1) {
-                setCookie('firstWaterDate', today);
-            }
+        // Save updated values to cookies
+        let firstRepaymentDate = new Date(localStorage.firstWaterDate);
+        if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
+            localStorage.setItem('waterDrinkAmount', "0");
+            localStorage.setItem('firstWaterDate', today.toString());
+        }
+        if (waterAmount === 1) {
+            localStorage.setItem('firstWaterDate', today.toString());
         }
     }, [waterAmount]);
 
     useEffect(() => {
-        if (cookies.acceptCookies === 'true') {
-            // Save updated values to cookies
-            let firstRepaymentDate = new Date(cookies.firstWaterDate);
-            if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-                setWaterAmount(0);
-            }
-            if (cookies.waterTrackMethod === "bottle") {
-                setMaxWaterAmount(3);
-            } else if (cookies.waterTrackMethod === "glass") {
-                setMaxWaterAmount(12);
-            }
+        let firstRepaymentDate = new Date(localStorage.firstWaterDate);
+        if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
+            setWaterAmount(0);
         }
-
+        if (localStorage.waterTrackMethod === "bottle") {
+            setMaxWaterAmount(3);
+        } else if (localStorage.waterTrackMethod === "glass") {
+            setMaxWaterAmount(12);
+        }
+        if (localStorage.waterDrinkAmount !== null && Number(localStorage.waterDrinkAmount) >= 0) {
+            setWaterAmount(Number(localStorage.waterDrinkAmount));
+        }
+        if (localStorage.waterTrackMethod !== null && localStorage.waterTrackMethod !== "") {
+            setTrackMode(localStorage.waterTrackMethod);
+        }
         setInitialRenderComplete(true);
     }, []);
 
