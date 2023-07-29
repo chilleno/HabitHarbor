@@ -6,7 +6,7 @@ const WaterTracker = () => {
     const [today] = useState(new Date());
     const [waterAmount, setWaterAmount] = useState<number>(0);
     const [maxWaterAmount, setMaxWaterAmount] = useState<number>(12);
-    const [trackMode, setTrackMode] = useState<string>('glass');
+    const [trackMode, setTrackMode] = useState<string>("glass");
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const [initialRenderComplete, setInitialRenderComplete] = React.useState(false);
@@ -96,6 +96,10 @@ const WaterTracker = () => {
         }
         if (localStorage.waterTrackMethod !== null && localStorage.waterTrackMethod !== "") {
             setTrackMode(localStorage.waterTrackMethod);
+        }
+        if (localStorage.waterTrackMethod === undefined) {
+            localStorage.setItem('waterTrackMethod', 'glass');
+            setTrackMode('glass');
         }
         setInitialRenderComplete(true);
     }, []);
