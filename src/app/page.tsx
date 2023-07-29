@@ -10,14 +10,9 @@ import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskList from './components/TaskList/TaskList';
 import Routine from './components/Routine/Routine';
-import CookieModal from './components/CookieModal/CookieModal';
 import WaterTracker from './components/WaterTracker/WaterTracker';
-import { useCookies } from 'react-cookie'
 
 export default function Home() {
-  const [cookies, setCookie] = useCookies([
-    'taskLists',
-  ]);
   const [currentTask, setCurrentTask] = useState(0);
   const [currentTaskList, setCurrentTaskList] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
@@ -39,7 +34,7 @@ export default function Home() {
   };
 
   const nextTaskList = () => {
-    if ((currentTaskList + 1) < cookies.taskLists.length) {
+    if ((currentTaskList + 1) < localStorage.taskLists.length) {
       setCurrentTaskList(currentTaskList + 1);
     }
   };
@@ -63,7 +58,6 @@ export default function Home() {
 
   return (
     <MainComponent>
-      <CookieModal />
       <StartScreen className=''>
         <div className=''>
           <Clock />
