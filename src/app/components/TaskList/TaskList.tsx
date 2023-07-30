@@ -76,6 +76,20 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         }
     };
 
+    const handleDeleteTaskList = (): void => {
+        if (typeof window !== 'undefined') {
+            if (window.confirm('are you sure you want to delete the entire task list?')) {
+                let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+
+                let updatedTaskLists = currentStoredTaskLists.filter((taskList, index) => index !== currentTaskListIndex);
+
+                localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
+                handleChangeTaskList(updatedTaskLists.length - 1)
+                renderTaskLists();
+            }
+        }
+    };
+
 
     const openModal = () => {
         setShowModal(true);
@@ -91,7 +105,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }
 
     useEffect(() => {
-        taskList && taskList.length > 0 && currentSelection === -1 && setCurrentSelection(currentTaskListIndex);
+        handleChangeTaskList(currentTaskListIndex);
     }, [])
 
     useEffect(() => {
@@ -103,12 +117,12 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         if (currentStoredTaskLists && currentStoredTaskLists.length > 0) {
             setTaskList(currentStoredTaskLists[currentTaskListIndex].tasks);
             setShowCreateTaskInput(true);
-            setCurrentSelection(currentTaskListIndex);
         }
-    }, [currentTaskListIndex, currentSelection])
+    }, [currentTaskListIndex])
 
     const handleChangeTaskList = (newValue: number): void => {
         setCurrentSelection(newValue);
+        changeTaskList(newValue);
     }
 
     const handleShowNewTaskInput = (): void => {
@@ -188,7 +202,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                         value={currentSelection}
                         onChange={(e) => handleChangeTaskList(Number(e.target.value))}
                     >
-                        <option value={-1} disabled>
+                        <option disabled value={-1}>
                             No task list selected
                         </option>
                         {
@@ -212,17 +226,23 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     />
                     {
                         currentSelection >= 0 &&
-                        <PencilIcon
-                            onClick={() => (setEditMode(!editMode), console.log(editMode))}
-                            className="h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5"
-                        />
+                        <>
+                            <PencilIcon
+                                onClick={() => (setEditMode(!editMode), console.log(editMode))}
+                                className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5 ${editMode === true && 'border-0 border-b-4 border-white'}`}
+                            />
+                            <TrashIcon
+                                onClick={() => handleDeleteTaskList()}
+                                className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5`}
+                            />
+                        </>
                     }
                 </div>
 
             </div >
             {
                 <div className="flex flex-col h-screen max-h-[80%] overflow-y-auto -z-50 pt-5">
-                    <div className={`flex items-center`} style={editMode || showCreateTaskInput === false ? { display: 'none' } : {}} >
+                    <div className={`flex items-center`} style={currentSelection === -1 || editMode || showCreateTaskInput === false ? { display: 'none' } : {}} >
                         <input
                             checked={false}
                             onChange={(e) => e.preventDefault()}
@@ -321,7 +341,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                     value={task.header}
                                 />
                             </div>
-                        )) : (editMode && taskList && taskList.length === 0 && <i className="text-gray-500 underline font-bold">No tasks to delete ...</i>)
+                        )) : (editMode && taskList && taskList.length === 0 && <i className="text-gray-500 underline font-bold">No tasks to edit ...</i>)
                     }
 
                 </div>
