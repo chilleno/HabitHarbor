@@ -33,6 +33,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     const [showNewTaskLabel, setShowNewTaskLabel] = useState<boolean>(true);
     const [showCreateTaskInput, setShowCreateTaskInput] = useState<boolean>(false);
     const [showError, setShowError] = useState<boolean>(false);
+    const [currentSelection, setCurrentSelection] = useState<number>(-1);
 
 
     const handleCheckboxChange = (taskIndex: number) => {
@@ -42,7 +43,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         }
 
         if (typeof window !== 'undefined') {
-            const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            const currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
 
 
             const updatedTasks = taskList.map((task, index) => {
@@ -54,8 +55,8 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                 }
                 return task;
             });
-            currentCookieTaskLists[currentTaskListIndex].tasks = updatedTasks;
-            localStorage.setItem('taskLists', JSON.stringify(currentCookieTaskLists));
+            currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
+            localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             setTaskList(updatedTasks);
             renderTaskLists();
         }
@@ -80,12 +81,17 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }, [])
 
     useEffect(() => {
-        const currentCookieTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-        if (currentCookieTaskLists && currentCookieTaskLists.length > 0) {
-            setTaskList(currentCookieTaskLists[currentTaskListIndex].tasks);
+        const currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+        if (currentStoredTaskLists && currentStoredTaskLists.length > 0) {
+            setTaskList(currentStoredTaskLists[currentTaskListIndex].tasks);
             setShowCreateTaskInput(true);
+            setCurrentSelection(currentTaskListIndex);
         }
-    }, [currentTaskListIndex])
+    }, [currentTaskListIndex, currentSelection])
+
+    const handleChangeTaskList = (newValue: number): void => {
+        setCurrentSelection(newValue);
+    }
 
     const handleShowNewTaskInput = (): void => {
         setShowNewTaskLabel(false);
@@ -160,24 +166,23 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                 <div className="w-3/6 border-2 rounded-xl relative after:content-['▼'] after:right-5 after:top-3 after:text-white after:absolute after:pointer-events-none">
                     <select
                         className="w-[100%] p-3 text-white text-xl bg-transparent appearance-none"
-                        defaultValue={lists && lists.length > 0 ? currentTaskListIndex : 'error'}
-                        onChange={(e) => changeTaskList(Number(e.target.value))}
+                        value={currentSelection}
+                        onChange={(e) => handleChangeTaskList(Number(e.target.value))}
                     >
+                        <option value={-1} disabled>
+                            No task list selected
+                        </option>
                         {
                             lists &&
-                                lists.length > 0 ?
-                                lists.map((list, index) => (
-                                    <option
-                                        key={'task_list_' + index}
-                                        value={index}
-                                    >
-                                        {list.name}
-                                    </option>
-                                ))
-                                :
-                                <option value={'error'} disabled>
-                                    No task list are created
+                            lists.length > 0 &&
+                            lists.map((list, index) => (
+                                <option
+                                    key={'task_list_' + index}
+                                    value={index}
+                                >
+                                    {list.name}
                                 </option>
+                            ))
                         }
                     </select>
                 </div>
@@ -223,7 +228,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     </b>
 
                     {
-                        taskList && taskList.length > 0 ? taskList.map((task, index) => (
+                        taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
                             task.checked == false &&
                             <div
                                 key={'task_content_' + index}
@@ -248,7 +253,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     }
 
                     {
-                        taskList && taskList.length > 0 ? taskList.map((task, index) => (
+                        taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
                             task.checked === true ?
                                 <div
                                     key={'task_content_' + index}
