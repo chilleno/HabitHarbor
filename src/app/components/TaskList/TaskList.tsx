@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from 'react';
-import { PlusIcon } from '@heroicons/react/24/solid';
+import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
 
 interface Task {
@@ -24,7 +24,7 @@ interface TaskList {
 
 
 const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
-    const [renderList, setRenderList] = useState<boolean>(false);
+    const [editMode, setEditMode] = useState<boolean>(false);
     const [lists, setLists] = useState<TaskList[]>();
     const [taskList, setTaskList] = useState<Task[]>([]);
     const [showModal, setShowModal] = useState(false);
@@ -43,7 +43,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         }
 
         if (typeof window !== 'undefined') {
-            const currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
 
 
             const updatedTasks = taskList.map((task, index) => {
@@ -55,6 +55,20 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                 }
                 return task;
             });
+            currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
+            localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+            setTaskList(updatedTasks);
+            renderTaskLists();
+        }
+    };
+
+    const handleDeleteTask = (taskIndex: number) => {
+        if (typeof window !== 'undefined') {
+            let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+
+            let updatedTasks = currentStoredTaskLists[currentTaskListIndex].tasks;
+            updatedTasks = updatedTasks.filter((task, index) => index !== taskIndex);
+
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             setTaskList(updatedTasks);
@@ -196,12 +210,19 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                         onClick={openModal}
                         className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
                     />
+                    {
+                        currentSelection >= 0 &&
+                        <PencilIcon
+                            onClick={() => (setEditMode(!editMode), console.log(editMode))}
+                            className="h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5"
+                        />
+                    }
                 </div>
 
             </div >
             {
                 <div className="flex flex-col h-screen max-h-[80%] overflow-y-auto -z-50 pt-5">
-                    <div className={`flex items-center`} style={showCreateTaskInput === false ? { display: 'none' } : {}} >
+                    <div className={`flex items-center`} style={editMode || showCreateTaskInput === false ? { display: 'none' } : {}} >
                         <input
                             checked={false}
                             onChange={(e) => e.preventDefault()}
@@ -233,7 +254,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     </b>
 
                     {
-                        taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
+                        !editMode && taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
                             task.checked == false &&
                             <div
                                 key={'task_content_' + index}
@@ -258,7 +279,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                     }
 
                     {
-                        taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
+                        !editMode && taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
                             task.checked === true ?
                                 <div
                                     key={'task_content_' + index}
@@ -281,6 +302,26 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                 </div>
                                 : null
                         )) : null
+                    }
+
+                    {
+                        editMode && taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
+                            <div
+                                key={'task_content_' + index}
+                                className={`flex items-center pb-1 justify-start`}
+                            >
+                                <TrashIcon
+                                    onClick={() => handleDeleteTask(index)}
+                                    className="h-4 w-4 text-white-500 hover:cursor-pointer mr-3"
+                                />
+                                <input
+                                    className="ml-2 text-white bg-transparent border-b-2"
+                                    style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
+                                    type="text"
+                                    value={task.header}
+                                />
+                            </div>
+                        )) : (editMode && taskList && taskList.length === 0 && <i className="text-gray-500 underline font-bold">No tasks to delete ...</i>)
                     }
 
                 </div>
