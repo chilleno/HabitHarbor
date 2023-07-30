@@ -76,6 +76,28 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         }
     };
 
+    const handleChangeTaskText = (newText: string, taskIndex: number) => {
+        if (typeof window !== 'undefined') {
+            let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+
+            let updatedTasks = currentStoredTaskLists[currentTaskListIndex].tasks;
+            updatedTasks = updatedTasks.map((task, index) => {
+                let currentTask = task;
+                if (taskIndex === index) {
+                    currentTask.header = newText;
+                    return currentTask;
+                } else {
+                    return currentTask;
+                }
+            });
+
+            currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
+            localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+            setTaskList(updatedTasks);
+            renderTaskLists();
+        }
+    };
+
     const handleDeleteTaskList = (): void => {
         if (typeof window !== 'undefined') {
             if (window.confirm('are you sure you want to delete the entire task list?')) {
@@ -228,7 +250,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                         currentSelection >= 0 &&
                         <>
                             <PencilIcon
-                                onClick={() => (setEditMode(!editMode), console.log(editMode))}
+                                onClick={() => setEditMode(!editMode)}
                                 className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5 ${editMode === true && 'border-0 border-b-4 border-white'}`}
                             />
                             <TrashIcon
@@ -338,7 +360,8 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                     className="ml-2 text-white bg-transparent border-b-2"
                                     style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                     type="text"
-                                    value={task.header}
+                                    defaultValue={task.header}
+                                    onBlur={(e) => handleChangeTaskText(e.target.value, index)}
                                 />
                             </div>
                         )) : (editMode && taskList && taskList.length === 0 && <i className="text-gray-500 underline font-bold">No tasks to edit ...</i>)
