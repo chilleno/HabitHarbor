@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 interface NewTaskListModalProps {
     closeModal: () => void;
     renderList: () => void;
+    handleChangeTaskList: (newValue: number) => void;
 }
 interface Task {
     header: string;
@@ -16,7 +17,7 @@ interface TaskList {
 }
 
 
-const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderList }) => {
+const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderList, handleChangeTaskList }) => {
     const [name, setName] = useState('');
 
     const createNewTaskList = (): void => {
@@ -28,6 +29,9 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
             }
             currentTaskLists.push(newTaskList);
             localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
+            if (currentTaskLists.length === 1) {
+                handleChangeTaskList(0);
+            }
             renderList();
             closeModal();
         }
