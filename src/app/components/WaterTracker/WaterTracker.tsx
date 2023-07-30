@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { CogIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
+import { CogIcon, PlusIcon, MinusIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/solid';
 
 const WaterTracker = () => {
     const [today] = useState(new Date());
@@ -8,6 +8,7 @@ const WaterTracker = () => {
     const [maxWaterAmount, setMaxWaterAmount] = useState<number>(12);
     const [trackMode, setTrackMode] = useState<string>("glass");
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [isCooldown, setIsCooldown] = useState<boolean>(false);
 
     const [initialRenderComplete, setInitialRenderComplete] = React.useState(false);
 
@@ -20,12 +21,16 @@ const WaterTracker = () => {
     }
 
     const handleWaterAmountChange = (newAmount: number, effect: boolean) => {
-        if (newAmount >= 0 && newAmount <= maxWaterAmount) {
+        if (!isCooldown && newAmount >= 0 && newAmount <= maxWaterAmount) {
+            setIsCooldown(true);
             setWaterAmount(newAmount);
             localStorage.setItem('waterDrinkAmount', newAmount.toString());
             if (effect) {
                 playSound();
             }
+            setTimeout(() => {
+                setIsCooldown(false);
+            }, 2000);
         }
     }
 
@@ -113,25 +118,37 @@ const WaterTracker = () => {
                     <h1>water tracker</h1>
                     <CogIcon onClick={openModal} className="h-5 w-5 text-white-500 ml-5 hover:cursor-pointer" />
                 </div>
-                <div className="flex flex-col items-center center w-2/2 mt-5">
-                    <div className="lg:text-xl sm:text-md xl:text-3xl">
-                        <span className="flex items-center justify-center">
-                            <MinusIcon onClick={() => handleWaterAmountChange(waterAmount - 1, false)} className="h-5 w-5 text-white-500 hover:cursor-pointer mr-5" />
-                            <>
-                                {generateIcons()}
-                            </>
-                            <PlusIcon onClick={() => handleWaterAmountChange(waterAmount + 1, true)} className="h-5 w-5 text-white-500 hover:cursor-pointer ml-5" />
-                        </span>
-                    </div>
-                    <div className="flex flex-col lg:mt-6 sm:mt-3 xl:text-xl lg:text-sm sm:text-sm" >
-                        <div className="flex justify-center">
-                            {waterAmount} / {maxWaterAmount}
+                {
+                    waterAmount === maxWaterAmount ?
+                        <div className="flex flex-col items-center center w-2/2 mt-5">
+                            <div className="lg:text-xl sm:text-md xl:text-3xl">
+                                <div className="flex flex-col gap-5 justify-center items-center center w-2/2 mt-5">
+                                    <h1>Congrats!</h1>
+                                    <ArrowUturnLeftIcon onClick={() => setWaterAmount(0)} className="h-5 w-5 text-white-500 ml-5 hover:cursor-pointer" />
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex justify-center xl:inline lg:inline sm:hidden">
-                            {trackMode === 'glass' ? 'Glasses' : 'Bottles'} of water
+                        :
+                        <div className="flex flex-col items-center center w-2/2 mt-5">
+                            <div className="lg:text-xl sm:text-md xl:text-3xl">
+                                <span className="flex items-center justify-center">
+                                    <>
+                                        {generateIcons()}
+                                    </>
+                                    <PlusIcon onClick={() => handleWaterAmountChange(waterAmount + 1, true)} className="h-5 w-5 text-white-500 hover:cursor-pointer ml-5" />
+                                </span>
+                            </div>
+                            <div className="flex flex-col lg:mt-6 sm:mt-3 xl:text-xl lg:text-sm sm:text-sm" >
+                                <div className="flex justify-center">
+                                    {waterAmount} / {maxWaterAmount}
+                                </div>
+                                <div className="flex justify-center xl:inline lg:inline sm:hidden">
+                                    {trackMode === 'glass' ? 'Glasses' : 'Bottles'} of water
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                }
+
 
                 {showModal && (
                     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50">
