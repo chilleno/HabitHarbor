@@ -77,6 +77,10 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
     }
 
     useEffect(() => {
+        taskList && taskList.length > 0 && currentSelection === -1 && setCurrentSelection(currentTaskListIndex);
+    }, [])
+
+    useEffect(() => {
         renderTaskLists();
     }, [])
 
@@ -154,6 +158,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                 <NewTaskListModal
                     closeModal={closeModal}
                     renderList={renderTaskLists}
+                    handleChangeTaskList={handleChangeTaskList}
                 />
             )}
             <div className="flex p-5">
