@@ -29,9 +29,7 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
             }
             currentTaskLists.push(newTaskList);
             localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
-            if (currentTaskLists.length === 1) {
-                handleChangeTaskList(0);
-            }
+            handleChangeTaskList(currentTaskLists.length - 1)
             renderList();
             closeModal();
         }
