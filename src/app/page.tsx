@@ -78,7 +78,7 @@ export default function Home() {
         />
       </MiddleScreen>
       <EndScreen className=''>
-        <Routine tasks={jsonData.data.tasks} currentTaskIndex={currentTask} />
+        <Routine changeTaskList={changeTaskList} currentTaskIndex={currentTask} />
       </EndScreen>
     </MainComponent >
   )
