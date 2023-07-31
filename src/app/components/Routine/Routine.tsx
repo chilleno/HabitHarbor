@@ -26,8 +26,16 @@ const Routine: React.FC<RoutineProps> = ({ changeTaskList, currentTaskIndex }) =
     const [showModal, setShowModal] = useState<boolean>(false);
     const [editMode, setEditMode] = useState<boolean>(false);
 
-    const handleDeleteStep = () => {
-        console.log('todo delete step')
+    const handleDeleteStep = (): void => {
+        if (typeof window !== 'undefined') {
+            if (window.confirm('are you sure you want to delete the step?')) {
+                let currentRoutine = routine;
+                let updatedRoutine = currentRoutine.filter((step, index) => index !== currentStep);
+                localStorage.setItem('routine', JSON.stringify(updatedRoutine));
+                setCurrentStep(updatedRoutine.length > 0 ? updatedRoutine.length - 1 : null)
+                renderRoutine();
+            }
+        };
     }
 
     const openModal = () => {
@@ -44,8 +52,8 @@ const Routine: React.FC<RoutineProps> = ({ changeTaskList, currentTaskIndex }) =
     }
 
     const getCurrentStep = (): void => {
-        const currentSetp = Number(localStorage.getItem('currentStep') || 0);
-        setCurrentStep(currentSetp);
+        const currentStep = Number(localStorage.getItem('currentStep') || 0);
+        setCurrentStep(currentStep > 0 ? currentStep : null);
     }
 
     useEffect(() => {
