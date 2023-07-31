@@ -260,7 +260,6 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                         </>
                     }
                 </div>
-
             </div >
             {
                 <div className="flex flex-col h-screen max-h-[80%] overflow-y-auto -z-50 pt-5">
