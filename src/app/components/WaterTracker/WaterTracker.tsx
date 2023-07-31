@@ -124,7 +124,7 @@ const WaterTracker = () => {
                             <div className="lg:text-xl sm:text-md xl:text-3xl">
                                 <div className="flex flex-col gap-5 justify-center items-center center w-2/2 mt-5">
                                     <h1>Congrats!</h1>
-                                    <ArrowUturnLeftIcon onClick={() => setWaterAmount(0)} className="h-5 w-5 text-white-500 ml-5 hover:cursor-pointer" />
+                                    <a onClick={() => handleWaterAmountChange(0, false)} className="text-lg text-white-500 p-2 hover:cursor-pointer border-0 transition duration-300 ease-in-out hover:underline hover:animate-pulse" >Reset Timer</a>
                                 </div>
                             </div>
                         </div>
