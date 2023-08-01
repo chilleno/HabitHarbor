@@ -76,25 +76,33 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
         }
     };
 
-    const handleChangeTaskText = (newText: string, taskIndex: number) => {
-        if (typeof window !== 'undefined') {
-            let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    const handleChangeTaskText = (newText: string, taskIndex: number, element: any) => {
+        if (newText.length <= 3) {
+            element.target.classList.add('shake-error');
+            element.target.focus();
+            setTimeout(() => {
+                element.target.classList.remove('shake-error');
+            }, 500);
+        } else {
+            if (typeof window !== 'undefined') {
+                let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
 
-            let updatedTasks = currentStoredTaskLists[currentTaskListIndex].tasks;
-            updatedTasks = updatedTasks.map((task, index) => {
-                let currentTask = task;
-                if (taskIndex === index) {
-                    currentTask.header = newText;
-                    return currentTask;
-                } else {
-                    return currentTask;
-                }
-            });
+                let updatedTasks = currentStoredTaskLists[currentTaskListIndex].tasks;
+                updatedTasks = updatedTasks.map((task, index) => {
+                    let currentTask = task;
+                    if (taskIndex === index) {
+                        currentTask.header = newText;
+                        return currentTask;
+                    } else {
+                        return currentTask;
+                    }
+                });
 
-            currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
-            localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
-            setTaskList(updatedTasks);
-            renderTaskLists();
+                currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
+                localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+                setTaskList(updatedTasks);
+                renderTaskLists();
+            }
         }
     };
 
@@ -356,11 +364,11 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                     className="h-4 w-4 text-white-500 hover:cursor-pointer mr-3"
                                 />
                                 <input
-                                    className="ml-2 text-white bg-transparent border-b-2"
+                                    className={`ml-2 text-white bg-transparent border-b-2`}
                                     style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                     type="text"
                                     defaultValue={task.header}
-                                    onBlur={(e) => handleChangeTaskText(e.target.value, index)}
+                                    onBlur={(e) => handleChangeTaskText(e.target.value, index, e)}
                                 />
                             </div>
                         )) : (editMode && taskList && taskList.length === 0 && <i className="text-gray-500 underline font-bold">No tasks to edit ...</i>)
