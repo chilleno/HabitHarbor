@@ -8,7 +8,7 @@ import { CogIcon } from '@heroicons/react/24/solid';
 import { ForwardIcon } from '@heroicons/react/24/solid';
 
 const PomodoroTimer = () => {
-    const [soundEffect, setSoundEffect] = useState<string>('');
+    const [soundEffect, setSoundEffect] = useState<string>('wow');
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
     const [shortBreakDuration, setShortBreakDuration] = useState<number>(5);
     const [longBreakDuration, setLongBreakDuration] = useState<number>(15);
@@ -104,12 +104,13 @@ const PomodoroTimer = () => {
         if (savedSoundEffect) {
             setSoundEffect(String(savedSoundEffect));
         }
-     
+
     };
 
     useEffect(() => {
         let firstRepaymentDate = new Date(localStorage.firstPomodoroCountDate);
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
+            console.log('reset is working');
             resetTimer(false, false);
         }
     }, []);
@@ -148,6 +149,21 @@ const PomodoroTimer = () => {
         longBreakCount,
         soundEffect
     ]);
+
+    const updateLocalStorageDate = (): void => {
+        localStorage.setItem('pomodoroDuration', pomodoroDuration.toString());
+        localStorage.setItem('shortBreakDuration', shortBreakDuration.toString());
+        localStorage.setItem('longBreakDuration', longBreakDuration.toString());
+        localStorage.setItem('pomodorosForLongBreak', pomodorosForLongBreak.toString());
+        localStorage.setItem('isBreak', isBreak ? "true" : "false");
+        localStorage.setItem('isShortBreak', isBreak ? "true" : "false");
+        localStorage.setItem('isLongBreak', isBreak ? "true" : "false");
+        localStorage.setItem('pomodoroCount', pomodoroCount.toString());
+        localStorage.setItem('pomodoroTotalCount', pomodoroTotalCount.toString());
+        localStorage.setItem('shortBreakCount', shortBreakCount.toString());
+        localStorage.setItem('longBreakCount', longBreakCount.toString());
+        localStorage.setItem('soundEffect', soundEffect);
+    }
 
     useEffect(() => {
         if (isActive) {
@@ -204,6 +220,7 @@ const PomodoroTimer = () => {
             setPomodoroTotalCount(0);
             setShortBreakCount(0);
             setLongBreakCount(0);
+            updateLocalStorageDate();
             localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
     };
