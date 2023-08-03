@@ -7,7 +7,11 @@ import { CogIcon } from '@heroicons/react/24/solid';
 
 import { ForwardIcon } from '@heroicons/react/24/solid';
 
-const PomodoroTimer = () => {
+interface PomodoroTimerProps {
+    handleCurrentRoutineStepCount: () => void;
+}
+
+const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepCount }) => {
     const [soundEffect, setSoundEffect] = useState<string>('wow');
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
     const [shortBreakDuration, setShortBreakDuration] = useState<number>(5);
@@ -250,6 +254,7 @@ const PomodoroTimer = () => {
                 setIsBreak(true);
                 setPomodoroCount(0);
                 setPomodoroTotalCount(pomodoroTotalCount + 1);
+                handleCurrentRoutineStepCount();
             }
             if (newPomodoroCount.toString() !== pomodorosForLongBreak.toString()) {
                 setMinutes(shortBreakDuration);
@@ -258,6 +263,7 @@ const PomodoroTimer = () => {
                 setIsBreak(true);
                 setPomodoroCount(newPomodoroCount);
                 setPomodoroTotalCount(pomodoroTotalCount + 1);
+                handleCurrentRoutineStepCount();
             }
         }
 
