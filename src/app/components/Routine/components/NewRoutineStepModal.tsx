@@ -3,7 +3,8 @@ import TaskList from '../../TaskList/TaskList';
 
 interface NewRoutineStepModalProps {
     closeModal: () => void;
-    renderList: () => void;
+    setUpdateRoutineStep: (newValue:boolean) => void;
+    updateRoutineStep: boolean;
 }
 
 interface Step {
@@ -14,7 +15,7 @@ interface Step {
     order: number;
 }
 
-const NewRoutineStepModal: React.FC<NewRoutineStepModalProps> = ({ closeModal, renderList }) => {
+const NewRoutineStepModal: React.FC<NewRoutineStepModalProps> = ({ closeModal, setUpdateRoutineStep, updateRoutineStep }) => {
     const [name, setName] = useState<string>('');
     const [pomodoroAmount, setPomodoroAmount] = useState<number>(0);
     const [taskLists, setTaskLists] = useState<TaskList[]>([]);
@@ -35,7 +36,7 @@ const NewRoutineStepModal: React.FC<NewRoutineStepModalProps> = ({ closeModal, r
             if (currentRoutine.length === 1) {
                 localStorage.setItem('currentRoutineStep', JSON.stringify(0));
             }
-            renderList();
+            setUpdateRoutineStep(!updateRoutineStep);
             closeModal();
         }
     }
