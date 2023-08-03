@@ -364,7 +364,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                                     className="h-4 w-4 text-white-500 hover:cursor-pointer mr-3"
                                 />
                                 <input
-                                    className={`ml-2 text-white bg-transparent border-b-2`}
+                                    className={`ml-2 text-white bg-transparent border-b-2 w-3/6`}
                                     style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                     type="text"
                                     defaultValue={task.header}
