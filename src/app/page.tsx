@@ -51,7 +51,6 @@ export default function Home() {
     }
   };
 
-
   useEffect(() => {
     setTask(jsonData.data.tasks[currentTask]);
   }, [currentTask, task]);

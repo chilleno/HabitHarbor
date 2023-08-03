@@ -32,17 +32,20 @@ const NewRoutineStepModal: React.FC<NewRoutineStepModalProps> = ({ closeModal, r
             }
             currentRoutine.push(newStep);
             localStorage.setItem('routine', JSON.stringify(currentRoutine))
+            if (currentRoutine.length === 1) {
+                localStorage.setItem('currentRoutineStep', JSON.stringify(0));
+            }
             renderList();
             closeModal();
         }
     }
 
     const validateForm = (): boolean => {
-        if(name === '') {
+        if (name === '') {
             window.alert('Please enter a name for the step');
             return false;
         }
-        if(pomodoroAmount === 0) {
+        if (pomodoroAmount === 0) {
             window.alert('Please enter a number of pomodoros');
             return false;
         }
