@@ -11,15 +11,12 @@ interface Step {
 }
 
 interface RoutineProps {
-    changeTaskList(newIndex: number): void;
+    setUpdateRoutineStep: (newValue:boolean) => void;
+    updateRoutineStep: boolean;
     currentTaskIndex: number;
 }
 
-const rootStyle = { display: 'flex', justifyContent: 'center' };
-const rowStyle = { margin: '200px 0', display: 'flex', justifyContent: 'space-between' };
-const boxStyle = { padding: '10px', border: '1px solid black' };
-
-const Routine: React.FC<RoutineProps> = ({ changeTaskList, currentTaskIndex }) => {
+const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
     const [routine, setRoutine] = useState<Step[]>([])
     const [currentStep, setCurrentStep] = useState<number | null>(null);
     const taskRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -52,14 +49,14 @@ const Routine: React.FC<RoutineProps> = ({ changeTaskList, currentTaskIndex }) =
     }
 
     const getCurrentStep = (): void => {
-        const currentStep = Number(localStorage.getItem('currentStep') || 0);
+        const currentStep = Number(localStorage.getItem('currentRoutineStep') || 0);
         setCurrentStep(currentStep > 0 ? currentStep : null);
     }
 
     useEffect(() => {
         renderRoutine();
         getCurrentStep()
-    }, []);
+    }, [updateRoutineStep]);
 
     useEffect(() => {
         const currentTaskRef = taskRefs.current[currentTaskIndex];
@@ -74,7 +71,8 @@ const Routine: React.FC<RoutineProps> = ({ changeTaskList, currentTaskIndex }) =
                 showModal && (
                     <NewRoutineStepModal
                         closeModal={closeModal}
-                        renderList={renderRoutine}
+                        setUpdateRoutineStep={setUpdateRoutineStep}
+                        updateRoutineStep={updateRoutineStep}
                     />
                 )
             }
