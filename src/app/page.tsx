@@ -12,10 +12,19 @@ import TaskList from './components/TaskList/TaskList';
 import Routine from './components/Routine/Routine';
 import WaterTracker from './components/WaterTracker/WaterTracker';
 
+interface Step {
+  header: string;
+  pomodoros: number;
+  currentPomodorosCount: number;
+  assignedTaskList: number;
+  order: number;
+}
+
 export default function Home() {
   const [currentTask, setCurrentTask] = useState(0);
   const [currentTaskList, setCurrentTaskList] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
+  const [updateRoutineStep, setUpdateRoutineStep] = useState(false);
   const { MainComponent } = useMainComponent();
   const { StartScreen } = useStartScreen();
   const { MiddleScreen } = useMiddleScreen();
@@ -55,6 +64,29 @@ export default function Home() {
     setTask(jsonData.data.tasks[currentTask]);
   }, [currentTask, task]);
 
+
+  const handleCurrentRoutineStepCount = (): void => {
+    if (typeof window !== 'undefined') {
+      let currentRoutine: Step[] = JSON.parse(localStorage.getItem('routine') || '[]');
+      let currentRoutineStep: number = Number(localStorage.getItem('currentRoutineStep') || '-1');
+
+      if (currentRoutineStep > -1) {
+        let step: Step = currentRoutine[currentRoutineStep];
+        if (step.currentPomodorosCount < step.pomodoros) {
+          step.currentPomodorosCount = step.currentPomodorosCount + 1;
+          currentRoutine[currentRoutineStep] = step;
+          localStorage.setItem('routine', JSON.stringify(currentRoutine));
+          if(step.currentPomodorosCount === step.pomodoros) {
+            currentRoutineStep = currentRoutineStep + 1;
+            localStorage.setItem('currentRoutineStep', currentRoutineStep.toString());
+          }
+        }
+        setUpdateRoutineStep(!updateRoutineStep);
+      }
+    }
+  }
+
+
   return (
     <MainComponent>
       <StartScreen className=''>
@@ -62,7 +94,9 @@ export default function Home() {
           <Clock />
         </div>
         <div className=''>
-          <PomodoroTimer />
+          <PomodoroTimer
+            handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
+          />
         </div>
         <div className=''>
           <WaterTracker />
@@ -77,7 +111,7 @@ export default function Home() {
         />
       </MiddleScreen>
       <EndScreen className=''>
-        <Routine changeTaskList={changeTaskList} currentTaskIndex={currentTask} />
+        <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTask} />
       </EndScreen>
     </MainComponent >
   )
