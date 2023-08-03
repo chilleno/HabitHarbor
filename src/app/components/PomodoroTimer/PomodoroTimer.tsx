@@ -104,19 +104,14 @@ const PomodoroTimer = () => {
         if (savedSoundEffect) {
             setSoundEffect(String(savedSoundEffect));
         }
-
     };
 
     useEffect(() => {
+        initializeFromLocalstorage();
         let firstRepaymentDate = new Date(localStorage.firstPomodoroCountDate);
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-            console.log('reset is working');
             resetTimer(false, false);
         }
-    }, []);
-
-    useEffect(() => {
-        initializeFromLocalstorage();
     }, []);
 
     useEffect(() => {
@@ -150,7 +145,7 @@ const PomodoroTimer = () => {
         soundEffect
     ]);
 
-    const updateLocalStorageDate = (): void => {
+    const updateLocalStorageData = (): void => {
         localStorage.setItem('pomodoroDuration', pomodoroDuration.toString());
         localStorage.setItem('shortBreakDuration', shortBreakDuration.toString());
         localStorage.setItem('longBreakDuration', longBreakDuration.toString());
@@ -220,7 +215,7 @@ const PomodoroTimer = () => {
             setPomodoroTotalCount(0);
             setShortBreakCount(0);
             setLongBreakCount(0);
-            updateLocalStorageDate();
+            updateLocalStorageData();
             localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
     };
