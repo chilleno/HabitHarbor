@@ -10,8 +10,19 @@ interface Step {
     order: number;
 }
 
+interface TaskList {
+    name: string;
+    tasks: Task[];
+}
+
+interface Task {
+    header: string;
+    checked: boolean;
+    subtasks: any[];
+}
+
 interface RoutineProps {
-    setUpdateRoutineStep: (newValue:boolean) => void;
+    setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
     currentTaskIndex: number;
 }
@@ -53,6 +64,11 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         setCurrentStep(currentStep > 0 ? currentStep : null);
     }
 
+    const getTaskListByIndex = (index: number): TaskList => {
+        let currentLocalStorageTaskList = JSON.parse(localStorage.getItem('taskLists') || '[]');
+        return currentLocalStorageTaskList[index];
+    }
+
     useEffect(() => {
         renderRoutine();
         getCurrentStep()
@@ -64,6 +80,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
             currentTaskRef.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     }, [currentTaskIndex]);
+
 
     return (
         <>
@@ -128,7 +145,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                     </div>
                                     <div className='w-2/6 flex-col border-l-2'>
                                         <div className="border-b-2 h-1/2 p-1 flex justify-center items-center">
-                                            <b>Pomodoros</b>
+                                            <b>{getTaskListByIndex(index).name}</b>
                                         </div>
                                         <div className="flex h-1/2 justify-center items-center">
                                             <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
