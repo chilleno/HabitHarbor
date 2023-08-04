@@ -249,21 +249,21 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
                         }
                     </select>
                 </div>
-                <div className='flex w-1/6 justify-start ml-5 mt-auto mb-auto'>
+                <div className='flex xl:w-1/6 lg:w-2/6 md:w-2/6 justify-start ml-5 mt-auto mb-auto'>
                     <PlusIcon
                         onClick={openModal}
-                        className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
+                        className="flex h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
                     />
                     {
                         currentSelection >= 0 &&
                         <>
                             <PencilIcon
                                 onClick={() => setEditMode(!editMode)}
-                                className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5 ${editMode === true && 'border-0 border-b-4 border-white'}`}
+                                className={`flex h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5 ${editMode === true && 'border-0 border-b-4 border-white'}`}
                             />
                             <TrashIcon
                                 onClick={() => handleDeleteTaskList()}
-                                className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5`}
+                                className={`flex h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5`}
                             />
                         </>
                     }
