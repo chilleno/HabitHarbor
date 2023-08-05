@@ -76,16 +76,19 @@ export default function Home() {
           step.currentPomodorosCount = step.currentPomodorosCount + 1;
           currentRoutine[currentRoutineStep] = step;
           localStorage.setItem('routine', JSON.stringify(currentRoutine));
-          if(step.currentPomodorosCount === step.pomodoros) {
+          if (step.currentPomodorosCount === step.pomodoros) {
             currentRoutineStep = currentRoutineStep + 1;
             localStorage.setItem('currentRoutineStep', currentRoutineStep.toString());
+            let newSelectedStep: Step = currentRoutine[currentRoutineStep];
+            if (newSelectedStep.assignedTaskList > -1) {
+              changeTaskList(newSelectedStep.assignedTaskList);
+            }
           }
         }
         setUpdateRoutineStep(!updateRoutineStep);
       }
     }
   }
-
 
   return (
     <MainComponent>
