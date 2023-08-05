@@ -4,25 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
 
-interface Task {
-    header: string;
-    checked: boolean;
-    subtasks: any[];
-}
-
-interface TaskListProps {
-    currentTaskListIndex: number;
-    nextTaskList(): void;
-    previousTaskList(): void;
-    changeTaskList(taskListIndex: number): void;
-}
-
-interface TaskList {
-    name: string;
-    tasks: Task[];
-}
-
-
 const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [lists, setLists] = useState<TaskList[]>();
