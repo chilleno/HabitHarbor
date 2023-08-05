@@ -117,7 +117,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
 
     useEffect(() => {
         handleChangeTaskList(currentTaskListIndex);
-    }, [])
+    }, [currentTaskListIndex])
 
     useEffect(() => {
         renderTaskLists();
