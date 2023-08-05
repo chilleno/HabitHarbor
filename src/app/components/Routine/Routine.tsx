@@ -37,7 +37,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     const getCurrentStep = (): void => {
         const currentStep = Number(localStorage.getItem('currentRoutineStep') || 0);
-        setCurrentStep(currentStep > 0 ? currentStep : null);
+        setCurrentStep(currentStep >= 0 ? currentStep : null);
     }
 
     const getTaskListByIndex = (index: number): string => {
