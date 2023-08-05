@@ -7,10 +7,6 @@ import { CogIcon } from '@heroicons/react/24/solid';
 
 import { ForwardIcon } from '@heroicons/react/24/solid';
 
-interface PomodoroTimerProps {
-    handleCurrentRoutineStepCount: () => void;
-}
-
 const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepCount }) => {
     const [soundEffect, setSoundEffect] = useState<string>('wow');
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
