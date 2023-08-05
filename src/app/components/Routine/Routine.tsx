@@ -3,31 +3,6 @@ import { ArcherContainer, ArcherElement, } from 'react-archer';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewRoutineStepModal from './components/NewRoutineStepModal';
 
-interface Step {
-    header: string;
-    pomodoros: number;
-    currentPomodorosCount: number;
-    assignedTaskList: number;
-    order: number;
-}
-
-interface TaskList {
-    name: string;
-    tasks: Task[];
-}
-
-interface Task {
-    header: string;
-    checked: boolean;
-    subtasks: any[];
-}
-
-interface RoutineProps {
-    setUpdateRoutineStep: (newValue: boolean) => void;
-    updateRoutineStep: boolean;
-    currentTaskIndex: number;
-}
-
 const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
     const [routine, setRoutine] = useState<Step[]>([])
     const [currentStep, setCurrentStep] = useState<number | null>(null);
