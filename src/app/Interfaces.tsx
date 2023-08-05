@@ -17,6 +17,11 @@ interface TaskList {
     tasks: Task[];
 }
 
+interface HelpButtonOption {
+    text: string;
+    url: string;
+}
+
 interface RoutineProps {
     setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
@@ -44,4 +49,12 @@ interface NewTaskListModalProps {
     closeModal: () => void;
     renderList: () => void;
     handleChangeTaskList: (newValue: number) => void;
+}
+
+interface HelpOptionListProps {
+    onClose: () => void;
+}
+
+interface QuestionButtonProps {
+    onClick: () => void;
 }
