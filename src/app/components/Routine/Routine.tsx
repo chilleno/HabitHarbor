@@ -7,6 +7,7 @@ interface Step {
     header: string;
     pomodoros: number;
     currentPomodorosCount: number;
+    assignedTaskList: number;
     order: number;
 }
 
@@ -64,9 +65,13 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         setCurrentStep(currentStep > 0 ? currentStep : null);
     }
 
-    const getTaskListByIndex = (index: number): TaskList => {
+    const getTaskListByIndex = (index: number): string => {
         let currentLocalStorageTaskList = JSON.parse(localStorage.getItem('taskLists') || '[]');
-        return currentLocalStorageTaskList[index];
+        if(currentLocalStorageTaskList[index] !== undefined){
+            return currentLocalStorageTaskList[index].name;
+        } else {
+            return 'No Task List';
+        }
     }
 
     useEffect(() => {
@@ -145,7 +150,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                     </div>
                                     <div className='w-2/6 flex-col border-l-2'>
                                         <div className="border-b-2 h-1/2 p-1 flex justify-center items-center">
-                                            <b>{getTaskListByIndex(index).name}</b>
+                                            <b>{getTaskListByIndex(step.assignedTaskList)}</b>
                                         </div>
                                         <div className="flex h-1/2 justify-center items-center">
                                             <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
