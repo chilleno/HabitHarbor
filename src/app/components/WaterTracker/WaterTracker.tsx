@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { CogIcon, PlusIcon, MinusIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/solid';
+import { CogIcon, PlusIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image';
 
 const WaterTracker = () => {
     const [today] = useState(new Date());
@@ -59,15 +60,15 @@ const WaterTracker = () => {
         for (let i = 1; i <= maxWaterAmount; i++) {
             if (trackMode === 'glass') {
                 if (waterAmount >= (i)) {
-                    icons.push(<img key={'wte-' + i} src="/icons/filledGlass.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/filledGlass.svg" className={iconClass} alt="Glass Icon" />);
                 } else {
-                    icons.push(<img key={'wte-' + i} src="/icons/glass.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/glass.svg" className={iconClass} alt="Glass Icon" />);
                 }
             } else if (trackMode === 'bottle') {
                 if (waterAmount >= (i)) {
-                    icons.push(<img key={'wte-' + i} src="/icons/filledBottle.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/filledBottle.svg" className={iconClass} alt="Glass Icon" />);
                 } else {
-                    icons.push(<img key={'wte-' + i} src="/icons/bottle.svg" className={iconClass} alt="Glass Icon" />);
+                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/bottle.svg" className={iconClass} alt="Glass Icon" />);
                 }
             }
         }
@@ -136,7 +137,17 @@ const WaterTracker = () => {
                                     <>
                                         {generateIcons()}
                                     </>
-                                    <PlusIcon onClick={() => handleWaterAmountChange(waterAmount + 1, true)} className="h-5 w-5 text-white-500 hover:cursor-pointer ml-5" />
+                                    <PlusIcon
+                                        onClick={() => handleWaterAmountChange(waterAmount + 1, true)}
+                                        className={`${isCooldown && 'hidden'} h-5 w-5 text-white-500 hover:cursor-pointer ml-5`}
+                                    />
+                                    <Image
+                                    width={20}
+                                    height={20}
+                                        src="/icons/loading.svg"
+                                        className={`${!isCooldown && 'hidden'} animate-spin h-5 w-5 text-white-500 hover:cursor-pointer ml-5`}
+                                        alt="lading..."
+                                    />
                                 </span>
                             </div>
                             <div className="flex flex-col lg:mt-6 sm:mt-3 xl:text-xl lg:text-sm sm:text-sm" >
