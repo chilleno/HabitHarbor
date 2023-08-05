@@ -1,22 +1,5 @@
 import React, { useState } from 'react';
 
-interface NewTaskListModalProps {
-    closeModal: () => void;
-    renderList: () => void;
-    handleChangeTaskList: (newValue: number) => void;
-}
-interface Task {
-    header: string;
-    checked: boolean;
-    subtasks: any[];
-}
-
-interface TaskList {
-    name: string;
-    tasks: Task[];
-}
-
-
 const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderList, handleChangeTaskList }) => {
     const [name, setName] = useState('');
 
