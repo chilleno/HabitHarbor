@@ -49,6 +49,7 @@ const WaterTracker = () => {
             setTrackMode(newTrackMode);
             localStorage.setItem('waterTrackMethod', newTrackMode.toString());
             setWaterAmount(0);
+            closeModal();
         }
     }
 
