@@ -11,6 +11,8 @@ import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import TaskList from './components/TaskList/TaskList';
 import Routine from './components/Routine/Routine';
 import WaterTracker from './components/WaterTracker/WaterTracker';
+import HelpButton from './components/HelpButton/HelpButton';
+import HelpOptionList from './components/HelpButton/HelpOptionList';
 
 interface Step {
   header: string;
@@ -25,21 +27,14 @@ export default function Home() {
   const [currentTaskList, setCurrentTaskList] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
   const [updateRoutineStep, setUpdateRoutineStep] = useState(false);
+  const [showList, setShowList] = useState(false);
   const { MainComponent } = useMainComponent();
   const { StartScreen } = useStartScreen();
   const { MiddleScreen } = useMiddleScreen();
   const { EndScreen } = useEndScreen();
 
-  const nextTask = () => {
-    if ((currentTask + 1) < jsonData.data.tasks.length) {
-      setCurrentTask(currentTask + 1);
-    }
-  };
-
-  const previousTask = () => {
-    if ((currentTask - 1) >= 0) {
-      setCurrentTask(currentTask - 1);
-    }
+  const handleButtonClick = () => {
+    setShowList(!showList);
   };
 
   const nextTaskList = () => {
@@ -116,6 +111,10 @@ export default function Home() {
       <EndScreen className=''>
         <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTask} />
       </EndScreen>
+      <div className="relative">
+        <HelpButton onClick={handleButtonClick} />
+        {showList && <HelpOptionList onClose={() => setShowList(false)} />}
+      </div>
     </MainComponent >
   )
 }
