@@ -1,20 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TaskList from '../../TaskList/TaskList';
 
-interface NewRoutineStepModalProps {
-    closeModal: () => void;
-    setUpdateRoutineStep: (newValue:boolean) => void;
-    updateRoutineStep: boolean;
-}
-
-interface Step {
-    header: string;
-    pomodoros: number;
-    currentPomodorosCount: number;
-    assignedTaskList: number;
-    order: number;
-}
-
 const NewRoutineStepModal: React.FC<NewRoutineStepModalProps> = ({ closeModal, setUpdateRoutineStep, updateRoutineStep }) => {
     const [name, setName] = useState<string>('');
     const [pomodoroAmount, setPomodoroAmount] = useState<number>(0);
