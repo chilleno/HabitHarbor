@@ -142,8 +142,8 @@ const WaterTracker = () => {
                                         className={`${isCooldown && 'hidden'} h-5 w-5 text-white-500 hover:cursor-pointer ml-5`}
                                     />
                                     <Image
-                                    width={20}
-                                    height={20}
+                                        width={20}
+                                        height={20}
                                         src="/icons/loading.svg"
                                         className={`${!isCooldown && 'hidden'} animate-spin h-5 w-5 text-white-500 hover:cursor-pointer ml-5`}
                                         alt="lading..."
