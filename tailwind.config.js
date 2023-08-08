@@ -12,7 +12,19 @@ module.exports = {
       lg: '976px',
       xl: '1440px',
     },
+    colors: {
+      'main': {
+        light: '#1B1A20',
+        primary: '#18161A',
+      },
+      'white': {
+        DEFAULT: '#FFFFFF ',
+      },
+    },
     extend: {
+      boxShadow: {
+        'main': '10px 10px 4px 0px rgba(0,0,0,0.25)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
