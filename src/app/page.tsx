@@ -88,7 +88,7 @@ export default function Home() {
   return (
     <MainComponent>
       <StartScreen className=''>
-        <div className=''>
+        <div className='flex justify-center content-center mt-5 mb-5'>
           <Clock />
         </div>
         <div className=''>
