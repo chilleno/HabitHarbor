@@ -88,10 +88,10 @@ export default function Home() {
   return (
     <MainComponent>
       <StartScreen className=''>
-        <div className='flex justify-center content-center mt-5 mb-5'>
+        <div className="flex justify-center content-center mt-5 mb-5">
           <Clock />
         </div>
-        <div className=''>
+        <div className="flex justify-center content-center mt-10 mb-5">
           <PomodoroTimer
             handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
           />
