@@ -324,7 +324,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 </FloatingButton>
             </div>
             <div className="flex flex-col justify-center content-center">
-                <div className="flex content-center justify-center">
+                <div className="flex content-center justify-center text-main-primary">
                     <div className={`rounded-full w-[180px] h-[180px] ${(isBreak == true ? (isLongBreak == true ? 'bg-pomodoro-green' : isShortBreak == true ? 'bg-pomodoro-yellow' : null) : 'bg-pomodoro-red')}`}>
                         <div className="flex flex-col items-center h-full justify-center leading-10 -mt-4">
                             <div className="text-[16px]">
