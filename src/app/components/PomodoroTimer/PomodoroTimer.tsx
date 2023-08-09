@@ -316,7 +316,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
 
     return (
         <ContentBox className="xl:px-[40px] lg:px-[70px] sm:px-[80px]">
-            <div className="flex justify-end -mr-14 -mt-8">
+            <div className="flex justify-end xl:-mr-14 lg:-mr-20 md:-mr-24 sm:-mr-24 -mt-8">
                 <FloatingButton onClick={openModal}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
                         <CogIcon className="h-[24px] w-[24px] text-white-500" />
@@ -353,7 +353,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                         </span>
                     </FloatingButton>
                 </div>
-                <div className="lg:text-sm sm:text-xs lg:mt-6 xl:text-lg mb-5">
+                <div className="lg:text-sm sm:text-xs lg:mt-6 xl:text-lg xl:mb-5">
                     <div className="w-full flex justify-center items-center">
                         Pomodoros: {pomodoroTotalCount}
                     </div>
