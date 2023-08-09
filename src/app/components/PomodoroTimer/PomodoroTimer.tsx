@@ -1,6 +1,9 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import ContentBox from '../../designComponent/ContentBox';
+import FloatingButton from '@/app/designComponent/FloatingButton';
+
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { StopIcon } from '@heroicons/react/24/solid';
 import { CogIcon } from '@heroicons/react/24/solid';
@@ -312,49 +315,53 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }
 
     return (
-        <div className="flex flex-col items-center justify-center lg:h-64 text-white font-bold lg:p-5 sm:p-1">
-            <div className="flex items-center w-full">
-                <div className="flex flex-col xl:w-2/3 lg:w-2/3 sm:w-1/2 items-center">
-                    <div className="lg:text-xl sm:text-md xl:text-3xl">
-                        {'[ ' + (isBreak == true ? (isLongBreak == true ? 'Long break' : isShortBreak == true ? 'Short break' : null) : 'Pomodoro') + ' ]'}
-                    </div>
-                    <div className="lg:text-6xl lg:mt-6 sm:text-4xl xl:text-8xl">
-                        {formattedTime}
-                    </div>
-                    <div className="lg:text-xs sm:text-[10px] lg:mt-6 xl:text-lg">
-                        <div className="w-full flex justify-center items-center">
-                            Pomodoros: {pomodoroTotalCount}
-                        </div>
-                        <div className="w-full flex justify-center">
-                            Short Breaks: {shortBreakCount} |  Long Breaks: {longBreakCount}
+        <ContentBox>
+            <div className="flex justify-end -mr-14 -mt-8">
+                <FloatingButton onClick={openModal}>
+                    <span className="flex items-center justify-center hover:cursor-pointer">
+                        <CogIcon className="h-[24px] w-[24px] text-white-500" />
+                    </span>
+                </FloatingButton>
+            </div>
+            <div className="flex flex-col justify-center content-center">
+                <div className="flex content-center justify-center">
+                    <div className={`rounded-full w-[180px] h-[180px] ${(isBreak == true ? (isLongBreak == true ? 'bg-pomodoro-green' : isShortBreak == true ? 'bg-pomodoro-yellow' : null) : 'bg-pomodoro-red')}`}>
+                        <div className="flex flex-col items-center h-full justify-center leading-10 -mt-4">
+                            <div className="text-[16px]">
+                                {(isBreak == true ? (isLongBreak == true ? 'Long break' : isShortBreak == true ? 'Short break' : null) : 'Pomodoro')}
+                            </div>
+                            <div className="text-[55px]">
+                                {formattedTime}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="xl:w-1/3 lg:w-1/3 sm:w-1/2">
-                    <div className='flex xl:flex-col lg:flex-col sm:flex-row gap-3'>
+                <div className="flex content-center justify-center -mt-10 gap-1">
+                    <FloatingButton onClick={startTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <PlayIcon onClick={startTimer} className="h-5 w-5 text-white-500" />
+                            <PlayIcon className="h-[24px] w-[24px] text-white-500" />
                         </span>
-                        <span className="flex items-center justify-center">
-                            <StopIcon
-                                onClick={stopTimer}
-                                className="h-5 w-5 text-white-500  hover:cursor-pointer" />
+                    </FloatingButton>
+                    <FloatingButton onClick={stopTimer}>
+                        <span className="flex items-center justify-center hover:cursor-pointer">
+                            <StopIcon className="h-[24px] w-[24px] text-white-500" />
                         </span>
-                        <span className="flex items-center justify-center">
-                            <ForwardIcon
-                                onClick={nextTimer}
-                                className="h-5 w-5 text-white-500 hover:cursor-pointer" />
+                    </FloatingButton>
+                    <FloatingButton onClick={nextTimer}>
+                        <span className="flex items-center justify-center hover:cursor-pointer">
+                            <ForwardIcon className="h-[24px] w-[24px] text-white-500" />
                         </span>
-                        <span className="flex items-center justify-center">
-                            <CogIcon
-                                onClick={openModal}
-                                className="h-5 w-5 text-white-500 hover:cursor-pointer" />
-                        </span>
+                    </FloatingButton>
+                </div>
+                <div className="lg:text-xs sm:text-[10px] lg:mt-6 xl:text-lg">
+                    <div className="w-full flex justify-center items-center">
+                        Pomodoros: {pomodoroTotalCount}
                     </div>
-
+                    <div className="w-full flex justify-center">
+                        Short Breaks: {shortBreakCount} |  Long Breaks: {longBreakCount}
+                    </div>
                 </div>
             </div>
-
             {showModal && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50">
                     <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
@@ -367,7 +374,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                                 min="1"
                                 value={pomodoroDuration}
                                 onChange={(e) => handlePomodoroDurationChange(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
                                 onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="shortBreakDurationInput">Short Break Duration (minutes)</label>
@@ -377,7 +384,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                                 min="1"
                                 value={shortBreakDuration}
                                 onChange={(e) => handleShortBreakDurationChange(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
                                 onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="longBreakDurationInput">Long Break Duration (minutes)</label>
@@ -387,7 +394,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                                 min="1"
                                 value={longBreakDuration}
                                 onChange={(e) => handleLongBreakDurationChange(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
                                 onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="pomodorosForLongBreakInput">Pomodoros for Long Break</label>
@@ -397,13 +404,13 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                                 min="2"
                                 value={pomodorosForLongBreak}
                                 onChange={(e) => handlePomodorosForLongBreakChange(Number(e.target.value))}
-                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
                                 onFocus={(event) => event.target.select()}
                             />
                             <label htmlFor="pomodorosForLongBreakInput">Sound Effect</label>
                             <select
                                 id="soundEffectSelect"
-                                className="border border-gray-300 px-2 py-1 rounded-full text-black"
+                                className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
                                 value={soundEffect}
                                 onChange={(e) => setSoundEffect(e.target.value)}
                             >
@@ -429,7 +436,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                     </div>
                 </div>
             )}
-        </div>
+        </ContentBox>
     );
 };
 
