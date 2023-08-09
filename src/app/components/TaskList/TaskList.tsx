@@ -209,7 +209,7 @@ const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskL
             <div className="flex content-center justify-center">
                 <div className="w-3/6 border-2 rounded-xl relative after:content-['▼'] after:right-5 after:top-3 after:text-white after:absolute after:pointer-events-none">
                     <select
-                        className="w-[100%] p-3 text-white text-xl bg-transparent appearance-none"
+                        className="w-[100%] p-3 text-main-primary text-xl bg-transparent appearance-none"
                         value={currentSelection}
                         onChange={(e) => handleChangeTaskList(Number(e.target.value))}
                     >
