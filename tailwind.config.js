@@ -17,6 +17,15 @@ module.exports = {
         light: '#1B1A20',
         primary: '#18161A',
       },
+      'pomodoro': {
+        red: '#ED665C',
+        yellow: '#F0DB5B',
+        green: '#4FF08D',
+      },
+      'main': {
+        light: '#1B1A20',
+        primary: '#18161A',
+      },
       'white': {
         DEFAULT: '#FFFFFF ',
       },
