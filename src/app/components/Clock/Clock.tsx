@@ -11,8 +11,8 @@ const Clock: React.FC = () => {
     }, []);
 
     return (
-        <ContentBox>
-            <div className="flex flex-row items-center justify-center  font-bold gap-1">
+        <ContentBox className="px-[80px]">
+            <div className="flex flex-row items-center justify-center font-bold gap-1">
                 <div className="text-6xl">
                     {dateState.toLocaleString('en-US', {
                         hour: 'numeric',
