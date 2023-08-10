@@ -150,7 +150,7 @@ const WaterTracker = () => {
                             </div>
                             {/* Progress bar */}
                             <div
-                                className={`absolute bottom-0 -left-0 bg-water h-2 ${getPercentage(waterAmount, maxWaterAmount) === 100 ? 'rounded-b-xl' : 'rounded-bl-xl'} transition-all duration-500`}
+                                className={`absolute bottom-0 -left-0 bg-water h-2 ${getPercentage(waterAmount, maxWaterAmount) === 100 ? 'rounded-b-xl' : 'rounded-bl-xl'} ${getPercentage(waterAmount, maxWaterAmount) === 0 && 'opacity-0'} transition-all duration-500`}
                                 style={{
                                     width: `${(waterAmount / maxWaterAmount) * 100}%`,
                                 }}
