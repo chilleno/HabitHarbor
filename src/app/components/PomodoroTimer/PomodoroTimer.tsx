@@ -11,7 +11,6 @@ import { CogIcon } from '@heroicons/react/24/solid';
 import { ForwardIcon } from '@heroicons/react/24/solid';
 
 const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepCount }) => {
-    const [soundEffect, setSoundEffect] = useState<string>('wow');
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
     const [shortBreakDuration, setShortBreakDuration] = useState<number>(5);
     const [longBreakDuration, setLongBreakDuration] = useState<number>(15);
@@ -39,10 +38,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 if (seconds === 0 && minutes === 0) {
                     clearInterval(interval);
                     handleTimerFinish();
-                    if (soundEffect === 'wow')
-                        playSoundWow();
-                    if (soundEffect === 'oot')
-                        playSoundOOT();
+                    playSoundFinishPomodoro();
                 } else if (seconds === 0) {
                     setMinutes((prevMinutes: number) => prevMinutes - 1);
                     setSeconds(59);
@@ -68,7 +64,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         const savedPomodoroTotalCount = localStorage.pomodoroTotalCount;
         const savedShortBreakCount = localStorage.shortBreakCount;
         const savedLongBreakCount = localStorage.longBreakCount;
-        const savedSoundEffect = localStorage.soundEffect;
 
         if (savedPomodoroDuration) {
             setPomodoroDuration(Number(savedPomodoroDuration));
@@ -104,9 +99,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         if (savedLongBreakCount) {
             setLongBreakCount(Number(savedLongBreakCount));
         }
-        if (savedSoundEffect) {
-            setSoundEffect(String(savedSoundEffect));
-        }
     };
 
     useEffect(() => {
@@ -129,7 +121,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         localStorage.setItem('pomodoroTotalCount', pomodoroTotalCount.toString());
         localStorage.setItem('shortBreakCount', shortBreakCount.toString());
         localStorage.setItem('longBreakCount', longBreakCount.toString());
-        localStorage.setItem('soundEffect', soundEffect);
         if (pomodoroCount === 1) {
             localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
@@ -145,7 +136,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         pomodoroTotalCount,
         shortBreakCount,
         longBreakCount,
-        soundEffect
     ]);
 
     const updateLocalStorageData = (): void => {
@@ -160,7 +150,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         localStorage.setItem('pomodoroTotalCount', pomodoroTotalCount.toString());
         localStorage.setItem('shortBreakCount', shortBreakCount.toString());
         localStorage.setItem('longBreakCount', longBreakCount.toString());
-        localStorage.setItem('soundEffect', soundEffect);
     }
 
     useEffect(() => {
@@ -199,7 +188,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 setShortBreakDuration(5);
                 setLongBreakDuration(15);
                 setPomodorosForLongBreak(4);
-                setSoundEffect('wow');
                 setMinutes(25);
             }
             if (!defaultValues) {
@@ -280,13 +268,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         setShowModal(false);
     };
 
-    const playSoundWow = (): void => {
-        const audio = new Audio('/static/sounds/soundEffect.ogg');
-        audio.play();
-    };
-
-    const playSoundOOT = (): void => {
-        const audio = new Audio('/static/sounds/OOT_soundEffect.wav');
+    const playSoundFinishPomodoro = (): void => {
+        const audio = new Audio('/static/sounds/finishPomodoro.wav');
         audio.play();
     };
 
@@ -315,7 +298,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }
 
     return (
-        <ContentBox className="xl:px-[40px] lg:px-[70px] sm:px-[80px]">
+        <ContentBox className="min-w-[340px]">
             <div className="flex justify-end xl:-mr-14 lg:-mr-20 md:-mr-24 sm:-mr-24 -mt-8">
                 <FloatingButton onClick={openModal}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
@@ -407,16 +390,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                                 className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
                                 onFocus={(event) => event.target.select()}
                             />
-                            <label htmlFor="pomodorosForLongBreakInput">Sound Effect</label>
-                            <select
-                                id="soundEffectSelect"
-                                className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
-                                value={soundEffect}
-                                onChange={(e) => setSoundEffect(e.target.value)}
-                            >
-                                <option value={'wow'}>World of Warcraft</option>
-                                <option value={'oot'}>Zelda: Ocarina of Time</option>
-                            </select>
                         </div>
                         <div className="flex mt-4">
                             <div className="flex w-1/2 justify-start">
