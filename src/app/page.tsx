@@ -96,7 +96,7 @@ export default function Home() {
             handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
           />
         </div>
-        <div className=''>
+        <div className="flex justify-center content-center mt-10 mb-5">
           <WaterTracker />
         </div>
       </StartScreen>
