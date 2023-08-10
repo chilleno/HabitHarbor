@@ -1,13 +1,15 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { CogIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { CogIcon, PlusIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
+import ContentBox from '../../designComponent/ContentBox';
+import FloatingButton from '@/app/designComponent/FloatingButton';
 
 const WaterTracker = () => {
     const [today] = useState(new Date());
     const [waterAmount, setWaterAmount] = useState<number>(0);
     const [maxWaterAmount, setMaxWaterAmount] = useState<number>(12);
-    const [trackMode, setTrackMode] = useState<string>("glass");
+    const [trackMode, setTrackMode] = useState<string>("CUPS");
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isCooldown, setIsCooldown] = useState<boolean>(false);
 
@@ -21,30 +23,38 @@ const WaterTracker = () => {
         setShowModal(false);
     }
 
-    const handleWaterAmountChange = (newAmount: number, effect: boolean) => {
+    const handleWaterAmountChange = (newAmount: number, effectCount: boolean, effectReset:boolean) => {
         if (!isCooldown && newAmount >= 0 && newAmount <= maxWaterAmount) {
             setIsCooldown(true);
             setWaterAmount(newAmount);
             localStorage.setItem('waterDrinkAmount', newAmount.toString());
-            if (effect) {
-                playSound();
+            if (effectCount) {
+                playSoundCountWater();
+            }
+            if (effectReset) {
+                playSoundResetWater();
             }
             setTimeout(() => {
                 setIsCooldown(false);
-            }, 2000);
+            }, 1000);
         }
     }
 
-    const playSound = () => {
-        const audio = new Audio('/static/sounds/minecraft-drink.mp3');
+    const playSoundCountWater = () => {
+        const audio = new Audio('/static/sounds/waterTrackCount.wav');
+        audio.play();
+    };
+
+    const playSoundResetWater = () => {
+        const audio = new Audio('/static/sounds/waterTrackReset.wav');
         audio.play();
     };
 
     const updateTrackMode = (newTrackMode: React.SetStateAction<string>) => {
         if (window.confirm('This action will reset the water count, are you sure you want to continue?')) {
-            if (newTrackMode === "bottle") {
+            if (newTrackMode === "BOTTLES") {
                 setMaxWaterAmount(3);
-            } else if (newTrackMode === "glass") {
+            } else if (newTrackMode === "CUPS") {
                 setMaxWaterAmount(12);
             }
             setTrackMode(newTrackMode);
@@ -54,30 +64,11 @@ const WaterTracker = () => {
         }
     }
 
-    const generateIcons = (): JSX.Element[] => {
-        const icons: JSX.Element[] = [];
-        let iconClass = "xl:h-7 xl:w-7 lg:w-5 lg:h-5 sm:h-5 sm:w-5 text-white-500";
-        for (let i = 1; i <= maxWaterAmount; i++) {
-            if (trackMode === 'glass') {
-                if (waterAmount >= (i)) {
-                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/filledGlass.svg" className={iconClass} alt="Glass Icon" />);
-                } else {
-                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/glass.svg" className={iconClass} alt="Glass Icon" />);
-                }
-            } else if (trackMode === 'bottle') {
-                if (waterAmount >= (i)) {
-                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/filledBottle.svg" className={iconClass} alt="Glass Icon" />);
-                } else {
-                    icons.push(<Image width={20} height={20} key={'wte-' + i} src="/icons/bottle.svg" className={iconClass} alt="Glass Icon" />);
-                }
-            }
-        }
-        return icons;
+    const getPercentage = (done: number, max: number): number => {
+        return Math.round((done / max) * 100 / 10) * 10;
     }
 
-
     useEffect(() => {
-        // Save updated values to cookies
         let firstRepaymentDate = new Date(localStorage.firstWaterDate);
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
             localStorage.setItem('waterDrinkAmount', "0");
@@ -93,9 +84,9 @@ const WaterTracker = () => {
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
             setWaterAmount(0);
         }
-        if (localStorage.waterTrackMethod === "bottle") {
+        if (localStorage.waterTrackMethod === "BOTTLES") {
             setMaxWaterAmount(3);
-        } else if (localStorage.waterTrackMethod === "glass") {
+        } else if (localStorage.waterTrackMethod === "CUPS") {
             setMaxWaterAmount(12);
         }
         if (localStorage.waterDrinkAmount !== null && Number(localStorage.waterDrinkAmount) >= 0) {
@@ -105,8 +96,8 @@ const WaterTracker = () => {
             setTrackMode(localStorage.waterTrackMethod);
         }
         if (localStorage.waterTrackMethod === undefined) {
-            localStorage.setItem('waterTrackMethod', 'glass');
-            setTrackMode('glass');
+            localStorage.setItem('waterTrackMethod', 'CUPS');
+            setTrackMode('CUPS');
         }
         setInitialRenderComplete(true);
     }, []);
@@ -115,61 +106,47 @@ const WaterTracker = () => {
         return null;
     } else {
         return (
-            <div className="flex flex-col items-center justify-center lg:h-auto text-white font-bold lg:p-5 sm:p-1">
-                <div className="flex justify-center items-center center w-2/2 mt-5">
-                    <h1>water tracker</h1>
-                    <CogIcon onClick={openModal} className="h-5 w-5 text-white-500 ml-5 hover:cursor-pointer" />
+            <ContentBox className="min-w-[340px] -mt-2">
+                <div className="flex justify-end -mr-12 -mt-8">
+                    <FloatingButton onClick={openModal}>
+                        <span className="flex items-center justify-center hover:cursor-pointer">
+                            <CogIcon className="h-[24px] w-[24px] text-white-500" />
+                        </span>
+                    </FloatingButton>
                 </div>
-                {
-                    waterAmount === maxWaterAmount ?
-                        <div className="flex flex-col items-center center w-2/2 mt-5">
-                            <div className="lg:text-xl sm:text-md xl:text-3xl">
-                                <div className="flex flex-col gap-5 justify-center items-center center w-2/2 mt-5">
-                                    <h1>Congrats!</h1>
-                                    <a onClick={() => handleWaterAmountChange(0, false)} className="text-lg text-white-500 p-2 hover:cursor-pointer border-0 transition duration-300 ease-in-out hover:underline hover:animate-pulse" >Reset Timer</a>
-                                </div>
-                            </div>
+                <div className="flex justify-center items-center font-bold -mt-6 mb-2">
+                    <h1>Daily habits</h1>
+                </div>
+                <div className="flex justify-center items-center bg-main-primary rounded-xl p-3">
+                    <div className={`flex flex-row gap-3 rounded-xl p-2 w-[90%] transition-all duration-500 bg-gradient-to-r ${getPercentage(waterAmount, maxWaterAmount) === 0 ? 'from-white' : 'from-water-light'} ${'from-' + getPercentage(waterAmount, maxWaterAmount) + '%'} via-white to-white to-90%`}>
+                        <h1 className="h-[34px] w-[34px] bg-water rounded-md shadow-habit py-1 text-xl justify-center content-center flex">
+                            💧
+                        </h1>
+                        <div className="w-8/12">
+                            <h1 className="text-main-primary font-bold text-sm">DRINK WATER</h1>
+                            <h1 className="text-water font-bold text-xs"> {waterAmount}/{maxWaterAmount} {trackMode}</h1>
                         </div>
-                        :
-                        <div className="flex flex-col items-center center w-2/2 mt-5">
-                            <div className="lg:text-xl sm:text-md xl:text-3xl">
-                                <span className="flex items-center justify-center">
-                                    <>
-                                        {generateIcons()}
-                                    </>
-                                    <PlusIcon
-                                        onClick={() => handleWaterAmountChange(waterAmount + 1, true)}
-                                        className={`${isCooldown && 'hidden'} h-5 w-5 text-white-500 hover:cursor-pointer ml-5`}
-                                    />
-                                    <Image
-                                        width={20}
-                                        height={20}
-                                        src="/icons/loading.svg"
-                                        className={`${!isCooldown && 'hidden'} animate-spin h-5 w-5 text-white-500 hover:cursor-pointer ml-5`}
-                                        alt="lading..."
-                                    />
-                                </span>
-                            </div>
-                            <div className="flex flex-col lg:mt-6 sm:mt-3 xl:text-xl lg:text-sm sm:text-sm" >
-                                <div className="flex justify-center">
-                                    {waterAmount} / {maxWaterAmount}
-                                </div>
-                                <div className="flex justify-center xl:inline lg:inline sm:hidden">
-                                    {trackMode === 'glass' ? 'Glasses' : 'Bottles'} of water
-                                </div>
-                            </div>
+                        <div className="w-2/12 text-water flex justify-center content-center py-2" >
+                            <PlusIcon className={`transition-all duration-500 ${waterAmount === maxWaterAmount && 'hidden'}  ${isCooldown && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`} onClick={() => handleWaterAmountChange(waterAmount + 1, true, false)} />
+                            <Image
+                                width={20}
+                                height={20}
+                                src="/icons/loading.svg"
+                                className={`transition-all duration-500 ${!isCooldown && 'hidden'} animate-spin h-[24px] w-[24px] text-water`}
+                                alt="lading..."
+                            />
+                            <ArrowPathIcon className={`transition-all duration-500 ${!(waterAmount === maxWaterAmount) && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`} onClick={() => handleWaterAmountChange(0, false, true)} />
                         </div>
-                }
-
-
+                    </div>
+                </div>
                 {showModal && (
                     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50">
                         <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                             <h2 className="text-xl font-bold mb-4">Edit Water Tacker</h2>
                             <div className="flex flex-col">
                                 <select className="text-black rounded-full py-2" value={trackMode} onChange={(e) => updateTrackMode(e.target.value)}>
-                                    <option value="glass">Glasses</option>
-                                    <option value="bottle">Bottles</option>
+                                    <option value="CUPS">CUPS</option>
+                                    <option value="BOTTLES">BOTTLES</option>
                                 </select>
                             </div>
                             <div className="flex justify-end mt-4">
@@ -180,7 +157,7 @@ const WaterTracker = () => {
                         </div>
                     </div>
                 )}
-            </div>
+            </ContentBox>
         );
     }
 };
