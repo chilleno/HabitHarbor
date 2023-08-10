@@ -23,7 +23,7 @@ const WaterTracker = () => {
         setShowModal(false);
     }
 
-    const handleWaterAmountChange = (newAmount: number, effectCount: boolean, effectReset:boolean) => {
+    const handleWaterAmountChange = (newAmount: number, effectCount: boolean, effectReset: boolean) => {
         if (!isCooldown && newAmount >= 0 && newAmount <= maxWaterAmount) {
             setIsCooldown(true);
             setWaterAmount(newAmount);
@@ -118,24 +118,45 @@ const WaterTracker = () => {
                     <h1>Daily habits</h1>
                 </div>
                 <div className="flex justify-center items-center bg-main-primary rounded-xl p-3">
-                    <div className={`flex flex-row gap-3 rounded-xl p-2 w-[90%] transition-all duration-500 bg-gradient-to-r ${getPercentage(waterAmount, maxWaterAmount) === 0 ? 'from-white' : 'from-water-light'} ${'from-' + getPercentage(waterAmount, maxWaterAmount) + '%'} via-white to-white to-90%`}>
-                        <h1 className="h-[34px] w-[34px] bg-water rounded-md shadow-habit py-1 text-xl justify-center content-center flex">
-                            💧
-                        </h1>
-                        <div className="w-8/12">
-                            <h1 className="text-main-primary font-bold text-sm">DRINK WATER</h1>
-                            <h1 className="text-water font-bold text-xs"> {waterAmount}/{maxWaterAmount} {trackMode}</h1>
-                        </div>
-                        <div className="w-2/12 text-water flex justify-center content-center py-2" >
-                            <PlusIcon className={`transition-all duration-500 ${waterAmount === maxWaterAmount && 'hidden'}  ${isCooldown && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`} onClick={() => handleWaterAmountChange(waterAmount + 1, true, false)} />
-                            <Image
-                                width={20}
-                                height={20}
-                                src="/icons/loading.svg"
-                                className={`transition-all duration-500 ${!isCooldown && 'hidden'} animate-spin h-[24px] w-[24px] text-water`}
-                                alt="lading..."
-                            />
-                            <ArrowPathIcon className={`transition-all duration-500 ${!(waterAmount === maxWaterAmount) && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`} onClick={() => handleWaterAmountChange(0, false, true)} />
+                    <div className={`w-full`}>
+                        <div className="relative bg-white rounded-xl p-2 ">
+                            <div className="flex flex-row gap-3 z-10">
+                                <div className="h-[34px] w-[34px] bg-water rounded-md shadow-habit py-1 text-xl justify-center content-center flex">
+                                    💧
+                                </div>
+                                <div className="w-8/12">
+                                    <h1 className="text-main-primary font-bold text-sm">DRINK WATER</h1>
+                                    <h1 className="text-water font-bold text-xs"> {waterAmount}/{maxWaterAmount} {trackMode}</h1>
+                                </div>
+                                <div className="w-2/12 text-water flex justify-center content-center py-2">
+                                    <PlusIcon
+                                        className={`transition-all duration-500 ${waterAmount === maxWaterAmount && 'hidden'
+                                            } ${isCooldown && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
+                                        onClick={() => handleWaterAmountChange(waterAmount + 1, true, false)}
+                                    />
+                                    <Image
+                                        width={20}
+                                        height={20}
+                                        src="/icons/loading.svg"
+                                        className={`transition-all duration-500 ${!isCooldown && 'hidden'
+                                            } animate-spin h-[24px] w-[24px] text-water`}
+                                        alt="loading..."
+                                    />
+                                    <ArrowPathIcon
+                                        className={`transition-all duration-500 ${!(waterAmount === maxWaterAmount) && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
+                                        onClick={() => handleWaterAmountChange(0, false, true)}
+                                    />
+                                </div>
+                            </div>
+                            {/* Progress bar */}
+                            <div
+                                className={`absolute bottom-0 -left-0 bg-water h-2 ${getPercentage(waterAmount, maxWaterAmount) === 100 ? 'rounded-b-xl' : 'rounded-bl-xl'} transition-all duration-500`}
+                                style={{
+                                    width: `${(waterAmount / maxWaterAmount) * 100}%`,
+                                }}
+                            >
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
