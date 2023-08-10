@@ -143,7 +143,7 @@ const WaterTracker = () => {
                                         alt="loading..."
                                     />
                                     <ArrowPathIcon
-                                        className={`transition-all duration-500 ${!(waterAmount === maxWaterAmount) && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
+                                        className={`transition-all duration-500 ${!(waterAmount === maxWaterAmount)  && 'hidden'} ${isCooldown && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
                                         onClick={() => handleWaterAmountChange(0, false, true)}
                                     />
                                 </div>
