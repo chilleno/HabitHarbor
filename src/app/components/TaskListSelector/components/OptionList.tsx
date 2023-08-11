@@ -1,0 +1,28 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TaskListOptionListProps> = ({ onClose, openModal }) => {
+    const listRef = useRef<HTMLDivElement>(null);
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (listRef.current && !listRef.current.contains(event.target as Node)) {
+            onClose();
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    return (
+        <div ref={listRef} className="absolute mt-6 ml-36 bg-main-primary border-2 w-40 rounded-lg shadow-md">
+            <div onClick={openModal} className="px-4 py-2 hover:bg-gray-100 hover:text-black cursor-pointer">
+                New task list
+            </div>
+        </div>
+    );
+};
+
+export default OptionList;
