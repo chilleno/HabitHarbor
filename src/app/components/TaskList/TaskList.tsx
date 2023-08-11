@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
 
-const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, previousTaskList, nextTaskList, changeTaskList }) => {
+const TaskList: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [lists, setLists] = useState<TaskList[]>();
     const [taskList, setTaskList] = useState<Task[]>([]);
