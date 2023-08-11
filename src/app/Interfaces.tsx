@@ -40,8 +40,6 @@ interface PomodoroTimerProps {
 
 interface TaskListProps {
     currentTaskListIndex: number;
-    nextTaskList(): void;
-    previousTaskList(): void;
     changeTaskList(taskListIndex: number): void;
 }
 
@@ -53,6 +51,11 @@ interface NewTaskListModalProps {
 
 interface HelpOptionListProps {
     onClose: () => void;
+}
+
+interface TaskListOptionListProps {
+    onClose: () => void;
+    openModal: () => void;
 }
 
 interface QuestionButtonProps {
