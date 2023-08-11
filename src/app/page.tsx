@@ -38,18 +38,6 @@ export default function Home() {
     setShowList(!showList);
   };
 
-  const nextTaskList = () => {
-    if ((currentTaskList + 1) < localStorage.taskLists.length) {
-      setCurrentTaskList(currentTaskList + 1);
-    }
-  };
-
-  const previousTaskList = () => {
-    if ((currentTaskList - 1) >= 0) {
-      setCurrentTaskList(currentTaskList - 1);
-    }
-  };
-
   const changeTaskList = (taskListIndex: number) => {
     if (taskListIndex >= 0 && taskListIndex < JSON.parse(localStorage.getItem('taskLists') || '[]').length) {
       setCurrentTaskList(taskListIndex);
