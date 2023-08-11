@@ -13,6 +13,7 @@ import Routine from './components/Routine/Routine';
 import WaterTracker from './components/WaterTracker/WaterTracker';
 import HelpButton from './components/HelpButton/HelpButton';
 import HelpOptionList from './components/HelpButton/HelpOptionList';
+import TaskListSelector from './components/TaskListSelector/TaskListSelector';
 
 interface Step {
   header: string;
@@ -98,13 +99,18 @@ export default function Home() {
         </div>
         <div className="flex justify-center content-center mt-10 mb-5">
           <WaterTracker />
+
         </div>
       </StartScreen>
-      <MiddleScreen className=''>
+      <MiddleScreen className="">
+        <div className="flex justify-center content-center mt-10 mb-5">
+          <TaskListSelector
+            currentTaskListIndex={currentTaskList}
+            changeTaskList={changeTaskList}
+          />
+        </div>
         <TaskList
           currentTaskListIndex={currentTaskList}
-          nextTaskList={nextTaskList}
-          previousTaskList={previousTaskList}
           changeTaskList={changeTaskList}
         />
       </MiddleScreen>
