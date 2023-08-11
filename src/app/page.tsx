@@ -89,9 +89,6 @@ export default function Home() {
   return (
     <MainComponent>
       <StartScreen className=''>
-        <div className="flex justify-center content-center mt-5 mb-5">
-          <Clock />
-        </div>
         <div className="flex justify-center content-center mt-10 mb-5">
           <PomodoroTimer
             handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
@@ -99,7 +96,6 @@ export default function Home() {
         </div>
         <div className="flex justify-center content-center mt-10 mb-5">
           <WaterTracker />
-
         </div>
       </StartScreen>
       <MiddleScreen className="">
@@ -115,6 +111,9 @@ export default function Home() {
         />
       </MiddleScreen>
       <EndScreen className=''>
+        <div className="flex justify-center content-center mt-5 mb-5">
+          <Clock />
+        </div>
         <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTask} />
       </EndScreen>
       <div className="relative">
