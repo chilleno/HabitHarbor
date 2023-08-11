@@ -50,7 +50,16 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
                         <span className="flex items-center justify-center hover:cursor-pointer">
                             <CogIcon className="h-[24px] w-[24px] text-white-500" />
                         </span>
-                        {showOptions && <OptionList openModal={openModal} onClose={() => setShowOptions(false)} />}
+                        {
+                            showOptions &&
+                            <OptionList
+                                openModal={openModal}
+                                onClose={() => setShowOptions(false)}
+                                currentSelection={currentSelection}
+                                handleChangeTaskList={handleChangeTaskList}
+                                renderTaskLists={renderTaskLists}
+                            />
+                        }
                     </FloatingButton>
                 </div>
                 <div className="flex justify-center items-center font-bold -mt-6 mb-2">
@@ -81,12 +90,12 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
                     </select>
                 </div>
                 {showModal && (
-                <NewTaskListModal
-                    closeModal={closeModal}
-                    renderList={renderTaskLists}
-                    handleChangeTaskList={handleChangeTaskList}
-                />
-            )}
+                    <NewTaskListModal
+                        closeModal={closeModal}
+                        renderList={renderTaskLists}
+                        handleChangeTaskList={handleChangeTaskList}
+                    />
+                )}
             </ContentBox>
         );
     }

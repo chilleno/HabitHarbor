@@ -56,6 +56,9 @@ interface HelpOptionListProps {
 interface TaskListOptionListProps {
     onClose: () => void;
     openModal: () => void;
+    currentSelection: number;
+    handleChangeTaskList: (taskListIndex: number) => void;
+    renderTaskLists: () => void;
 }
 
 interface QuestionButtonProps {
