@@ -30,7 +30,7 @@ interface RoutineProps {
 
 interface NewRoutineStepModalProps {
     closeModal: () => void;
-    setUpdateRoutineStep: (newValue:boolean) => void;
+    setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
 }
 
@@ -44,9 +44,9 @@ interface TaskListProps {
 }
 interface TasksProps {
     currentTaskListIndex: number;
-    changeTaskList(taskListIndex: number): void;
     taskList: Task[];
-    setTaskList: (newValue: Task[]) => void;
+    setUpdateTaskList: (newValue: boolean) => void;
+    updateTaskList: boolean;
 }
 
 interface NewTaskListModalProps {

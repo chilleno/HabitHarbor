@@ -1,6 +1,4 @@
 "use client"
-
-import jsonData from './data.json';
 import { useState, useEffect, use } from 'react';
 import { useMainComponent } from './layoutComponents/mainComponent';
 import { useStartScreen } from './layoutComponents/startScreen';
@@ -26,7 +24,8 @@ interface Step {
 
 export default function Home() {
   const [currentTaskList, setCurrentTaskList] = useState<number>(-1);
-  const [updateRoutineStep, setUpdateRoutineStep] = useState(false);
+  const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
+  const [updateRoutineStep, setUpdateRoutineStep] = useState<boolean>(false);
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [showList, setShowList] = useState(false);
   const { MainComponent } = useMainComponent();
@@ -52,11 +51,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-    if (currentStoredTaskLists && currentStoredTaskLists.length > 0 && currentTaskList >= 0) {
-      setTaskList(currentStoredTaskLists[currentTaskList].tasks);
+    const storedTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    if (storedTaskLists && storedTaskLists.length > 0 && currentTaskList >= 0) {
+      setTaskList([]);
+      setTimeout(() => {
+        setTaskList(storedTaskLists[currentTaskList].tasks);
+      }, 1);
     }
-  }, [currentTaskList])
+  }, [currentTaskList, updateTaskList])
 
 
   const handleCurrentRoutineStepCount = (): void => {
@@ -110,16 +112,16 @@ export default function Home() {
               <TodoTasks
                 currentTaskListIndex={currentTaskList}
                 taskList={taskList}
-                setTaskList={setTaskList}
-                changeTaskList={changeTaskList}
+                setUpdateTaskList={setUpdateTaskList}
+                updateTaskList={updateTaskList}
               />
             </div>
             <div className="flex justify-center content-center mt-12 mb-5">
               <DoneTasks
                 currentTaskListIndex={currentTaskList}
                 taskList={taskList}
-                setTaskList={setTaskList}
-                changeTaskList={changeTaskList}
+                setUpdateTaskList={setUpdateTaskList}
+                updateTaskList={updateTaskList}
               />
             </div>
           </>
