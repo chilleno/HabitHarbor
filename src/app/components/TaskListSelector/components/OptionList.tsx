@@ -17,8 +17,8 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TaskListOptionL
 
                 localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
 
-                handleChangeTaskList(updatedTaskLists.length - 1);
                 renderTaskLists();
+                handleChangeTaskList(updatedTaskLists.length - 1);
             }
         }
     };

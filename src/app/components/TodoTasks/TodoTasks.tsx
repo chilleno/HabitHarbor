@@ -11,7 +11,6 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
     const [newTask, setNewTask] = useState<string>('');
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [showError, setShowError] = useState<boolean>(false);
-    const [currentSelection, setCurrentSelection] = useState<number>(-1);
     const [initialRenderComplete, setInitialRenderComplete] = React.useState(false);
     const [showOptions, setShowOptions] = useState(false);
 
@@ -91,12 +90,18 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
     };
 
     const handleDeleteTask = (taskIndex: number) => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+        
         if (typeof window !== 'undefined') {
-            let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            
 
-            let updatedTasks = currentStoredTaskLists[currentTaskListIndex].tasks;
+            let updatedTasks = taskList;
             updatedTasks = updatedTasks.filter((task, index) => index !== taskIndex);
 
+            let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             setTaskList(updatedTasks);
@@ -147,9 +152,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
         }
     };
 
-
     const handleChangeTaskList = (newValue: number): void => {
-        setCurrentSelection(newValue);
         changeTaskList(newValue);
     }
 
@@ -160,7 +163,6 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
     useEffect(() => {
         handleChangeTaskList(currentTaskListIndex);
     }, [currentTaskListIndex])
-
 
     if (!initialRenderComplete) {
         return null;
@@ -197,7 +199,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
                 </div>
                 <div className="flex flex-col max-h-40 h-40 min-h-40 xl:max-h-80 xl:h-80 xl:min-h-80 overflow-y-auto">
                     {
-                        taskList && taskList.length > 0 && currentSelection >= 0 ? taskList.map((task, index) => (
+                        taskList && taskList.length > 0 ? taskList.map((task, index) => (
                             task.checked == false &&
                             <div
                                 key={'task_content_' + index}

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { CogIcon, PlusIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
+import { CogIcon } from '@heroicons/react/24/solid';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import NewTaskListModal from './components/NewTaskListModal';
@@ -8,7 +8,6 @@ import OptionList from './components/OptionList';
 
 const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }) => {
     const [lists, setLists] = useState<TaskList[]>();
-    const [currentSelection, setCurrentSelection] = useState<number>(-1);
     const [initialRenderComplete, setInitialRenderComplete] = React.useState(false);
     const [showOptions, setShowOptions] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -21,19 +20,10 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
         setShowModal(false);
     }
 
-    const handleChangeTaskList = (newValue: number): void => {
-        setCurrentSelection(newValue);
-        changeTaskList(newValue);
-    }
-
     useEffect(() => {
         renderTaskLists();
         setInitialRenderComplete(true);
     }, []);
-
-    useEffect(() => {
-        handleChangeTaskList(currentTaskListIndex);
-    }, [currentTaskListIndex])
 
     const renderTaskLists = (): void => {
         const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
@@ -55,8 +45,8 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
                             <OptionList
                                 openModal={openModal}
                                 onClose={() => setShowOptions(false)}
-                                currentSelection={currentSelection}
-                                handleChangeTaskList={handleChangeTaskList}
+                                currentSelection={currentTaskListIndex}
+                                handleChangeTaskList={changeTaskList}
                                 renderTaskLists={renderTaskLists}
                             />
                         }
@@ -67,11 +57,11 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
                 </div>
                 <div className="flex justify-center content-center">
                     <select
-                        value={currentSelection}
-                        onChange={(e) => handleChangeTaskList(Number(e.target.value))}
+                        value={currentTaskListIndex}
+                        onChange={(e) => changeTaskList(Number(e.target.value))}
                         className="w-3/6 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic"
                     >
-                        <option disabled value={-1}>
+                        <option value={-1}>
                             No task list selected
                         </option>
                         {
@@ -93,7 +83,7 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
                     <NewTaskListModal
                         closeModal={closeModal}
                         renderList={renderTaskLists}
-                        handleChangeTaskList={handleChangeTaskList}
+                        handleChangeTaskList={changeTaskList}
                     />
                 )}
             </ContentBox>
