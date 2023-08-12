@@ -42,6 +42,12 @@ interface TaskListProps {
     currentTaskListIndex: number;
     changeTaskList(taskListIndex: number): void;
 }
+interface TasksProps {
+    currentTaskListIndex: number;
+    changeTaskList(taskListIndex: number): void;
+    taskList: Task[];
+    setTaskList: (newValue: Task[]) => void;
+}
 
 interface NewTaskListModalProps {
     closeModal: () => void;
@@ -59,6 +65,10 @@ interface TaskListOptionListProps {
     currentSelection: number;
     handleChangeTaskList: (taskListIndex: number) => void;
     renderTaskLists: () => void;
+}
+
+interface TodoTasksOptionListProps {
+    onClose: () => void;
 }
 
 interface QuestionButtonProps {
