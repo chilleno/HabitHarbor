@@ -69,7 +69,7 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
                     <select
                         value={currentSelection}
                         onChange={(e) => handleChangeTaskList(Number(e.target.value))}
-                        className="w-3/6 bg-main-primary rounded-xl p-3 content-center justify-center flex text-center italic"
+                        className="w-3/6 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic"
                     >
                         <option disabled value={-1}>
                             No task list selected

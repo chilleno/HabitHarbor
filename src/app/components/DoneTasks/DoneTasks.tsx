@@ -18,7 +18,6 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
         }
 
         if (typeof window !== 'undefined') {
-            playSoundCheckbox();
             let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             const updatedTasks = taskList.map((task, index) => {
                 if (index === taskIndex) {
@@ -33,6 +32,9 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             setTaskList(updatedTasks);
             changeTaskList(currentTaskListIndex);
+            setTimeout(() => {
+                playSoundCheckbox();
+            }, (600))
         }
     };
 
@@ -124,7 +126,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
                             task.checked == true &&
                             <div
                                 key={'task_content_' + index}
-                                className={`group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                                className={`animate-bounceInRight group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
                             >
                                 <input
                                     checked={task.checked || false}

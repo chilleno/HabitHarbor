@@ -29,7 +29,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
         if (typeof window !== 'undefined') {
             let newTaskLists: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
             if (newTaskLists.length > 0) {
-                playSoundNewTask();
+               
                 let newTaskObject: Task = {
                     "header": newTask,
                     "checked": false,
@@ -44,6 +44,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
                 setTimeout(() => {
                     setNewTask('');
                 }, (1))
+
+                setTimeout(() => {
+                    playSoundNewTask();
+                }, (600))
+
             } else {
                 window.alert('You need to create a new list first.')
             }
@@ -65,7 +70,6 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
         }
 
         if (typeof window !== 'undefined') {
-            playSoundCheckbox();
             let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             const updatedTasks = taskList.map((task, index) => {
                 if (index === taskIndex) {
@@ -79,6 +83,10 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             setTaskList(updatedTasks);
+
+            setTimeout(() => {
+                playSoundCheckbox();
+            }, (600))
         }
     };
 
@@ -183,7 +191,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
                         onChange={(value) => setNewTask(value)}
                         onKeyDown={handlePressEnterButton}
                     />
-                    <b className={`ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100' : 'opacity-0'}`}>
+                    <b className={` ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
                         <i>Please add a text longer than 3 characters.</i>
                     </b>
                 </div>
@@ -193,7 +201,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, changeTaskList,
                             task.checked == false &&
                             <div
                                 key={'task_content_' + index}
-                                className={`group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                                className={`animate-bounceInRight group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
                             >
                                 <input
                                     checked={task.checked || false}

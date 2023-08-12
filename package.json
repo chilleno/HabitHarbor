@@ -28,6 +28,7 @@
     "typescript": "5.1.3"
   },
   "devDependencies": {
+    "animated-tailwindcss": "^4.0.0",
     "file-loader": "^6.2.0",
     "url-loader": "^4.1.1"
   }
