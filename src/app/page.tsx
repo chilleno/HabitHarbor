@@ -8,12 +8,13 @@ import { useMiddleScreen } from './layoutComponents/middleScreen';
 import { useEndScreen } from './layoutComponents/endScreen';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
-import TaskList from './components/TaskList/TaskList';
 import Routine from './components/Routine/Routine';
 import WaterTracker from './components/WaterTracker/WaterTracker';
 import HelpButton from './components/HelpButton/HelpButton';
 import HelpOptionList from './components/HelpButton/HelpOptionList';
 import TaskListSelector from './components/TaskListSelector/TaskListSelector';
+import TodoTasks from './components/TodoTasks/TodoTasks';
+import DoneTasks from './components/DoneTasks/DoneTasks';
 
 interface Step {
   header: string;
@@ -28,6 +29,7 @@ export default function Home() {
   const [currentTaskList, setCurrentTaskList] = useState(0);
   const [task, setTask] = useState(jsonData.data.tasks[currentTask]);
   const [updateRoutineStep, setUpdateRoutineStep] = useState(false);
+  const [taskList, setTaskList] = useState<Task[]>([]);
   const [showList, setShowList] = useState(false);
   const { MainComponent } = useMainComponent();
   const { StartScreen } = useStartScreen();
@@ -47,6 +49,13 @@ export default function Home() {
   useEffect(() => {
     setTask(jsonData.data.tasks[currentTask]);
   }, [currentTask, task]);
+
+  useEffect(() => {
+    const currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    if (currentStoredTaskLists && currentStoredTaskLists.length > 0) {
+      setTaskList(currentStoredTaskLists[currentTaskList].tasks);
+    }
+  }, [currentTaskList])
 
 
   const handleCurrentRoutineStepCount = (): void => {
@@ -93,10 +102,22 @@ export default function Home() {
             changeTaskList={changeTaskList}
           />
         </div>
-        <TaskList
-          currentTaskListIndex={currentTaskList}
-          changeTaskList={changeTaskList}
-        />
+        <div className="flex justify-center content-center mt-12 mb-5">
+          <TodoTasks
+            currentTaskListIndex={currentTaskList}
+            taskList={taskList}
+            setTaskList={setTaskList}
+            changeTaskList={changeTaskList}
+          />
+        </div>
+        <div className="flex justify-center content-center mt-12 mb-5">
+          <DoneTasks
+            currentTaskListIndex={currentTaskList}
+            taskList={taskList}
+            setTaskList={setTaskList}
+            changeTaskList={changeTaskList}
+          />
+        </div>
       </MiddleScreen>
       <EndScreen className=''>
         <div className="flex justify-center content-center mt-5 mb-5">
