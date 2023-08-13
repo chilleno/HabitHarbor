@@ -35,6 +35,9 @@ module.exports = withAnimations({
       'white': {
         DEFAULT: '#FFFFFF ',
       },
+      'gray': {
+        DEFAULT: '#8c8c8c',
+      },
     },
     extend: {
       boxShadow: {
