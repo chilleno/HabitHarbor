@@ -7,7 +7,7 @@ import { useEndScreen } from './layoutComponents/endScreen';
 import Clock from './components/Clock/Clock';
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer';
 import Routine from './components/Routine/Routine';
-import WaterTracker from './components/WaterTracker/WaterTracker';
+import DailyHabits from './components/DailyHabits/DailyHabits';
 import HelpButton from './components/HelpButton/HelpButton';
 import HelpOptionList from './components/HelpButton/HelpOptionList';
 import TaskListSelector from './components/TaskListSelector/TaskListSelector';
@@ -95,7 +95,7 @@ export default function Home() {
           />
         </div>
         <div className="flex justify-center content-center mt-10 mb-5">
-          <WaterTracker />
+          <DailyHabits />
         </div>
       </StartScreen>
       <MiddleScreen className="">
