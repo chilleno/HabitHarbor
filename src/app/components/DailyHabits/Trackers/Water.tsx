@@ -158,7 +158,7 @@ const Water: React.FC = () => {
                         <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                             <h2 className="text-xl font-bold mb-4">Edit Water Tacker</h2>
                             <div className="flex flex-col">
-                                <select className="text-black rounded-full py-2" value={trackMode} onChange={(e) => updateTrackMode(e.target.value)}>
+                                <select className="text-main-primary rounded-full py-2" value={trackMode} onChange={(e) => updateTrackMode(e.target.value)}>
                                     <option value="CUPS">CUPS</option>
                                     <option value="BOTTLES">BOTTLES</option>
                                 </select>
