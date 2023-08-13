@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { CogIcon, PlusIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 
 const Water: React.FC = () => {
     const [today] = useState(new Date());
-    const [waterAmount, setWaterAmount] = useState<number>(0);
-    const [maxWaterAmount, setMaxWaterAmount] = useState<number>(12);
+    const [currentAmount, setCurrentAmount] = useState<number>(0);
+    const [maxAmount, setMaxAmount] = useState<number>(12);
     const [trackMode, setTrackMode] = useState<string>("CUPS");
     const [isCooldown, setIsCooldown] = useState<boolean>(false);
-    const [initialRenderComplete, setInitialRenderComplete] = React.useState(false);
+    const [initialRenderComplete, setInitialRenderComplete] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
 
-    const handleWaterAmountChange = (newAmount: number, effectCount: boolean, effectReset: boolean) => {
-        if (!isCooldown && newAmount >= 0 && newAmount <= maxWaterAmount) {
+    const handleCurrentAmountChange = (newAmount: number, effectCount: boolean, effectReset: boolean) => {
+        if (!isCooldown && newAmount >= 0 && newAmount <= maxAmount) {
             setIsCooldown(true);
-            setWaterAmount(newAmount);
+            setCurrentAmount(newAmount);
             localStorage.setItem('waterDrinkAmount', newAmount.toString());
             if (effectCount) {
                 playSoundCountWater();
@@ -44,23 +44,23 @@ const Water: React.FC = () => {
             localStorage.setItem('waterDrinkAmount', "0");
             localStorage.setItem('firstWaterDate', today.toString());
         }
-        if (waterAmount === 1) {
+        if (currentAmount === 1) {
             localStorage.setItem('firstWaterDate', today.toString());
         }
-    }, [waterAmount]);
+    }, [currentAmount]);
 
     useEffect(() => {
         let firstRepaymentDate = new Date(localStorage.firstWaterDate);
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
-            setWaterAmount(0);
+            setCurrentAmount(0);
         }
         if (localStorage.waterTrackMethod === "BOTTLES") {
-            setMaxWaterAmount(3);
+            setMaxAmount(3);
         } else if (localStorage.waterTrackMethod === "CUPS") {
-            setMaxWaterAmount(12);
+            setMaxAmount(12);
         }
         if (localStorage.waterDrinkAmount !== null && Number(localStorage.waterDrinkAmount) >= 0) {
-            setWaterAmount(Number(localStorage.waterDrinkAmount));
+            setCurrentAmount(Number(localStorage.waterDrinkAmount));
         }
         if (localStorage.waterTrackMethod !== null && localStorage.waterTrackMethod !== "") {
             setTrackMode(localStorage.waterTrackMethod);
@@ -88,13 +88,13 @@ const Water: React.FC = () => {
     const updateTrackMode = (newTrackMode: React.SetStateAction<string>) => {
         if (window.confirm('This action will reset the water count, are you sure you want to continue?')) {
             if (newTrackMode === "BOTTLES") {
-                setMaxWaterAmount(3);
+                setMaxAmount(3);
             } else if (newTrackMode === "CUPS") {
-                setMaxWaterAmount(12);
+                setMaxAmount(12);
             }
             setTrackMode(newTrackMode);
             localStorage.setItem('waterTrackMethod', newTrackMode.toString());
-            setWaterAmount(0);
+            setCurrentAmount(0);
             closeModal();
         }
     }
@@ -111,9 +111,9 @@ const Water: React.FC = () => {
                     </div>
                     <div className="absolute z-10 h-14 w-[250px]">
                         <div
-                            className={`z-10 bg-water-light h-14 rounded-xl animate-fill-forwards transition-all duration-500 ${getPercentage(waterAmount, maxWaterAmount) === 0 && 'opacity-0'}`}
+                            className={`z-10 bg-water-light h-14 rounded-xl animate-fill-both duration-500 ${getPercentage(currentAmount, maxAmount) === 0 && 'opacity-0'}`}
                             style={{
-                                width: `${(waterAmount / maxWaterAmount) * 100}%`,
+                                width: `${(currentAmount / maxAmount) * 100}%`,
                             }}
                         >
                         </div>
@@ -127,29 +127,29 @@ const Water: React.FC = () => {
                             </div>
                             <div className="w-8/12">
                                 <h1 className="text-main-primary font-bold text-sm">DRINK WATER</h1>
-                                <h1 className="text-water font-bold text-xs"> {waterAmount}/{maxWaterAmount} {trackMode}</h1>
+                                <h1 className="text-gray font-bold text-xs"> {currentAmount}/{maxAmount} {trackMode}</h1>
                             </div>
                             <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer">
-                                <CogIcon className="h-[24px] w-[24px] text-water" />
+                                <CogIcon className="h-[24px] w-[24px] text-gray" />
                             </span>
                             <div className="w-2/12 text-water flex justify-center content-center py-2">
                                 <PlusIcon
-                                    className={`animate-delay-100 animate-fadeIn ${waterAmount === maxWaterAmount && 'hidden'
-                                        } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
-                                    onClick={() => handleWaterAmountChange(waterAmount + 1, true, false)}
+                                    className={`animate-delay-100 animate-fadeIn ${currentAmount === maxAmount && 'hidden'
+                                        } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[24px] w-[24px] text-gray hover:cursor-pointer`}
+                                    onClick={() => handleCurrentAmountChange(currentAmount + 1, true, false)}
                                 />
                                 <div className={`absolute ${!isCooldown ? 'animate-fadeOut' : 'animate-fadeIn'}`}>
                                     <Image
                                         width={20}
                                         height={20}
                                         src="/icons/loading.svg"
-                                        className={`animate-twSpin animate-infinite h-[24px] w-[24px] text-water`}
+                                        className={`animate-twSpin animate-infinite h-[24px] w-[24px] text-gray`}
                                         alt="loading..."
                                     />
                                 </div>
                                 <ArrowPathIcon
-                                    className={`animate-delay-100 animate-fadeIn ${!(waterAmount === maxWaterAmount) && 'hidden'} ${isCooldown && 'opacity-0'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
-                                    onClick={() => handleWaterAmountChange(0, false, true)}
+                                    className={`animate-delay-100 animate-fadeIn ${!(currentAmount === maxAmount) && 'hidden'} ${isCooldown && 'opacity-0'} h-[24px] w-[24px] text-gray hover:cursor-pointer`}
+                                    onClick={() => handleCurrentAmountChange(0, false, true)}
                                 />
                             </div>
                         </div>
