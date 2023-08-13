@@ -5,8 +5,8 @@ import Water from './Trackers/Water';
 
 const DailyHabits = () => {
     return (
-        <ContentBox className="min-w-[340px] -mt-2">
-            <div className="flex justify-center items-center font-bold -mt-6 mb-2">
+        <ContentBox className="min-w-[340px] -mt-2 h-60">
+            <div className="flex justify-center font-bold mb-2">
                 <h1>Daily habits</h1>
             </div>
             <div className="flex justify-center items-center bg-main-primary rounded-xl p-3">
