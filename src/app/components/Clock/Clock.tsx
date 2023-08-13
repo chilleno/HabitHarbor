@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
 
 const Clock: React.FC = () => {
-    const [dateState, setDateState] = useState<Date>(new Date());
+    const [dateState, setDateState] = useState<Date | null>(null);
+    const [initialRenderComplete, setInitialRenderComplete] = useState<boolean>(false);
 
     // Update the date state every 30 seconds.
     useEffect(() => {
@@ -10,18 +11,27 @@ const Clock: React.FC = () => {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        setDateState(new Date());
+        setInitialRenderComplete(true);
+    }, []);
+
+    if (!initialRenderComplete) {
+        return null;
+    }
+
     return (
         <ContentBox className="min-w-[340px]">
             <div className="flex flex-row items-center justify-center font-bold gap-1">
                 <div className="text-6xl">
-                    {dateState.toLocaleString('en-US', {
+                    {dateState && dateState.toLocaleString('en-US', {
                         hour: 'numeric',
                         minute: 'numeric',
                         hour12: true,
                     }).slice(0, -2)}
                 </div>
                 <div className="-rotate-90 text-3xl">
-                    {dateState.toLocaleString('en-US', {
+                    {dateState && dateState.toLocaleString('en-US', {
                         hour: 'numeric',
                         minute: 'numeric',
                         hour12: true,
@@ -29,7 +39,7 @@ const Clock: React.FC = () => {
                 </div>
             </div>
             <div className="flex justify-center content-center text-xl">
-                {dateState.toLocaleDateString('en-GB', {
+                {dateState && dateState.toLocaleDateString('en-GB', {
                     weekday: 'short',
                     day: 'numeric',
                     month: 'short',
