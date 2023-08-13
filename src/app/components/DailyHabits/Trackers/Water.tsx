@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { CogIcon, PlusIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
-import FloatingButton from '@/app/designComponent/FloatingButton';
 import Image from 'next/image';
 
 const Water: React.FC = () => {
@@ -105,49 +104,55 @@ const Water: React.FC = () => {
     } else {
         return (
             <>
-                <div className="relative bg-white border-water border-2 rounded-xl p-2">
-                    <div className="flex flex-row gap-3 z-10">
-                        <div className="w-2/12">
-                            <div className="h-[34px] w-[34px] bg-water rounded-md shadow-habit py-1 text-xl justify-center content-center flex">
-                                💧
-                            </div>
-                        </div>
-                        <div className="w-8/12">
-                            <h1 className="text-main-primary font-bold text-sm">DRINK WATER</h1>
-                            <h1 className="text-water font-bold text-xs"> {waterAmount}/{maxWaterAmount} {trackMode}</h1>
-                        </div>
-                        <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer">
-                            <CogIcon className="h-[24px] w-[24px] text-water" />
-                        </span>
-                        <div className="w-2/12 text-water flex justify-center content-center py-2">
-                            <PlusIcon
-                                className={`animate-delay-100 animate-fadeIn ${waterAmount === maxWaterAmount && 'hidden'
-                                    } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
-                                onClick={() => handleWaterAmountChange(waterAmount + 1, true, false)}
-                            />
-                            <div className={`absolute ${!isCooldown ? 'animate-fadeOut' : 'animate-fadeIn'}`}>
-                                <Image
-                                    width={20}
-                                    height={20}
-                                    src="/icons/loading.svg"
-                                    className={`animate-twSpin animate-infinite h-[24px] w-[24px] text-water`}
-                                    alt="loading..."
-                                />
-                            </div>
-                            <ArrowPathIcon
-                                className={`animate-delay-100 animate-fadeIn ${!(waterAmount === maxWaterAmount) && 'hidden'} ${isCooldown && 'opacity-0'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
-                                onClick={() => handleWaterAmountChange(0, false, true)}
-                            />
+                <div className="flex flex-col">
+                    <div className="absolute w-[250px] z-0 h-14 bg-white border-water border-2 rounded-xl p-2">
+
+
+                    </div>
+                    <div className="absolute z-10 h-14 w-[250px]">
+                        <div
+                            className={`z-10 bg-water-light h-14 rounded-xl animate-fill-forwards transition-all duration-500 ${getPercentage(waterAmount, maxWaterAmount) === 0 && 'opacity-0'}`}
+                            style={{
+                                width: `${(waterAmount / maxWaterAmount) * 100}%`,
+                            }}
+                        >
                         </div>
                     </div>
-                    {/* Progress bar */}
-                    <div
-                        className={`absolute bottom-0 -left-0 bg-water h-2 ${getPercentage(waterAmount, maxWaterAmount) === 100 ? 'rounded-b-xl' : 'rounded-bl-xl'} ${getPercentage(waterAmount, maxWaterAmount) === 0 && 'opacity-0'} transition-all duration-500`}
-                        style={{
-                            width: `${(waterAmount / maxWaterAmount) * 100}%`,
-                        }}
-                    >
-
+                    <div className="absolute z-20 h-14 p-2 w-[250px]">
+                        <div className="flex flex-row gap-3">
+                            <div className="w-2/12">
+                                <div className="h-[34px] w-[34px] bg-water rounded-md shadow-habit py-1 text-xl justify-center content-center flex">
+                                    💧
+                                </div>
+                            </div>
+                            <div className="w-8/12">
+                                <h1 className="text-main-primary font-bold text-sm">DRINK WATER</h1>
+                                <h1 className="text-water font-bold text-xs"> {waterAmount}/{maxWaterAmount} {trackMode}</h1>
+                            </div>
+                            <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer">
+                                <CogIcon className="h-[24px] w-[24px] text-water" />
+                            </span>
+                            <div className="w-2/12 text-water flex justify-center content-center py-2">
+                                <PlusIcon
+                                    className={`animate-delay-100 animate-fadeIn ${waterAmount === maxWaterAmount && 'hidden'
+                                        } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
+                                    onClick={() => handleWaterAmountChange(waterAmount + 1, true, false)}
+                                />
+                                <div className={`absolute ${!isCooldown ? 'animate-fadeOut' : 'animate-fadeIn'}`}>
+                                    <Image
+                                        width={20}
+                                        height={20}
+                                        src="/icons/loading.svg"
+                                        className={`animate-twSpin animate-infinite h-[24px] w-[24px] text-water`}
+                                        alt="loading..."
+                                    />
+                                </div>
+                                <ArrowPathIcon
+                                    className={`animate-delay-100 animate-fadeIn ${!(waterAmount === maxWaterAmount) && 'hidden'} ${isCooldown && 'opacity-0'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
+                                    onClick={() => handleWaterAmountChange(0, false, true)}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {showModal && (
