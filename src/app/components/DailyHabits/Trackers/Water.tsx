@@ -105,10 +105,7 @@ const Water: React.FC = () => {
     } else {
         return (
             <>
-                <div className="relative bg-white rounded-xl p-2 ">
-                    <div className="absolute justify-start -mt-5 -ml-5">
-
-                    </div>
+                <div className="relative bg-white border-water border-2 rounded-xl p-2">
                     <div className="flex flex-row gap-3 z-10">
                         <div className="w-2/12">
                             <div className="h-[34px] w-[34px] bg-water rounded-md shadow-habit py-1 text-xl justify-center content-center flex">
@@ -124,21 +121,21 @@ const Water: React.FC = () => {
                         </span>
                         <div className="w-2/12 text-water flex justify-center content-center py-2">
                             <PlusIcon
-                                className={`transition-all duration-500 ${waterAmount === maxWaterAmount && 'hidden'
-                                    } ${isCooldown && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
+                                className={`animate-delay-100 animate-fadeIn ${waterAmount === maxWaterAmount && 'hidden'
+                                    } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
                                 onClick={() => handleWaterAmountChange(waterAmount + 1, true, false)}
                             />
-                            <Image
-                                width={20}
-                                height={20}
-                                src="/icons/loading.svg"
-                                className={`transition-all duration-500 ${!isCooldown && 'hidden'
-                                    } animate-spin h-[24px] w-[24px] text-water`}
-                                alt="loading..."
-                            />
-
+                            <div className={`absolute ${!isCooldown ? 'animate-fadeOut' : 'animate-fadeIn'}`}>
+                                <Image
+                                    width={20}
+                                    height={20}
+                                    src="/icons/loading.svg"
+                                    className={`animate-twSpin animate-infinite h-[24px] w-[24px] text-water`}
+                                    alt="loading..."
+                                />
+                            </div>
                             <ArrowPathIcon
-                                className={`transition-all duration-500 ${!(waterAmount === maxWaterAmount) && 'hidden'} ${isCooldown && 'hidden'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
+                                className={`animate-delay-100 animate-fadeIn ${!(waterAmount === maxWaterAmount) && 'hidden'} ${isCooldown && 'opacity-0'} h-[24px] w-[24px] text-water hover:cursor-pointer`}
                                 onClick={() => handleWaterAmountChange(0, false, true)}
                             />
                         </div>
