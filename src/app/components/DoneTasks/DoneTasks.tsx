@@ -107,7 +107,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                         task.checked == true &&
                         <div
                             key={'task_content_' + index}
-                            className={`animate-bounceInRight group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                            className={`group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
                         >
                             <input
                                 checked={task.checked || false}

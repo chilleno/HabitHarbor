@@ -82,7 +82,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             setUpdateTaskList(!updateTaskList);
-            
+
             setTimeout(() => {
                 playSoundCheckbox();
             }, (600))
@@ -189,13 +189,13 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                     taskList && taskList.length > 0 ? taskList.map((task, index) => (
                         task.checked == false &&
                         <div
-                            key={'task_content_' + index}
-                            className={`animate-bounceInRight group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                            key={'task_' + currentTaskListIndex + '_content_' + index}
+                            className={`group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
                         >
                             <input
                                 checked={task.checked || false}
                                 onChange={() => handleCheckboxChange(index)}
-                                id={'task_' + index}
+                                id={'check_task_' + currentTaskListIndex + '_content_' + index}
                                 type='checkbox'
                                 className="w-[20px] h-[20px] rounded-3xl focus:rounded-full bg-main-primary border-[#3D3E42] border-2 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
                             />
@@ -204,6 +204,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                 style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                 defaultValue={task.header}
                                 onChange={(e) => handleChangeTaskText(e.target.value, index, e)}
+                                id={'task_' + currentTaskListIndex + '_content_' + index}
                             />
                             <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3">
                                 <TrashIcon
