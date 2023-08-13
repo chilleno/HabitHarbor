@@ -177,6 +177,8 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                     id="newTaskInput"
                     onChange={(value) => setNewTask(value)}
                     onKeyDown={handlePressEnterButton}
+                    className="focus:ring-0 focus:border-main-primary"
+                    name="task-name-new"
                 />
                 <b className={` ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
                     <i>Please add a text longer than 3 characters.</i>

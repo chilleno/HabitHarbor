@@ -1,7 +1,8 @@
-const InputText: React.FC<{ id?: string, value?: string, className?: string, placeholder?: string, onClick?: () => void, onKeyDown?, hidden?: boolean, onChange: (value: string) => void }> = ({ id, className, placeholder, onClick, onChange, onKeyDown, hidden, value }) => {
+const InputText: React.FC<{ id?: string, name?: string, value?: string, className?: string, placeholder?: string, onClick?: () => void, onKeyDown?, hidden?: boolean, onChange: (value: string) => void }> = ({ id,name, className, placeholder, onClick, onChange, onKeyDown, hidden, value }) => {
     return (
         <input
             type="text"
+            name={name}
             id={id}
             value={value}
             hidden={hidden}
