@@ -79,7 +79,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                     />
                 )
             }
-            <ContentBox className="min-w-[500px]">
+            <ContentBox className="min-w-[400px]">
                 <div className="flex justify-center font-bold mb-2">
                     <h1>Routine</h1>
                 </div>
