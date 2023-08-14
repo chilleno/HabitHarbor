@@ -53,26 +53,26 @@ const NewRoutineStepModal: React.FC<NewRoutineStepModalProps> = ({ closeModal, s
 
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50">
-            <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
+            <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-main-primary border-[2px] border-white">
                 <h2 className="text-xl font-bold mb-4">New routine step</h2>
                 <div className="flex flex-col gap-5">
                     <input
                         type='text'
                         placeholder='Enter step name'
-                        className="text-black rounded-full py-2 placeholder:px-3 px-3"
+                        className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
                         value={name} onChange={(e) => setName(e.target.value)}
                     />
                     <input
                         type='number'
                         min={0}
                         placeholder='Enter number of pomodoros'
-                        className="text-black rounded-full py-2 placeholder:px-3 px-3"
+                        className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
                         onChange={(e) => setPomodoroAmount(Number(e.target.value))}
                     />
                     <select
                         value={selectedTaskList}
                         onChange={(e) => setSelectedTaskList(Number(e.target.value))}
-                        className="text-black rounded-full py-2 placeholder:px-3 px-3"
+                        className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
                     >
                         <option disabled value={-1}>select an option</option>
                         {
