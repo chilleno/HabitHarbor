@@ -131,7 +131,9 @@ export default function Home() {
         <div className="flex justify-center content-center mt-5 mb-5">
           <Clock />
         </div>
-        <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTaskList} />
+        <div className="flex justify-center content-center mt-5 mb-5">
+          <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTaskList} />
+        </div>
       </EndScreen>
       <div className="relative">
         <HelpButton onClick={handleButtonClick} />
