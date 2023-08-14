@@ -35,7 +35,7 @@ module.exports = withAnimations({
         DEFAULT: '#FFFFFF ',
       },
       'gray': {
-        DEFAULT: '#8c8c8c',
+        DEFAULT: '#3d3e42',
       },
     },
     extend: {
