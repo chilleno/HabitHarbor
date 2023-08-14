@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArcherContainer, ArcherElement, } from 'react-archer';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewRoutineStepModal from './components/NewRoutineStepModal';
+import ContentBox from '@/app/designComponent/ContentBox';
+import './Routine.scss';
 
 const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
     const [routine, setRoutine] = useState<Step[]>([])
@@ -42,11 +44,15 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     const getTaskListByIndex = (index: number): string => {
         let currentLocalStorageTaskList = JSON.parse(localStorage.getItem('taskLists') || '[]');
-        if(currentLocalStorageTaskList[index] !== undefined){
+        if (currentLocalStorageTaskList[index] !== undefined) {
             return currentLocalStorageTaskList[index].name;
         } else {
             return 'No Task List';
         }
+    }
+
+    const getPercentage = (done: number, max: number): number => {
+        return Math.round((done / max) * 100 / 10) * 10;
     }
 
     useEffect(() => {
@@ -73,33 +79,33 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                     />
                 )
             }
-            <div className="flex flex-col justify-center content-center p-5 gap-5">
-                <h1 className="text-white xl:text-4xl lg:text-3xl sm:text2xl font-bold underline underline-offset-7 flex justify-center">
-                    Daily Routine
-                </h1>
-                <div className='flex w-full justify-center ml-5 mt-auto mb-auto'>
-                    <PlusIcon
-                        onClick={openModal}
-                        className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
-                    />
-                    {
-                        currentStep !== null &&
-                        <>
-                            <PencilIcon
-                                onClick={() => setEditMode(!editMode)}
-                                className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5 ${editMode === true && 'border-0 border-b-4 border-white'}`}
-                            />
-                            <TrashIcon
-                                onClick={() => handleDeleteStep()}
-                                className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5`}
-                            />
-                        </>
-                    }
+            <ContentBox className="min-w-[500px]">
+                <div className="flex justify-center font-bold mb-2">
+                    <h1>Routine</h1>
                 </div>
-            </div>
-            <div className="flex flex-col h-screen max-h-fit -z-50 overflow-y-auto sm:max-h-[100%] pt-5">
+                <div className="flex flex-col justify-center font-bold mb-2">
+                    <div className='flex w-full justify-center ml-5 mt-auto mb-auto'>
+                        <PlusIcon
+                            onClick={openModal}
+                            className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
+                        />
+                        {
+                            currentStep !== null &&
+                            <>
+                                <PencilIcon
+                                    onClick={() => setEditMode(!editMode)}
+                                    className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5 ${editMode === true && 'border-0 border-b-4 border-white'}`}
+                                />
+                                <TrashIcon
+                                    onClick={() => handleDeleteStep()}
+                                    className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5`}
+                                />
+                            </>
+                        }
+                    </div>
+                </div>
                 <ArcherContainer>
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center gap-5">
                         {routine.map((step, index) => (
                             <ArcherElement
                                 key={'step_arrow_' + index}
@@ -115,28 +121,31 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                             >
                                 <div
                                     key={'step_box_' + index}
-                                    className={`flex h-20 w-5/6 border border-gray-100 rounded-md mb-4 cursor-pointer ${index === currentStep && 'bg-blue-200'}`}
+                                    className={`flex w-full min-w-full bg-main-primary rounded-xl p-3 ${index === currentStep && 'border-2 border-white'}`}
                                     ref={(ref) => {
                                         taskRefs.current[index] = ref;
                                     }}
                                 >
-                                    <div className='w-4/6 flex justify-center items-center p-3'>
-                                        <h6 className="font-bold text-md justify-center flex">{step.header}</h6>
+                                    <div className="w-3/12 ">
+                                        <div className="flex border-2 border-white rounded-full max-w-fit">
+                                            <div className={` pie-wrapper pie-wrapper--solid ${'progress-' + getPercentage(step.currentPomodorosCount, step.pomodoros)}`}>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='w-2/6 flex-col border-l-2'>
-                                        <div className="border-b-2 h-1/2 p-1 flex justify-center items-center">
-                                            <b>{getTaskListByIndex(step.assignedTaskList)}</b>
-                                        </div>
-                                        <div className="flex h-1/2 justify-center items-center">
-                                            <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
-                                        </div>
+                                    <div className="flex flex-col w-8/12 gap-2">
+                                        <h1 className="text-gray font-bold text-sm">Work</h1>
+                                        <h1 className="text-white font-bold text-md">{step.header}</h1>
+                                        <h1 className="text-white font-bold text-sm max-w-fit py-1 px-3 rounded-2xl bg-[#73F1F3]/20">{getTaskListByIndex(step.assignedTaskList)}</h1>
+                                    </div>
+                                    <div className="w-2/12 text-white flex justify-center content-center py-2">
+                                        <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
                                     </div>
                                 </div>
                             </ArcherElement>
                         ))}
                     </div>
                 </ArcherContainer>
-            </div>
+            </ContentBox>
         </>
     );
 };
