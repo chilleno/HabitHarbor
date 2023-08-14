@@ -5,8 +5,7 @@ import Image from 'next/image';
 const Water: React.FC = () => {
     const [today] = useState(new Date());
     const [currentAmount, setCurrentAmount] = useState<number>(0);
-    const [maxAmount, setMaxAmount] = useState<number>(12);
-    const [trackMode, setTrackMode] = useState<string>("CUPS");
+    const [maxAmount, setMaxAmount] = useState<number>(3);
     const [isCooldown, setIsCooldown] = useState<boolean>(false);
     const [initialRenderComplete, setInitialRenderComplete] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -54,24 +53,14 @@ const Water: React.FC = () => {
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
             setCurrentAmount(0);
         }
-        if (localStorage.waterTrackMethod === "BOTTLES") {
-            setMaxAmount(3);
-        } else if (localStorage.waterTrackMethod === "CUPS") {
-            setMaxAmount(12);
+        if (localStorage.waterMaxAmount !== null && Number(localStorage.waterMaxAmount) >= 0) {
+            setMaxAmount(Number(localStorage.waterMaxAmount));
         }
         if (localStorage.waterDrinkAmount !== null && Number(localStorage.waterDrinkAmount) >= 0) {
             setCurrentAmount(Number(localStorage.waterDrinkAmount));
         }
-        if (localStorage.waterTrackMethod !== null && localStorage.waterTrackMethod !== "") {
-            setTrackMode(localStorage.waterTrackMethod);
-        }
-        if (localStorage.waterTrackMethod === undefined) {
-            localStorage.setItem('waterTrackMethod', 'CUPS');
-            setTrackMode('CUPS');
-        }
         setInitialRenderComplete(true);
     }, []);
-
 
     const getPercentage = (done: number, max: number): number => {
         return Math.round((done / max) * 100 / 10) * 10;
@@ -85,15 +74,10 @@ const Water: React.FC = () => {
         setShowModal(false);
     }
 
-    const updateTrackMode = (newTrackMode: React.SetStateAction<string>) => {
+    const updateMaxAmount = (newMaxAmount: number) => {
         if (window.confirm('This action will reset the water count, are you sure you want to continue?')) {
-            if (newTrackMode === "BOTTLES") {
-                setMaxAmount(3);
-            } else if (newTrackMode === "CUPS") {
-                setMaxAmount(12);
-            }
-            setTrackMode(newTrackMode);
-            localStorage.setItem('waterTrackMethod', newTrackMode.toString());
+            setMaxAmount(newMaxAmount);
+            localStorage.setItem('waterMaxAmount', newMaxAmount.toString());
             setCurrentAmount(0);
             closeModal();
         }
@@ -106,12 +90,10 @@ const Water: React.FC = () => {
             <>
                 <div className="flex flex-col">
                     <div className="absolute w-[250px] z-0 h-14 bg-white border-water border-2 rounded-xl p-2">
-
-
                     </div>
                     <div className="absolute z-10 h-14 w-[250px]">
                         <div
-                            className={`z-10 bg-water-light h-14 rounded-xl animate-fill-both duration-500 ${getPercentage(currentAmount, maxAmount) === 0 && 'opacity-0'}`}
+                            className={`z-10 bg-water h-14 rounded-xl animate-fill-both duration-500 ${getPercentage(currentAmount, maxAmount) === 0 && 'opacity-0'}`}
                             style={{
                                 width: `${(currentAmount / maxAmount) * 100}%`,
                             }}
@@ -127,7 +109,7 @@ const Water: React.FC = () => {
                             </div>
                             <div className="w-8/12">
                                 <h1 className="text-main-primary font-bold text-sm">DRINK WATER</h1>
-                                <h1 className="text-gray font-bold text-xs"> {currentAmount}/{maxAmount} {trackMode}</h1>
+                                <h1 className="text-gray font-bold text-xs"> {currentAmount}/{maxAmount} CUPS</h1>
                             </div>
                             <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer">
                                 <CogIcon className="h-[24px] w-[24px] text-gray" />
@@ -160,10 +142,7 @@ const Water: React.FC = () => {
                         <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                             <h2 className="text-xl font-bold mb-4">Edit Water Tacker</h2>
                             <div className="flex flex-col">
-                                <select className="text-main-primary rounded-full py-2" value={trackMode} onChange={(e) => updateTrackMode(e.target.value)}>
-                                    <option value="CUPS">CUPS</option>
-                                    <option value="BOTTLES">BOTTLES</option>
-                                </select>
+                                <input type="number" className="text-main-primary rounded-full py-2" defaultValue={maxAmount} onBlur={(e) => updateMaxAmount(Number(e.target.value))} />
                             </div>
                             <div className="flex justify-end mt-4">
                                 <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-full text-white" onClick={closeModal}>
