@@ -125,7 +125,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                 <div className="flex justify-center font-bold mb-2">
                     <h1>Routine</h1>
                 </div>
-                <div className="xl:max-h-[70vh] max-h-[57vh] overflow-y-auto flex flex-col px-4">
+                <div className="xl:max-h-[69vh] max-h-[57vh] overflow-y-auto flex flex-col px-4">
                     <ArcherContainer>
                         <div className="flex flex-col items-center gap-5 max-w-[300px]">
                             {routine.map((step, index) => (
