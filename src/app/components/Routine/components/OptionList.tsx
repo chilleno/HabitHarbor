@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, RoutineOptionListProps> = ({ onClose, openModal }) => {
+const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, RoutineOptionListProps> = ({ resetCurrentStep, onClose, openModal }) => {
     const listRef = useRef<HTMLDivElement>(null);
-    
+
     const handleClickOutside = (event: MouseEvent) => {
         if (listRef.current && !listRef.current.contains(event.target as Node)) {
             onClose();
@@ -20,6 +20,9 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, RoutineOptionLi
         <div ref={listRef} className="absolute mt-6 ml-28 bg-main-primary border-2 w-50 rounded-lg shadow-md">
             <div onClick={openModal} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
                 New step
+            </div>
+            <div onClick={openModal} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+                Reset Routine
             </div>
         </div>
     );

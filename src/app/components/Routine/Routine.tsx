@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArcherContainer, ArcherElement, } from 'react-archer';
-import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { CogIcon } from '@heroicons/react/24/solid';
 import NewRoutineStepModal from './components/NewRoutineStepModal';
-import ContentBox from '@/app/designComponent/ContentBox';
+import ContentBox from '../../designComponent/ContentBox';
+import FloatingButton from '@/app/designComponent/FloatingButton';
+import OptionList from './components/OptionList';
 import './Routine.scss';
 
 const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
@@ -10,13 +12,13 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     const [currentStep, setCurrentStep] = useState<number | null>(null);
     const taskRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [editMode, setEditMode] = useState<boolean>(false);
+    const [showOptions, setShowOptions] = useState<boolean>(false);
 
-    const handleDeleteStep = (): void => {
+    const handleDeleteStep = (stepIndex): void => {
         if (typeof window !== 'undefined') {
             if (window.confirm('are you sure you want to delete the step?')) {
                 let currentRoutine = routine;
-                let updatedRoutine = currentRoutine.filter((step, index) => index !== currentStep);
+                let updatedRoutine = currentRoutine.filter((step, index) => index !== stepIndex);
                 localStorage.setItem('routine', JSON.stringify(updatedRoutine));
                 setCurrentStep(updatedRoutine.length > 0 ? updatedRoutine.length - 1 : null)
                 renderRoutine();
@@ -60,6 +62,12 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         getCurrentStep()
     }, [updateRoutineStep]);
 
+
+    const resetCurrentStep = (): void => {
+        localStorage.setItem('currentRoutineStep', '0');
+        setCurrentStep(0);
+    }
+
     useEffect(() => {
         const currentTaskRef = taskRefs.current[currentTaskIndex];
         if (currentTaskRef) {
@@ -70,6 +78,69 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     return (
         <>
+            <ContentBox className="min-w-[400px]">
+                <div className="flex justify-end -mr-12 -mt-8">
+                    <FloatingButton onClick={() => setShowOptions(!showOptions)}>
+                        <span className="flex items-center justify-center hover:cursor-pointer">
+                            <CogIcon className="h-[24px] w-[24px] text-white" />
+                        </span>
+                        {
+                            showOptions &&
+                            <OptionList
+                                resetCurrentStep={resetCurrentStep}
+                                openModal={openModal}
+                                onClose={() => setShowOptions(false)}
+                            />
+                        }
+                    </FloatingButton>
+                </div>
+                <div className="flex justify-center font-bold mb-2">
+                    <h1>Routine</h1>
+                </div>
+                <div className="xl:max-h-[70vh] max-h-[55vh] overflow-y-auto flex flex-col px-4">
+                    <ArcherContainer>
+                        <div className="flex flex-col items-center gap-5 max-w-[300px]">
+                            {routine.map((step, index) => (
+                                <ArcherElement
+                                    key={'step_arrow_' + index}
+                                    id={step.order.toString()}
+                                    relations={(step.order + 1) < routine.length ? [
+                                        {
+                                            targetId: (step.order + 1).toString(),
+                                            targetAnchor: 'top',
+                                            sourceAnchor: 'bottom',
+                                            style: { strokeColor: 'white', strokeWidth: 5, endMarker: false, noCurves: true, },
+                                        },
+                                    ] : []}
+                                >
+                                    <div
+                                        key={'step_box_' + index}
+                                        className={`flex w-full min-w-full bg-main-primary rounded-xl p-3 ${index === currentStep && 'border-2 border-white'}`}
+                                        ref={(ref) => {
+                                            taskRefs.current[index] = ref;
+                                        }}
+                                    >
+                                        <div className="w-3/12 ">
+                                            <div className="flex border-2 border-white rounded-full max-w-fit">
+                                                <div className={` pie-wrapper pie-wrapper--solid ${'progress-' + getPercentage(step.currentPomodorosCount, step.pomodoros)}`}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col w-8/12 gap-2">
+                                            <h1 className="text-gray font-bold text-sm">Work</h1>
+                                            <h1 className="text-white font-bold text-md">{step.header}</h1>
+                                            <h1 className="text-white font-bold text-sm max-w-fit py-1 px-3 rounded-2xl bg-[#73F1F3]/20">{getTaskListByIndex(step.assignedTaskList)}</h1>
+                                        </div>
+                                        <div className="w-2/12 text-white flex justify-center content-center py-2">
+                                            <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
+                                        </div>
+                                    </div>
+                                </ArcherElement>
+                            ))}
+                        </div>
+                    </ArcherContainer>
+                </div>
+            </ContentBox>
             {
                 showModal && (
                     <NewRoutineStepModal
@@ -79,73 +150,6 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                     />
                 )
             }
-            <ContentBox className="min-w-[400px]">
-                <div className="flex justify-center font-bold mb-2">
-                    <h1>Routine</h1>
-                </div>
-                <div className="flex flex-col justify-center font-bold mb-2">
-                    <div className='flex w-full justify-center ml-5 mt-auto mb-auto'>
-                        <PlusIcon
-                            onClick={openModal}
-                            className="h-10 w-10 text-white-500 hover:cursor-pointer mr-5"
-                        />
-                        {
-                            currentStep !== null &&
-                            <>
-                                <PencilIcon
-                                    onClick={() => setEditMode(!editMode)}
-                                    className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5 ${editMode === true && 'border-0 border-b-4 border-white'}`}
-                                />
-                                <TrashIcon
-                                    onClick={() => handleDeleteStep()}
-                                    className={`h-7 w-7 text-white-500 hover:cursor-pointer mt-2 mr-5`}
-                                />
-                            </>
-                        }
-                    </div>
-                </div>
-                <ArcherContainer>
-                    <div className="flex flex-col items-center gap-5">
-                        {routine.map((step, index) => (
-                            <ArcherElement
-                                key={'step_arrow_' + index}
-                                id={step.order.toString()}
-                                relations={(step.order + 1) < routine.length ? [
-                                    {
-                                        targetId: (step.order + 1).toString(),
-                                        targetAnchor: 'top',
-                                        sourceAnchor: 'bottom',
-                                        style: { strokeColor: 'white', strokeWidth: 5, endMarker: false, noCurves: true, },
-                                    },
-                                ] : []}
-                            >
-                                <div
-                                    key={'step_box_' + index}
-                                    className={`flex w-full min-w-full bg-main-primary rounded-xl p-3 ${index === currentStep && 'border-2 border-white'}`}
-                                    ref={(ref) => {
-                                        taskRefs.current[index] = ref;
-                                    }}
-                                >
-                                    <div className="w-3/12 ">
-                                        <div className="flex border-2 border-white rounded-full max-w-fit">
-                                            <div className={` pie-wrapper pie-wrapper--solid ${'progress-' + getPercentage(step.currentPomodorosCount, step.pomodoros)}`}>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col w-8/12 gap-2">
-                                        <h1 className="text-gray font-bold text-sm">Work</h1>
-                                        <h1 className="text-white font-bold text-md">{step.header}</h1>
-                                        <h1 className="text-white font-bold text-sm max-w-fit py-1 px-3 rounded-2xl bg-[#73F1F3]/20">{getTaskListByIndex(step.assignedTaskList)}</h1>
-                                    </div>
-                                    <div className="w-2/12 text-white flex justify-center content-center py-2">
-                                        <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
-                                    </div>
-                                </div>
-                            </ArcherElement>
-                        ))}
-                    </div>
-                </ArcherContainer>
-            </ContentBox>
         </>
     );
 };
