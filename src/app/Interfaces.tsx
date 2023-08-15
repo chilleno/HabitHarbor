@@ -74,3 +74,8 @@ interface TodoTasksOptionListProps {
 interface QuestionButtonProps {
     onClick: () => void;
 }
+
+interface RoutineOptionListProps {
+    openModal: () => void;
+    onClose: () => void;
+}
