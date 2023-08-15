@@ -3,12 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
-
-import { PlayIcon } from '@heroicons/react/24/solid';
-import { StopIcon } from '@heroicons/react/24/solid';
-import { CogIcon } from '@heroicons/react/24/solid';
-
-import { ForwardIcon } from '@heroicons/react/24/solid';
+import { PlayIcon, StopIcon, CogIcon, ForwardIcon } from '@heroicons/react/24/solid';
 
 const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepCount }) => {
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
@@ -29,13 +24,13 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     const [formattedTime, setFormattedTime] = useState<string>('00:00');
     const [today] = useState<Date>(new Date());
 
-
     useEffect(() => {
         setFormattedTime(formatTime(minutes) + ':' + formatTime(seconds));
         let interval: NodeJS.Timeout;
         if (isActive) {
             interval = setInterval(() => {
                 if (seconds === 0 && minutes === 0) {
+                    playSoundFinishPomodoro();
                     clearInterval(interval);
                     handleTimerFinish();
                 } else if (seconds === 0) {
@@ -218,7 +213,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }
 
     const handleTimerFinish = (): void => {
-        playSoundFinishPomodoro();
+     
         setIsActive(false);
         setSeconds(0);
         
