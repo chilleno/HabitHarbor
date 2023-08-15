@@ -38,7 +38,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 if (seconds === 0 && minutes === 0) {
                     clearInterval(interval);
                     handleTimerFinish();
-                    playSoundFinishPomodoro();
                 } else if (seconds === 0) {
                     setMinutes((prevMinutes: number) => prevMinutes - 1);
                     setSeconds(59);
@@ -219,8 +218,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }
 
     const handleTimerFinish = (): void => {
+        playSoundFinishPomodoro();
         setIsActive(false);
         setSeconds(0);
+        
         if (isBreak) {
             setMinutes(pomodoroDuration);
             setIsBreak(false);
@@ -232,6 +233,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 setIsLongBreak(false);
             }
         }
+
         if (!isBreak) {
             const newPomodoroCount: number = pomodoroCount + 1;
             if (newPomodoroCount.toString() === pomodorosForLongBreak.toString()) {
@@ -253,7 +255,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 handleCurrentRoutineStepCount();
             }
         }
-
     };
 
     const formatTime = (time: number): string => {
