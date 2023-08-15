@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import { ArcherContainer, ArcherElement, } from 'react-archer';
 import { CogIcon } from '@heroicons/react/24/solid';
 import NewRoutineStepModal from './components/NewRoutineStepModal';
@@ -62,8 +62,8 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         getCurrentStep()
     }, [updateRoutineStep]);
 
-    const resetCurrentStep = (): void => {
-        if (window.confirm('are you sure you want to reset the routine?')) {
+    const resetCurrentStep = (showConfirm: boolean): void => {
+        if (!showConfirm || window.confirm('are you sure you want to reset the routine?')) {
             localStorage.setItem('currentRoutineStep', '0');
             resetCurrentRoutineStepCount();
             setCurrentStep(0);
@@ -78,6 +78,23 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         });
         localStorage.setItem('routine', JSON.stringify(updatedRoutine));
         setUpdateRoutineStep(!updateRoutineStep);
+    }
+
+    useEffect(() => {
+        if (!localStorage.getItem('currentDayRoutine')) {
+            let currentDay = new Date();
+            localStorage.setItem('currentDayRoutine', currentDay.toString());
+        }
+        checkCurrentDay();
+    }, []);
+
+    const checkCurrentDay = (): void => {
+        const currentDay = new Date();
+        const currentLocalStorageDay = new Date(localStorage.getItem('currentDayRoutine') || '');
+        if (currentDay.setHours(0, 0, 0, 0) > currentLocalStorageDay.getTime()) {
+            resetCurrentStep(false);
+            localStorage.setItem('currentDayRoutine', JSON.stringify(currentDay));
+        }
     }
 
     useEffect(() => {
