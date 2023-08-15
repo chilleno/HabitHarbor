@@ -76,7 +76,7 @@ interface QuestionButtonProps {
 }
 
 interface RoutineOptionListProps {
-    resetCurrentStep: () => void;
+    resetCurrentStep: (showConfirm:boolean) => void;
     openModal: () => void;
     onClose: () => void;
 }
