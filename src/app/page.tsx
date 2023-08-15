@@ -68,7 +68,7 @@ export default function Home() {
 
       if (currentRoutineStep > -1) {
         let step: Step = currentRoutine[currentRoutineStep];
-        if (step.currentPomodorosCount < step.pomodoros) {
+        if (step && step.currentPomodorosCount < step.pomodoros) {
           step.currentPomodorosCount = step.currentPomodorosCount + 1;
           currentRoutine[currentRoutineStep] = step;
           localStorage.setItem('routine', JSON.stringify(currentRoutine));
