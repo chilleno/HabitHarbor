@@ -17,7 +17,7 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, RoutineOptionLi
     }, []);
 
     return (
-        <div ref={listRef} className="absolute mt-6 ml-28 bg-main-primary border-2 w-50 rounded-lg shadow-md">
+        <div ref={listRef} className="absolute mt-6 z-50 right-32 bg-main-primary border-2 w-50 rounded-lg shadow-md">
             <div onClick={openModal} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
                 New step
             </div>
