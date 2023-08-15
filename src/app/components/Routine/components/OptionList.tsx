@@ -21,7 +21,7 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, RoutineOptionLi
             <div onClick={openModal} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
                 New step
             </div>
-            <div onClick={resetCurrentStep} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+            <div onClick={() => resetCurrentStep(true)} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
                 Reset Routine
             </div>
         </div>
