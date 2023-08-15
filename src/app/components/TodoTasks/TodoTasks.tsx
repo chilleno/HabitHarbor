@@ -193,7 +193,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                 {
                     (taskList.length > 0 && highlightedTask !== null) &&
                     <div
-                        className={`gap-1 group/item flex items-center bg-main-primary mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                        className={`gap-1 group/item flex items-center bg-main-primary mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl animate-backInDown`}
                     >
                         <input
                             checked={taskList[highlightedTask].checked || false}
