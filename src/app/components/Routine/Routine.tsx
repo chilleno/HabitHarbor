@@ -106,7 +106,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     return (
         <>
-            <ContentBox className="min-w-[400px]">
+            <ContentBox className="xl:min-w-[400px]">
                 <div className="flex justify-end -mr-12 -mt-8">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
@@ -122,10 +122,10 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                         }
                     </FloatingButton>
                 </div>
-                <div className="flex justify-center font-bold mb-2">
+                <div className="flex justify-center font-bold mb-2 -mt-6">
                     <h1>Routine</h1>
                 </div>
-                <div className="xl:max-h-[69vh] max-h-[57vh] overflow-y-auto flex flex-col px-4">
+                <div className="xl:max-h-[69vh] max-h-[60vh] overflow-y-auto flex flex-col px-4">
                     <ArcherContainer>
                         <div className="flex flex-col items-center gap-5 max-w-[300px]">
                             {routine.map((step, index) => (
@@ -154,12 +154,12 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex flex-col w-8/12 gap-2">
+                                        <div className="flex flex-col w-8/12 ml-1">
                                             <h1 className="text-gray font-bold text-sm">Work</h1>
-                                            <h1 className="text-white font-bold text-md">{step.header}</h1>
-                                            <h1 className="text-white font-bold text-sm max-w-fit py-1 px-3 rounded-2xl bg-[#73F1F3]/20">{getTaskListByIndex(step.assignedTaskList)}</h1>
+                                            <h1 className="text-white font-bold text-md mb-1">{step.header}</h1>
+                                            <h1 className="text-white font-bold text-xs max-w-fit py-1 px-3 rounded-2xl bg-[#73F1F3]/20">{getTaskListByIndex(step.assignedTaskList)}</h1>
                                         </div>
-                                        <div className="w-2/12 text-white flex justify-center content-center py-2">
+                                        <div className="w-2/12 text-white lg:text-xs flex justify-center content-center py-2">
                                             <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
                                         </div>
                                     </div>
