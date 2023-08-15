@@ -123,7 +123,7 @@ export default function Home() {
         <div className="flex justify-center content-center mt-5 mb-5">
           <Clock />
         </div>
-        <div className="flex justify-center content-center mt-5 mb-5">
+        <div className="flex justify-center content-center mt-10 mb-5">
           <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTaskList} />
         </div>
       </EndScreen>
