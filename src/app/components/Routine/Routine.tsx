@@ -62,10 +62,22 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         getCurrentStep()
     }, [updateRoutineStep]);
 
-
     const resetCurrentStep = (): void => {
-        localStorage.setItem('currentRoutineStep', '0');
-        setCurrentStep(0);
+        if (window.confirm('are you sure you want to reset the routine?')) {
+            localStorage.setItem('currentRoutineStep', '0');
+            resetCurrentRoutineStepCount();
+            setCurrentStep(0);
+        }
+    }
+
+    const resetCurrentRoutineStepCount = (): void => {
+        let currentRoutine = JSON.parse(localStorage.getItem('routine') || '[]');
+        let updatedRoutine = currentRoutine.map((step: Step) => {
+            step.currentPomodorosCount = 0;
+            return step;
+        });
+        localStorage.setItem('routine', JSON.stringify(updatedRoutine));
+        setUpdateRoutineStep(!updateRoutineStep);
     }
 
     useEffect(() => {
@@ -74,7 +86,6 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
             currentTaskRef.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     }, [currentTaskIndex]);
-
 
     return (
         <>
