@@ -14,14 +14,6 @@ import TaskListSelector from './components/TaskListSelector/TaskListSelector';
 import TodoTasks from './components/TodoTasks/TodoTasks';
 import DoneTasks from './components/DoneTasks/DoneTasks';
 
-interface Step {
-  header: string;
-  pomodoros: number;
-  currentPomodorosCount: number;
-  assignedTaskList: number;
-  order: number;
-}
-
 export default function Home() {
   const [currentTaskList, setCurrentTaskList] = useState<number>(-1);
   const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
