@@ -106,7 +106,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     return (
         <>
-            <ContentBox className="xl:min-w-[400px]">
+            <ContentBox className="min-w-[400px]">
                 <div className="flex justify-end -mr-12 -mt-8">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
@@ -125,7 +125,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                 <div className="flex justify-center font-bold mb-2 -mt-6">
                     <h1>Routine</h1>
                 </div>
-                <div className="xl:max-h-[69vh] max-h-[60vh] overflow-y-auto flex flex-col px-4">
+                <div className="xl:max-h-fit pb-3 xl:h-fit max-h-[64vh] overflow-y-auto flex flex-col px-4">
                     <ArcherContainer>
                         <div className="flex flex-col items-center gap-5 max-w-[300px]">
                             {routine.map((step, index) => (

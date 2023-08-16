@@ -81,7 +81,7 @@ export default function Home() {
   return (
     <MainComponent>
       <StartScreen className=''>
-        <div className="flex justify-center content-center mt-10 mb-5">
+        <div className="flex justify-center content-center mt-7 mb-5">
           <PomodoroTimer
             handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
           />
@@ -91,7 +91,7 @@ export default function Home() {
         </div>
       </StartScreen>
       <MiddleScreen className="">
-        <div className="flex justify-center content-center mt-10 mb-5">
+        <div className="flex justify-center content-center mt-10">
           <TaskListSelector
             currentTaskListIndex={currentTaskList}
             changeTaskList={setCurrentTaskList}
@@ -100,7 +100,7 @@ export default function Home() {
         {
           currentTaskList >= 0 &&
           <>
-            <div className="flex justify-center content-center mt-12 mb-5">
+            <div className="flex justify-center content-center mt-10 mb-5">
               <TodoTasks
                 currentTaskListIndex={currentTaskList}
                 taskList={taskList}
@@ -108,7 +108,7 @@ export default function Home() {
                 updateTaskList={updateTaskList}
               />
             </div>
-            <div className="flex justify-center content-center mt-12 mb-5">
+            <div className="flex justify-center content-center mt-10">
               <DoneTasks
                 currentTaskListIndex={currentTaskList}
                 taskList={taskList}
@@ -120,10 +120,10 @@ export default function Home() {
         }
       </MiddleScreen>
       <EndScreen className=''>
-        <div className="flex justify-center content-center mt-5 mb-5">
+        <div className="flex justify-center content-center mt-4 mb-6">
           <Clock />
         </div>
-        <div className="flex justify-center content-center mt-6 mb-5">
+        <div className="flex justify-center content-center mt-4">
           <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTaskList} />
         </div>
       </EndScreen>
