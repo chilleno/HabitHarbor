@@ -19,6 +19,38 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
         }
     }
 
+    const handleHighlightTask = (taskIndex: number | null) => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+
+        if (taskIndex === highlightedTask) {
+            setHighlightedTask(null);
+        } else {
+            setHighlightedTask(taskIndex);
+        }
+    }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let localStorageTaskLists: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (localStorageTaskLists.length > 0) {
+                localStorageTaskLists[currentTaskListIndex].highlightedTask = highlightedTask;
+                localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
+            }
+        }
+    }, [highlightedTask]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let localStorageTaskLists: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (localStorageTaskLists.length > 0) {
+                setHighlightedTask(localStorageTaskLists[currentTaskListIndex].highlightedTask);
+            }
+        }
+    }, [currentTaskListIndex]);
+
     const addNewTask = (newTask: string): void => {
         if (newTask.length <= 3 || newTask === "Create a new task here...") {
             return handleInputError();
@@ -68,8 +100,8 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             clearTimeout(timeoutRef.current);
             timeoutRef.current = null;
         }
-        
-        if(taskIndex === highlightedTask) {
+
+        if (taskIndex === highlightedTask) {
             setHighlightedTask(null);
         }
 
@@ -212,7 +244,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                         />
                         <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-3">
                             <b
-                                onClick={() => setHighlightedTask(null)}
+                                onClick={() => handleHighlightTask(null)}
                                 className="text-xs text-white-500 hover:cursor-pointer"
                             >
                                 🧯
@@ -249,7 +281,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                             <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-2">
                                 {
                                     highlightedTask === null && <b
-                                        onClick={() => setHighlightedTask(index)}
+                                        onClick={() => handleHighlightTask(index)}
                                         className="text-xs text-white-500 hover:cursor-pointer"
                                     >
                                         🔥
