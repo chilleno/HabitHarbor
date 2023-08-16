@@ -14,6 +14,7 @@ interface Task {
 
 interface TaskList {
     name: string;
+    highlightedTask: number | null;
     tasks: Task[];
 }
 
@@ -76,7 +77,7 @@ interface QuestionButtonProps {
 }
 
 interface RoutineOptionListProps {
-    resetCurrentStep: (showConfirm:boolean) => void;
+    resetCurrentStep: (showConfirm: boolean) => void;
     openModal: () => void;
     onClose: () => void;
 }
