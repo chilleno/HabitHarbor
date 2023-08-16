@@ -8,6 +8,7 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
             const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             const newTaskList: TaskList = {
                 name: name,
+                highlightedTask: null,
                 tasks: []
             }
             currentTaskLists.push(newTaskList);
