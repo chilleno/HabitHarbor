@@ -25,11 +25,13 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             timeoutRef.current = null;
         }
 
-        if (taskIndex === highlightedTask) {
+        if (taskIndex !== null) {
             setHighlightedTask(null);
-        } else {
-            setHighlightedTask(taskIndex);
         }
+
+        setTimeout(() => {
+            setHighlightedTask(taskIndex);
+        }, (1))
     }
 
     useEffect(() => {
@@ -279,14 +281,12 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                 id={'task_' + currentTaskListIndex + '_content_' + index}
                             />
                             <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-2">
-                                {
-                                    highlightedTask === null && <b
-                                        onClick={() => handleHighlightTask(index)}
-                                        className="text-xs text-white-500 hover:cursor-pointer"
-                                    >
-                                        🔥
-                                    </b>
-                                }
+                                <b
+                                    onClick={() => handleHighlightTask(index)}
+                                    className="text-xs text-white-500 hover:cursor-pointer"
+                                >
+                                    🔥
+                                </b>
                                 <TrashIcon
                                     onClick={() => handleDeleteTask(index)}
                                     className="h-4 w-4 text-white-500 hover:cursor-pointer"
