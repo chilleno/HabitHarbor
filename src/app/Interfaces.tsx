@@ -81,6 +81,10 @@ interface TodoTasksOptionListProps {
     openPrioritizeModal: () => void;
 }
 
+interface DoneTasksOptionListProps {
+    onClose: () => void;
+}
+
 interface QuestionButtonProps {
     onClick: () => void;
 }
