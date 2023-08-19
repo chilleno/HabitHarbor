@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TodoTasksOptionListProps> = ({ onClose }) => {
+const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DoneTasksOptionListProps> = ({ onClose }) => {
     const listRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
