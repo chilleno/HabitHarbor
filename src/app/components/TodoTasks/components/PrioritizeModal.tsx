@@ -124,7 +124,8 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
         newPriorityCalculationList.forEach((task) => {
             newTaskList[task.taskIndex].priority = task.priority;
         });
-        newTaskList.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+
+        newTaskList.sort((a, b) => (a.priority || 0) - (b.priority || 0));
 
         const taskLists = JSON.parse(localStorage.getItem("taskLists") || "[]");
 
