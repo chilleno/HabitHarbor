@@ -62,12 +62,18 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         getCurrentStep()
     }, [updateRoutineStep]);
 
-    const resetCurrentStep = (showConfirm: boolean): void => {
-        if (!showConfirm || window.confirm('are you sure you want to reset the routine?')) {
+    const resetCurrentStep = (): void => {
+        if (window.confirm('are you sure you want to reset the routine?')) {
             localStorage.setItem('currentRoutineStep', '0');
             resetCurrentRoutineStepCount();
             setCurrentStep(0);
         }
+    }
+
+    const resetCurrentStepNoConfirm = (): void => {
+        localStorage.setItem('currentRoutineStep', '0');
+        resetCurrentRoutineStepCount();
+        setCurrentStep(0);
     }
 
     const resetCurrentRoutineStepCount = (): void => {
@@ -91,9 +97,10 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     const checkCurrentDay = (): void => {
         const currentDay = new Date();
         const currentLocalStorageDay = new Date(localStorage.getItem('currentDayRoutine') || '');
+        console.log(currentDay.setHours(0, 0, 0, 0), currentLocalStorageDay); 
         if (currentDay.setHours(0, 0, 0, 0) > currentLocalStorageDay.getTime()) {
-            resetCurrentStep(false);
-            localStorage.setItem('currentDayRoutine', JSON.stringify(currentDay));
+            resetCurrentStepNoConfirm();
+            localStorage.setItem('currentDayRoutine', currentDay.toString());
         }
     }
 
