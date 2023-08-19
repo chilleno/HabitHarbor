@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TodoTasksOptionListProps> = ({ onClose }) => {
+const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TodoTasksOptionListProps> = ({ onClose, openPrioritizeModal }) => {
     const listRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -18,8 +18,8 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TodoTasksOption
 
     return (
         <div ref={listRef} className="absolute mt-6 ml-36 bg-main-primary border-2 w-50 rounded-lg shadow-md">
-            <div onClick={() => console.log('soon')} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
-                no options
+            <div onClick={openPrioritizeModal} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+                Prioritize Tasks
             </div>
         </div>
     );

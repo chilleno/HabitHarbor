@@ -8,6 +8,7 @@ interface Step {
 
 interface Task {
     header: string;
+    priority: number | null;
     checked: boolean;
     subtasks: any[];
 }
@@ -56,6 +57,13 @@ interface NewTaskListModalProps {
     handleChangeTaskList: (newValue: number) => void;
 }
 
+interface PrioritizedModalProps {
+    closeModal: () => void;
+    renderList: () => void;
+    currentTaskListIndex: number;
+    taskList: Task[];
+}
+
 interface HelpOptionListProps {
     onClose: () => void;
 }
@@ -70,6 +78,7 @@ interface TaskListOptionListProps {
 
 interface TodoTasksOptionListProps {
     onClose: () => void;
+    openPrioritizeModal: () => void;
 }
 
 interface QuestionButtonProps {

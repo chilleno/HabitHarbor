@@ -5,6 +5,7 @@ import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import OptionList from './components/OptionList';
 import InputText from '@/app/designComponent/form/InputText';
+import PrioritizeModal from './components/PrioritizeModal';
 
 const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList }) => {
     const [newTask, setNewTask] = useState<string>('');
@@ -12,6 +13,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
     const [showError, setShowError] = useState<boolean>(false);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [highlightedTask, setHighlightedTask] = useState<number | null>(null);
+    const [showPrioritizeModal, setShowPrioritizeModal] = useState<boolean>(false);
 
     const handlePressEnterButton = (event: any) => {
         if (event.key === 'Enter') {
@@ -63,9 +65,10 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             if (localStorageTaskLists.length > 0) {
 
                 let newTaskObject: Task = {
-                    "header": newTask,
-                    "checked": false,
-                    "subtasks": [],
+                    header: newTask,
+                    priority: null,
+                    checked: false,
+                    subtasks: [],
                 }
 
                 let updatedTaskLists = localStorageTaskLists[currentTaskListIndex].tasks
@@ -74,7 +77,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                 localStorageTaskLists[currentTaskListIndex].tasks = updatedTaskLists;
 
                 localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
-                setUpdateTaskList(!updateTaskList);
+                handleRefreshList();
 
                 setTimeout(() => {
                     setNewTask('');
@@ -120,7 +123,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             });
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
-            setUpdateTaskList(!updateTaskList);
+            handleRefreshList();
 
             setTimeout(() => {
                 playSoundCheckbox();
@@ -134,16 +137,18 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             timeoutRef.current = null;
         }
 
+        if (taskIndex === highlightedTask) {
+            setHighlightedTask(null);
+        }
+
         if (typeof window !== 'undefined') {
-
-
             let updatedTasks = taskList;
             updatedTasks = updatedTasks.filter((task, index) => index !== taskIndex);
 
             let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
-            setUpdateTaskList(!updateTaskList);
+            handleRefreshList();
         }
     };
 
@@ -186,117 +191,147 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
 
                 currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
                 localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
-                setUpdateTaskList(!updateTaskList);
+                handleRefreshList();
             }
         }
     };
 
-    return (
-        <ContentBox className="min-w-full -mt-4">
-            <div className="flex justify-end -mr-12 -mt-8">
-                <FloatingButton onClick={() => setShowOptions(!showOptions)}>
-                    <span className="flex items-center justify-center hover:cursor-pointer">
-                        <CogIcon className="h-[24px] w-[24px] text-white" />
-                    </span>
-                    {
-                        showOptions &&
-                        <OptionList
-                            onClose={() => setShowOptions(false)}
-                        />
-                    }
-                </FloatingButton>
-            </div>
-            <div className="flex justify-center items-center font-bold -mt-6 mb-2">
-                <h1>TODO Tasks</h1>
-            </div>
-            <div className="flex flex-col justify-center content-center">
-                <InputText
-                    placeholder="Type and press enter to create a task..."
-                    value={newTask}
-                    id="newTaskInput"
-                    onChange={(value) => setNewTask(value)}
-                    onKeyDown={handlePressEnterButton}
-                    className="focus:ring-0 focus:border-main-primary"
-                    name="task-name-new"
-                />
-                <b className={` ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
-                    <i>Please add a text longer than 3 characters.</i>
-                </b>
-            </div>
-            <div className="flex flex-col max-h-[11rem] h-[11rem] min-h-[11rem] xl:max-h-80 xl:h-80 xl:min-h-80 overflow-y-auto">
-                {
-                    (taskList.length > 0 && highlightedTask !== null) &&
-                    <div
-                        className={`gap-1 group/item flex items-center bg-main-primary mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl animate-backInDown`}
-                    >
-                        <input
-                            checked={taskList[highlightedTask].checked || false}
-                            onChange={() => handleCheckboxChange(highlightedTask)}
-                            type='checkbox'
-                            className="w-[20px] h-[20px] rounded-3xl focus:rounded-full bg-main-primary border-[#3D3E42] border-2 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
-                        />
-                        <div className="animate-heartBeat animate-infinite ml-1">
-                            🔥
-                        </div>
-                        <input
-                            className="-ml-2 w-full bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
-                            style={{ textDecoration: taskList[highlightedTask].checked ? 'line-through' : 'none' }}
-                            defaultValue={taskList[highlightedTask].header}
-                            onChange={(e) => handleChangeTaskText(e.target.value, highlightedTask, e)}
-                        />
-                        <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-3">
-                            <b
-                                onClick={() => handleHighlightTask(null)}
-                                className="text-xs text-white-500 hover:cursor-pointer"
-                            >
-                                🧯
-                            </b>
-                            <TrashIcon
-                                onClick={() => handleDeleteTask(highlightedTask)}
-                                className="h-4 w-4 text-white-500 hover:cursor-pointer"
-                            />
-                        </div>
-                    </div>
-                }
+    const closePrioritizeModal = () => {
+        setShowPrioritizeModal(false);
+    }
 
-                {
-                    taskList && taskList.length > 0 ? taskList.map((task, index) => (
-                        (task.checked == false && index !== highlightedTask) &&
+    const openPrioritizeModal = () => {
+        setShowPrioritizeModal(true);
+    }
+
+    const handleRefreshList = () => {
+        setUpdateTaskList(!updateTaskList);
+    }
+
+    return (
+        <>
+            <ContentBox className="min-w-full -mt-4">
+                <div className="flex justify-end -mr-12 -mt-8">
+                    <FloatingButton onClick={() => setShowOptions(!showOptions)}>
+                        <span className="flex items-center justify-center hover:cursor-pointer">
+                            <CogIcon className="h-[24px] w-[24px] text-white" />
+                        </span>
+                        {
+                            showOptions &&
+                            <OptionList
+                                onClose={() => setShowOptions(false)}
+                                openPrioritizeModal={openPrioritizeModal}
+                            />
+                        }
+                    </FloatingButton>
+                </div>
+                <div className="flex justify-center items-center font-bold -mt-6 mb-2">
+                    <h1>TODO Tasks</h1>
+                </div>
+                <div className="flex flex-col justify-center content-center">
+                    <InputText
+                        placeholder="Type and press enter to create a task..."
+                        value={newTask}
+                        id="newTaskInput"
+                        onChange={(value) => setNewTask(value)}
+                        onKeyDown={handlePressEnterButton}
+                        className="focus:ring-0 focus:border-main-primary"
+                        name="task-name-new"
+                    />
+                    <b className={` ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
+                        <i>Please add a text longer than 3 characters.</i>
+                    </b>
+                </div>
+                <div className="flex flex-col max-h-[11rem] h-[11rem] min-h-[11rem] xl:max-h-80 xl:h-80 xl:min-h-80 overflow-y-auto">
+                    {
+                        (highlightedTask !== null && taskList[highlightedTask]) &&
                         <div
-                            key={'task_' + currentTaskListIndex + '_content_' + index}
-                            className={`gap-3 group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                            className={`gap-1 group/item flex items-center bg-main-primary mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl animate-backInDown`}
                         >
                             <input
-                                checked={task.checked || false}
-                                onChange={() => handleCheckboxChange(index)}
-                                id={'check_task_' + currentTaskListIndex + '_content_' + index}
+                                checked={taskList[highlightedTask].checked || false}
+                                onChange={() => handleCheckboxChange(highlightedTask)}
                                 type='checkbox'
                                 className="w-[20px] h-[20px] rounded-3xl focus:rounded-full bg-main-primary border-[#3D3E42] border-2 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
                             />
+                            <div className="animate-heartBeat animate-infinite ml-1">
+                                🔥
+                            </div>
+                            <div className="animate-heartBeat animate-delay-75 animate-infinite ml-2">
+                                {taskList[highlightedTask].priority}
+                            </div>
                             <input
-                                className="ml-3 w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
-                                style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
-                                defaultValue={task.header}
-                                onChange={(e) => handleChangeTaskText(e.target.value, index, e)}
-                                id={'task_' + currentTaskListIndex + '_content_' + index}
+                                className="ml-2 w-full bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
+                                style={{ textDecoration: taskList[highlightedTask].checked ? 'line-through' : 'none' }}
+                                defaultValue={taskList[highlightedTask].header}
+                                onChange={(e) => handleChangeTaskText(e.target.value, highlightedTask, e)}
                             />
-                            <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-2">
+                            <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-3">
                                 <b
-                                    onClick={() => handleHighlightTask(index)}
+                                    onClick={() => handleHighlightTask(null)}
                                     className="text-xs text-white-500 hover:cursor-pointer"
                                 >
-                                    🔥
+                                    🧯
                                 </b>
                                 <TrashIcon
-                                    onClick={() => handleDeleteTask(index)}
+                                    onClick={() => handleDeleteTask(highlightedTask)}
                                     className="h-4 w-4 text-white-500 hover:cursor-pointer"
                                 />
                             </div>
                         </div>
-                    )) : <i>no tasks created...</i>
-                }
-            </div>
-        </ContentBox>
+                    }
+
+                    {
+                        taskList && taskList.length > 0 ? taskList.map((task, index) => (
+                            (task.checked == false && index !== highlightedTask) &&
+                            <div
+                                key={'task_' + currentTaskListIndex + '_content_' + index}
+                                className={`gap-3 group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                            >
+                                <input
+                                    checked={task.checked || false}
+                                    onChange={() => handleCheckboxChange(index)}
+                                    id={'check_task_' + currentTaskListIndex + '_content_' + index}
+                                    type='checkbox'
+                                    className="w-[20px] h-[20px] rounded-3xl focus:rounded-full bg-main-primary border-[#3D3E42] border-2 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                                />
+                                <div className={`animate-fadeIn animate-delay-[${index}ms]} ml-7`}>
+                                    {task.priority}
+                                </div>
+                                <input
+                                    className="w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
+                                    style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
+                                    defaultValue={task.header}
+                                    onChange={(e) => handleChangeTaskText(e.target.value, index, e)}
+                                    id={'task_' + currentTaskListIndex + '_content_' + index}
+                                />
+                                <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-2">
+                                    <b
+                                        onClick={() => handleHighlightTask(index)}
+                                        className="text-xs text-white-500 hover:cursor-pointer"
+                                    >
+                                        🔥
+                                    </b>
+                                    <TrashIcon
+                                        onClick={() => handleDeleteTask(index)}
+                                        className="h-4 w-4 text-white-500 hover:cursor-pointer"
+                                    />
+                                </div>
+                            </div>
+                        )) : <i>no tasks created...</i>
+                    }
+                </div>
+            </ContentBox>
+            {
+                showPrioritizeModal &&
+                <PrioritizeModal
+                    closeModal={closePrioritizeModal}
+                    renderList={handleRefreshList}
+                    currentTaskListIndex={currentTaskListIndex}
+                    taskList={taskList}
+                />
+            }
+        </>
     );
 };
 
