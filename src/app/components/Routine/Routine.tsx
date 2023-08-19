@@ -97,7 +97,6 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     const checkCurrentDay = (): void => {
         const currentDay = new Date();
         const currentLocalStorageDay = new Date(localStorage.getItem('currentDayRoutine') || '');
-        console.log(currentDay.setHours(0, 0, 0, 0), currentLocalStorageDay); 
         if (currentDay.setHours(0, 0, 0, 0) > currentLocalStorageDay.getTime()) {
             resetCurrentStepNoConfirm();
             localStorage.setItem('currentDayRoutine', currentDay.toString());
