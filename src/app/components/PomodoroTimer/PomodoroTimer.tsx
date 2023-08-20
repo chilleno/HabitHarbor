@@ -23,6 +23,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     const [showModal, setShowModal] = useState<boolean>(false);
     const [formattedTime, setFormattedTime] = useState<string>('00:00');
     const [today] = useState<Date>(new Date());
+    const [autoStart, setAutoStart] = useState<boolean>(false);
 
     useEffect(() => {
         setFormattedTime(formatTime(minutes) + ':' + formatTime(seconds));
@@ -33,6 +34,13 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                     playSoundFinishPomodoro();
                     clearInterval(interval);
                     handleTimerFinish();
+
+                    if (autoStart) {
+                        setInterval(() => {
+                            startTimer();
+                        }, 5000);
+                    }
+
                 } else if (seconds === 0) {
                     setMinutes((prevMinutes: number) => prevMinutes - 1);
                     setSeconds(59);
@@ -58,6 +66,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         const savedPomodoroTotalCount = localStorage.pomodoroTotalCount;
         const savedShortBreakCount = localStorage.shortBreakCount;
         const savedLongBreakCount = localStorage.longBreakCount;
+        const savedAutoStart = localStorage.autoStart;
 
         if (savedPomodoroDuration) {
             setPomodoroDuration(Number(savedPomodoroDuration));
@@ -92,6 +101,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         }
         if (savedLongBreakCount) {
             setLongBreakCount(Number(savedLongBreakCount));
+        }
+        if (savedAutoStart !== null) {
+            setAutoStart(savedAutoStart === "true");
         }
     };
 
@@ -213,10 +225,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }
 
     const handleTimerFinish = (): void => {
-     
+
         setIsActive(false);
         setSeconds(0);
-        
+
         if (isBreak) {
             setMinutes(pomodoroDuration);
             setIsBreak(false);
@@ -292,6 +304,12 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
             setLongBreakDuration(value);
         }
     }
+
+    //useEffect when autoStart is changed save on localstorage
+    useEffect(() => {
+        localStorage.setItem('autoStart', autoStart.toString());
+    }, [autoStart]);
+
 
     return (
         <ContentBox className="min-w-[280px]">
@@ -386,6 +404,16 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                                 className="border border-gray-300 px-2 py-1 rounded-full text-main-primary"
                                 onFocus={(event) => event.target.select()}
                             />
+                            <div className="mt-1 mb-2">
+                                <input
+                                    id="autoStartPomodoro"
+                                    type="checkbox"
+                                    checked={autoStart}
+                                    onChange={(e) => setAutoStart(e.target.checked)}
+                                    className="border-2 ring-0 selection:ring-0 border-gray px-2 py-1 rounded-full text-main-primary"
+                                />
+                                <label htmlFor="autoStartPomodoro" className="ml-2">Auto start timer</label>
+                            </div>
                         </div>
                         <div className="flex mt-4">
                             <div className="flex w-1/2 justify-start">
