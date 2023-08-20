@@ -16,6 +16,7 @@ const OptionListStep: React.ForwardRefRenderFunction<HTMLDivElement, RoutineStep
         };
     }, []);
 
+    //function that select current step
     const selectCurrentStep = (): void => {
         if (typeof window !== 'undefined') {
             localStorage.setItem('currentRoutineStep', stepIndex.toString());
