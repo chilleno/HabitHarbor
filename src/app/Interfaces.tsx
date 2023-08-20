@@ -36,6 +36,13 @@ interface NewRoutineStepModalProps {
     updateRoutineStep: boolean;
 }
 
+interface EditRoutineStepModalProps {
+    stepIndex: number;
+    closeModal: () => void;
+    setUpdateRoutineStep: (newValue: boolean) => void;
+    updateRoutineStep: boolean;
+}
+
 interface PomodoroTimerProps {
     handleCurrentRoutineStepCount: () => void;
 }
@@ -99,4 +106,5 @@ interface RoutineStepOptionListProps {
     stepIndex: number;
     onClose: () => void;
     refreshRoutine: () => void;
+    openEditModal: (stepIndex: number) => void;
 }
