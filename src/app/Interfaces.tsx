@@ -108,3 +108,7 @@ interface RoutineStepOptionListProps {
     refreshRoutine: () => void;
     openEditModal: (stepIndex: number) => void;
 }
+
+interface DailyHabitsOptionListProps {
+    onClose: () => void;
+}
