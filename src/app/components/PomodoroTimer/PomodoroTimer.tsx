@@ -343,7 +343,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
             </div>
             {showModal && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50">
-                    <div className="bg-black p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
+                    <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                         <h2 className="text-xl font-bold mb-4">Edit Durations</h2>
                         <div className="flex flex-col gap-2">
                             <label htmlFor="pomodoroDurationInput">Pomodoro Duration (minutes)</label>
@@ -389,15 +389,15 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                         </div>
                         <div className="flex mt-4">
                             <div className="flex w-1/2 justify-start">
-                                <button className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-full text-white" onClick={() => (resetTimer(true, true), closeModal())}>
+                                <button className="bg-main-primary hover:bg-white hover:text-main-primary border-white border-2 px-4 py-2 rounded-full text-white" onClick={() => (resetTimer(true, true), closeModal())}>
                                     Reset
                                 </button>
                             </div>
                             <div className="flex w-1/2 justify-end gap-2">
-                                <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-full text-white" onClick={() => handleSave()}>
+                                <button className="bg-main-primary hover:bg-white hover:text-main-primary border-white border-2 px-4 py-2 rounded-full text-white" onClick={() => handleSave()}>
                                     save
                                 </button>
-                                <button className="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded-full text-white" onClick={closeModal}>
+                                <button className="bg-main-primary hover:bg-white hover:text-main-primary border-white border-2 px-4 py-2 rounded-full text-white" onClick={closeModal}>
                                     Close
                                 </button>
                             </div>
