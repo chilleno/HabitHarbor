@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const OptionListStep: React.ForwardRefRenderFunction<HTMLDivElement, RoutineStepOptionListProps> = ({ stepIndex, onClose, refreshRoutine }) => {
+
+const OptionListStep: React.ForwardRefRenderFunction<HTMLDivElement, RoutineStepOptionListProps> = ({ stepIndex, onClose, refreshRoutine, openEditModal }) => {
     const listRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,16 +36,20 @@ const OptionListStep: React.ForwardRefRenderFunction<HTMLDivElement, RoutineStep
         }
     }
 
-
     return (
-        <div ref={listRef} className="absolute mt-6 z-50 right-1 bg-main-primary border-2 w-40 rounded-lg shadow-md">
-            <div onClick={() => selectCurrentStep()} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
-                Select this step
+        <>
+            <div ref={listRef} className="absolute mt-6 z-50 right-1 bg-main-primary border-2 w-40 rounded-lg shadow-md">
+                <div onClick={() => selectCurrentStep()} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+                    Select this step
+                </div>
+                <div onClick={() => openEditModal(stepIndex)} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+                    Edit step
+                </div>
+                <div onClick={() => deleteCurrentStep()} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+                    Delete step
+                </div>
             </div>
-            <div onClick={() => deleteCurrentStep()} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
-                Delete this step
-            </div>
-        </div>
+        </>
     );
 };
 
