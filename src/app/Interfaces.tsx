@@ -94,3 +94,9 @@ interface RoutineOptionListProps {
     openModal: () => void;
     onClose: () => void;
 }
+
+interface RoutineStepOptionListProps {
+    stepIndex: number;
+    onClose: () => void;
+    refreshRoutine: () => void;
+}
