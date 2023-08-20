@@ -5,6 +5,7 @@ import NewRoutineStepModal from './components/NewRoutineStepModal';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import OptionList from './components/OptionList';
+import OptionListStep from './components/OptionListStep';
 import './Routine.scss';
 
 const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
@@ -13,6 +14,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     const taskRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [showOptionsStep, setShowOptionStep] = useState<number | null>(null);
 
     const handleDeleteStep = (stepIndex): void => {
         if (typeof window !== 'undefined') {
@@ -110,6 +112,11 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         }
     }, [currentTaskIndex]);
 
+
+    const handleRefreshRoutine = () => {
+        setUpdateRoutineStep(!updateRoutineStep);
+    }
+
     return (
         <>
             <ContentBox className="min-w-[400px]">
@@ -168,6 +175,19 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                         <div className="w-2/12 text-white lg:text-xs flex justify-center content-center py-2">
                                             <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
                                         </div>
+                                        <FloatingButton className="absolute right-0 -mr-1 mt-10 bg-main-primary" onClick={() => setShowOptionStep(index)}>
+                                            <span className="flex items-center justify-center hover:cursor-pointer">
+                                                <CogIcon className="h-[24px] w-[24px] text-white" />
+                                            </span>
+                                            {
+                                                showOptionsStep === index ?
+                                                    <OptionListStep
+                                                        stepIndex={index}
+                                                        onClose={() => setShowOptionStep(null)}
+                                                        refreshRoutine={handleRefreshRoutine}
+                                                    /> : null
+                                            }
+                                        </FloatingButton>
                                     </div>
                                 </ArcherElement>
                             ))}
