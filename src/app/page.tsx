@@ -52,7 +52,6 @@ export default function Home() {
     }
   }, [currentTaskList, updateTaskList])
 
-
   const handleCurrentRoutineStepCount = (): void => {
     if (typeof window !== 'undefined') {
       let currentRoutine: Step[] = JSON.parse(localStorage.getItem('routine') || '[]');
@@ -68,7 +67,7 @@ export default function Home() {
             currentRoutineStep = currentRoutineStep + 1;
             localStorage.setItem('currentRoutineStep', currentRoutineStep.toString());
             let newSelectedStep: Step = currentRoutine[currentRoutineStep];
-            if (newSelectedStep.assignedTaskList > -1) {
+            if (newSelectedStep && newSelectedStep.assignedTaskList > -1) {
               changeTaskList(newSelectedStep.assignedTaskList);
             }
           }
