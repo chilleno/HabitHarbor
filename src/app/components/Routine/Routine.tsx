@@ -6,6 +6,7 @@ import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import OptionList from './components/OptionList';
 import OptionListStep from './components/OptionListStep';
+import EditRoutineStepModal from './components/EditRoutineStepModal';
 import './Routine.scss';
 
 const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
@@ -13,20 +14,10 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     const [currentStep, setCurrentStep] = useState<number | null>(null);
     const taskRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [showOptionsStep, setShowOptionStep] = useState<number | null>(null);
-
-    const handleDeleteStep = (stepIndex): void => {
-        if (typeof window !== 'undefined') {
-            if (window.confirm('are you sure you want to delete the step?')) {
-                let currentRoutine = routine;
-                let updatedRoutine = currentRoutine.filter((step, index) => index !== stepIndex);
-                localStorage.setItem('routine', JSON.stringify(updatedRoutine));
-                setCurrentStep(updatedRoutine.length > 0 ? updatedRoutine.length - 1 : null)
-                renderRoutine();
-            }
-        };
-    }
+    const [editStepIndex, setEditStepIndex] = useState<number | null>(0);
 
     const openModal = () => {
         setShowModal(true);
@@ -117,6 +108,15 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         setUpdateRoutineStep(!updateRoutineStep);
     }
 
+    const handleOpenEditModal = (stepIndex: number): void => {
+        setEditStepIndex(stepIndex);
+        setShowEditModal(!showEditModal);
+    }
+
+    const handleCloseEditModal = (): void => {
+        setShowEditModal(!showEditModal);
+    }
+
     return (
         <>
             <ContentBox className="min-w-[400px]">
@@ -185,6 +185,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                                         stepIndex={index}
                                                         onClose={() => setShowOptionStep(null)}
                                                         refreshRoutine={handleRefreshRoutine}
+                                                        openEditModal={() => handleOpenEditModal(index)}
                                                     /> : null
                                             }
                                         </FloatingButton>
@@ -199,6 +200,16 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                 showModal && (
                     <NewRoutineStepModal
                         closeModal={closeModal}
+                        setUpdateRoutineStep={setUpdateRoutineStep}
+                        updateRoutineStep={updateRoutineStep}
+                    />
+                )
+            }
+            {
+                showEditModal && (
+                    <EditRoutineStepModal
+                        stepIndex={editStepIndex || 0}
+                        closeModal={handleCloseEditModal}
                         setUpdateRoutineStep={setUpdateRoutineStep}
                         updateRoutineStep={updateRoutineStep}
                     />
