@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Chaintask',
+  title: 'Habit Harbor',
   description: 'App inspired by Atomic Habits book',
 }
 
