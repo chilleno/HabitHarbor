@@ -30,6 +30,49 @@ const DailyHabits = () => {
         }, 100);
     }, [updateRender]);
 
+
+    useEffect(() => {
+        const dailyHabits: HabitTracker[] = JSON.parse(localStorage.getItem('dailyHabits') || '[]');
+        setDailyHabits(dailyHabits);
+    }, []);
+
+    //function that create 3 examples of trackers
+    const createExamples = () => {
+        const dailyHabits: HabitTracker[] = JSON.parse(localStorage.getItem('dailyHabits') || '[]');
+        const example1: HabitTracker = {
+            icon: '💧',
+            name: 'drink water',
+            unit: 'cups',
+            color: '#68A0CA',
+            maxValue: 3,
+            currentValue: 0,
+            firstTrackerDate: new Date().toString(),
+        };
+        const example2: HabitTracker = {
+            icon: '🧘',
+            name: 'meditate',
+            unit: 'sessions',
+            color: '#7975D1',
+            maxValue: 1,
+            currentValue: 0,
+            firstTrackerDate: new Date().toString(),
+        };
+        const example3: HabitTracker = {
+            icon: '📖',
+            name: 'Reading',
+            unit: 'sessions',
+            color: '#CE769C',
+            maxValue: 1,
+            currentValue: 0,
+            firstTrackerDate: new Date().toString(),
+        };
+        dailyHabits.push(example1);
+        dailyHabits.push(example2);
+        dailyHabits.push(example3);
+        localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+        setUpdateRender(!updateRender);
+    }
+
     return (
         <>
             <ContentBox className="xl:min-w-[330px] lg:min-w-[290px] -mt-2 h-[17rem]">
@@ -50,19 +93,21 @@ const DailyHabits = () => {
                 <div className="flex justify-center font-bold mb-2 -mt-8">
                     <h1>Daily habits</h1>
                 </div>
-                <div className="flex flex-col justify-center items-center gap-16 bg-main-primary rounded-xl w-full">
+                <div className="flex flex-col gap-16 bg-main-primary rounded-xl w-full max-h-[21vh] overflow-y-scroll min-h-[21vh] p-1">
                     {
-                        dailyHabits.length > 0 ? dailyHabits.map((habit, index) => (
-                            <div key={'habit_' + index} className={`w-full flex flex-col gap-2 xl:ml-1 lg:-ml-7`}>
+                        dailyHabits.map((habit, index) => (
+                            <div key={'habit_' + index} className={`w-full relative flex-col gap-2 xl:ml-1 lg:-ml-7`}>
                                 <Tracker tracker={habit} habitIndex={index} handleUpdateRender={handleUpdateRender} />
                             </div>
                         ))
-                            :
-                            <div>
-                                <h3 className="text-sm font-bold px-1 text-white text-center"><i>No trackers created...</i></h3>
-                                <br />
-                                <a onClick={() => alert('crate examples')} className="text-xs font-bold px-1 text-white text-center hover:cursor-pointer hover:underline"><i>click here to create some examples</i></a>
-                            </div>
+                    }
+                    {
+                        dailyHabits.length === 0 &&
+                        <div className="flex flex-col justify-center content-center py-5">
+                            <h3 className="text-sm font-bold px-1 text-white text-center"><i>No trackers created...</i></h3>
+                            <br />
+                            <a onClick={() => createExamples()} className="text-xs font-bold px-1 text-white text-center hover:cursor-pointer hover:underline"><i>click here to create some examples</i></a>
+                        </div>
                     }
                 </div>
             </ContentBox>
