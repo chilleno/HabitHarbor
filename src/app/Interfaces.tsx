@@ -24,6 +24,16 @@ interface HelpButtonOption {
     url: string;
 }
 
+interface HabitTracker {
+    icon: string; //example: '💧'
+    name: string; //example: 'drink water'
+    unit: string; //example: 'cups'
+    color: string; //example: '#3B82F6'
+    maxValue: number; //example: 8
+    currentValue: number;
+    firstTrackerDate: string;
+}
+
 interface RoutineProps {
     setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
@@ -34,6 +44,11 @@ interface NewRoutineStepModalProps {
     closeModal: () => void;
     setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
+}
+
+interface NewHabitTrackerModalProps {
+    closeModal: () => void;
+    updateHabits: () => void;
 }
 
 interface EditRoutineStepModalProps {
@@ -111,4 +126,11 @@ interface RoutineStepOptionListProps {
 
 interface DailyHabitsOptionListProps {
     onClose: () => void;
+    openCreateModal: () => void;
+}
+
+interface TrackerProps {
+    habitIndex: number;
+    tracker: HabitTracker
+    handleUpdateRender: () => void;
 }
