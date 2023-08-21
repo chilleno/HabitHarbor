@@ -75,7 +75,7 @@ const DailyHabits = () => {
 
     return (
         <>
-            <ContentBox className="xl:min-w-[330px] lg:min-w-[290px] -mt-2 h-[17rem]">
+            <ContentBox className="xl:min-w-[330px] lg:min-w-[290px] lg:max-w-[290px] -mt-2 h-[17rem]">
                 <div className="flex justify-end -mr-12 -mt-6">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
@@ -93,10 +93,19 @@ const DailyHabits = () => {
                 <div className="flex justify-center font-bold mb-2 -mt-8">
                     <h1>Daily habits</h1>
                 </div>
-                <div className="flex flex-col gap-16 bg-main-primary rounded-xl w-full max-h-[21vh] overflow-y-scroll min-h-[21vh] p-1">
+                <div className="flex flex-col gap-16 bg-main-primary rounded-xl xl:w-[270px] lg:w-[260px] overflow-y-scroll xl:max-h-[22vh] xl:min-h-[22vh] lg:min-h-[32vh] lg:max-h-[32vh] xl:-ml-1 lg:-ml-4 py-2">
                     {
                         dailyHabits.map((habit, index) => (
-                            <div key={'habit_' + index} className={`w-full relative flex-col gap-2 xl:ml-1 lg:-ml-7`}>
+                            habit.currentValue < habit.maxValue &&
+                            <div key={'habit_' + index} className={`w-full relative flex-col gap-2 xl:ml-3 lg:ml-1`}>
+                                <Tracker tracker={habit} habitIndex={index} handleUpdateRender={handleUpdateRender} />
+                            </div>
+                        ))
+                    }
+                    {
+                        dailyHabits.map((habit, index) => (
+                            habit.currentValue === habit.maxValue &&
+                            <div key={'habit_' + index} className={`w-full relative flex-col gap-2 xl:ml-3 lg:ml-1`}>
                                 <Tracker tracker={habit} habitIndex={index} handleUpdateRender={handleUpdateRender} />
                             </div>
                         ))
