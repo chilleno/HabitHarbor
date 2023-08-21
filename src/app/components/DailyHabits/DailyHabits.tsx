@@ -40,7 +40,7 @@ const DailyHabits = () => {
     const createExamples = () => {
         const dailyHabits: HabitTracker[] = JSON.parse(localStorage.getItem('dailyHabits') || '[]');
         const example1: HabitTracker = {
-            icon: '💧',
+            icon: '1f4a7',
             name: 'drink water',
             unit: 'cups',
             color: '#68A0CA',
@@ -49,7 +49,7 @@ const DailyHabits = () => {
             firstTrackerDate: new Date().toString(),
         };
         const example2: HabitTracker = {
-            icon: '🧘',
+            icon: '1f9d8',
             name: 'meditate',
             unit: 'sessions',
             color: '#7975D1',
@@ -58,7 +58,7 @@ const DailyHabits = () => {
             firstTrackerDate: new Date().toString(),
         };
         const example3: HabitTracker = {
-            icon: '📖',
+            icon: '1f4d6',
             name: 'Reading',
             unit: 'sessions',
             color: '#CE769C',
