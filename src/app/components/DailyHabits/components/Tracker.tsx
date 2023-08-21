@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { CogIcon, PlusIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
+import EmojiPicker, { EmojiStyle, Emoji } from 'emoji-picker-react';
+import { TwitterPicker } from 'react-color';
 
 const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRender }) => {
     const [today] = useState(new Date());
@@ -16,6 +18,8 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
     const [newIcon, setNewIcon] = useState<string>(tracker.icon);
     const [newColor, setNewColor] = useState<string>(tracker.color);
     const [newUnit, setNewUnit] = useState<string>(tracker.unit);
+    const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
+    let colors = ['#CE769C', '#7975D1', '#68A0CA', '#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']
 
 
     const handleCurrentAmountChange = (newAmount: number, effectCount: boolean, effectReset: boolean) => {
@@ -101,6 +105,33 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         closeModal();
     }
 
+    //function that validate new state values 
+    const validateNewState = () => {
+        if (newName === "") {
+            alert("Please enter a name for your tracker");
+            return false;
+        }
+        if (newMaxValue === 0) {
+            alert("Please enter a max value for your tracker");
+            return false;
+        }
+        if (newUnit === "") {
+            alert("Please enter a unit for your tracker");
+            return false;
+        }
+        if (newIcon === "") {
+            alert("Please enter an icon for your tracker");
+            return false;
+        }
+        if (newColor === "") {
+            alert("Please enter a color for your tracker");
+            return false;
+        }
+        return true;
+    }
+
+
+
     //function deleteHabitTracker that delete the tracker on the local storage
     const deleteHabitTracker = () => {
         //add window confirm to delete the tracker
@@ -113,6 +144,11 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         setInterval(() => {
             closeModal();
         }, 1000);
+    }
+
+    const handleSetEmoji = (emoji: string) => {
+        setNewIcon(emoji);
+        setShowEmojiPicker(false);
     }
 
     if (!initialRenderComplete) {
@@ -136,8 +172,8 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                     <div className="absolute z-20 h-14 p-2 w-[250px]">
                         <div className="flex flex-row gap-3">
                             <div className="w-2/12">
-                                <div style={{ backgroundColor: tracker.color }} className={`h-[34px] w-[34px] rounded-md shadow-habit py-1 text-xl justify-center content-center flex`}>
-                                    {tracker.icon}
+                                <div style={{ backgroundColor: tracker.color }} className={`h-[34px] w-[34px] rounded-md shadow-habit py-2 text-xl justify-center content-center flex`}>
+                                    <Emoji unified={tracker.icon} size={20} />
                                 </div>
                             </div>
                             <div className="w-8/12">
@@ -174,7 +210,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50">
                         <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                             <h2 className="text-xl font-bold mb-4 text-center">Edit Tacker</h2>
-                            <div className="flex flex-col gap-2 text-main-primary">
+                            <div className="flex flex-col gap-3 text-main-primary">
                                 <h3 className="text-lg font-bold px-1 text-white">Name: </h3>
                                 <input
                                     type='text'
@@ -190,18 +226,29 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                                     value={newUnit} onChange={(e) => setNewUnit(e.target.value)}
                                 />
                                 <h3 className="text-lg font-bold px-1 text-white">Icon: </h3>
-                                <input
-                                    type='text'
-                                    placeholder='Enter icon'
-                                    className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
-                                    value={newIcon} onChange={(e) => setNewIcon(e.target.value)}
-                                />
+                                <div className="flex flex-row gap-10 content-center justify-start">
+                                    <button
+                                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                                        className="border-white border-2 text-white hover:text-main-primary hover:bg-white rounded-full px-5"
+                                    >
+                                        Edit Icon
+                                    </button>
+                                    <Emoji unified={newIcon} size={25} />
+                                </div>
+                                {
+                                    showEmojiPicker === true &&
+                                    <div className="absolute">
+                                        <EmojiPicker
+                                            emojiStyle={EmojiStyle.APPLE}
+                                            onEmojiClick={(e) => handleSetEmoji(e.unified)}
+                                        />
+                                    </div>
+                                }
                                 <h3 className="text-lg font-bold px-1 text-white">Color: </h3>
-                                <input
-                                    type='text'
-                                    placeholder='Enter color'
-                                    className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
-                                    value={newColor} onChange={(e) => setNewColor(e.target.value)}
+                                <TwitterPicker
+                                    color={newColor}
+                                    onChange={(e) => setNewColor(e.hex)}
+                                    colors={colors}
                                 />
                                 <h3 className="text-lg font-bold px-1 text-white">Objective amount: </h3>
                                 <input type="number" className="text-main-primary rounded-full py-2" defaultValue={newMaxValue} onBlur={(e) => setNewMaxValue(Number(e.target.value))} />
