@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import EmojiPicker, { EmojiStyle, Emoji } from 'emoji-picker-react';
+import { TwitterPicker } from 'react-color';
 
 const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal, updateHabits }) => {
     const [icon, setIcon] = useState<string>('');
@@ -6,6 +8,8 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
     const [unit, setUnit] = useState<string>('');
     const [color, setColor] = useState<string>('');
     const [maxValue, setMaxValue] = useState<number>(0);
+    const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
+    let colors = ['#CE769C','#7975D1','#68A0CA','#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']
 
     const addHabitTracker = () => {
         if (validateForm()) {
@@ -30,17 +34,38 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
 
     const validateForm = (): boolean => {
         if (name === '') {
-            window.alert('Please enter a name for the step');
+            window.alert('Please enter a name for the tracker');
+            return false;
+        }
+        if (unit === '') {
+            window.alert('Please enter a unit name for the tracker');
+            return false;
+        }
+        if (icon === '') {
+            window.alert('Please select an icon for the tracker');
+            return false;
+        }
+        if (color === '') {
+            window.alert('Please select a color for the tracker');
+            return false;
+        }
+        if (maxValue === 0) {
+            window.alert('Please enter a max value for the tracker');
             return false;
         }
         return true;
     }
 
+    const handleSetEmoji = (emoji: string) => {
+        setIcon(emoji);
+        setShowEmojiPicker(false);
+    }
+
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
             <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
-                <h2 className="text-xl font-bold mb-4">New routine step</h2>
-                <div className="flex flex-col gap-1 text-main-primary">
+                <h2 className="text-xl font-bold mb-4">New habit tracker</h2>
+                <div className="flex flex-col gap-2 text-main-primary">
                     <h3 className="text-lg font-bold px-1 text-white">Name: </h3>
                     <input
                         type='text'
@@ -56,18 +81,29 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
                         value={unit} onChange={(e) => setUnit(e.target.value)}
                     />
                     <h3 className="text-lg font-bold px-1 text-white">Icon: </h3>
-                    <input
-                        type='text'
-                        placeholder='Enter icon'
-                        className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
-                        value={icon} onChange={(e) => setIcon(e.target.value)}
-                    />
+                    <div className="flex flex-row gap-10 content-center justify-start">
+                        <button
+                            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                            className="border-white border-2 text-white hover:text-main-primary hover:bg-white rounded-full px-5"
+                        >
+                            Edit Icon
+                        </button>
+                        <Emoji unified={icon} size={25} />
+                    </div>
+                    {
+                        showEmojiPicker === true &&
+                        <div className="absolute">
+                            <EmojiPicker
+                                emojiStyle={EmojiStyle.APPLE}
+                                onEmojiClick={(e) => handleSetEmoji(e.unified)}
+                            />
+                        </div>
+                    }
                     <h3 className="text-lg font-bold px-1 text-white">Color: </h3>
-                    <input
-                        type='text'
-                        placeholder='Enter color'
-                        className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
-                        value={color} onChange={(e) => setColor(e.target.value)}
+                    <TwitterPicker
+                        color={color}
+                        onChange={(e) => setColor(e.hex)}
+                        colors={colors}
                     />
                     <h3 className="text-lg font-bold px-1 text-white">Objective amount: </h3>
                     <input
