@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-const newHabitTracker: React.FC<NewHabitTrackerModalProps> = ({ closeModal, updateHabits }) => {
+const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal, updateHabits }) => {
     const [icon, setIcon] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [unit, setUnit] = useState<string>('');
@@ -91,4 +91,4 @@ const newHabitTracker: React.FC<NewHabitTrackerModalProps> = ({ closeModal, upda
     );
 };
 
-export default newHabitTracker;
+export default NewHabitTrackerModal;
