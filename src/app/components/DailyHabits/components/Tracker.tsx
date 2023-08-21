@@ -92,6 +92,8 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
 
     //function editHabitTracker that edit the tracker on the local storage with the new values
     const editHabitTracker = () => {
+        if (!validateNewState()) return;
+        
         let dailyHabits = JSON.parse(localStorage.dailyHabits);
         dailyHabits[habitIndex].name = newName;
         dailyHabits[habitIndex].maxValue = newMaxValue;
