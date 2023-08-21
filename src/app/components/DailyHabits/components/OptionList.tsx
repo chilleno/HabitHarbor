@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DailyHabitsOptionListProps> = ({ onClose }) => {
+const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DailyHabitsOptionListProps> = ({ onClose, openCreateModal }) => {
     const listRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -18,8 +18,8 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DailyHabitsOpti
 
     return (
         <div ref={listRef} className="absolute mt-6 ml-36 bg-main-primary border-2 w-50 rounded-lg shadow-md z-50">
-            <div onClick={() => console.log('soon')} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
-                no options
+            <div onClick={openCreateModal} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+                New tracker
             </div>
         </div>
     );
