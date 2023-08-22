@@ -119,7 +119,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     return (
         <>
-            <ContentBox className="min-w-[400px] min-h-[77.5vh] max-h-[77.5vh]">
+            <ContentBox className="min-w-[400px] min-h-[77.5vh] max-h-[77.5vh] routine">
                 <div className="flex justify-end -mr-12 -mt-8">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
