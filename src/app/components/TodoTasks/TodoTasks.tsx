@@ -210,7 +210,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
 
     return (
         <>
-            <ContentBox className="min-w-full -mt-4">
+            <ContentBox className="min-w-full -mt-4 task-list-todo">
                 <div className="flex justify-end -mr-12 -mt-8">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
