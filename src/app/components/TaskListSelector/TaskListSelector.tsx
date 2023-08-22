@@ -29,7 +29,7 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
     }
 
     return (
-        <ContentBox className="min-w-full -mt-4">
+        <ContentBox className="min-w-full -mt-4 task-list-selector">
             <div className="flex justify-end -mr-12 -mt-8">
                 <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
