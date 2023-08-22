@@ -312,7 +312,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
 
 
     return (
-        <ContentBox className="min-w-[280px]">
+        <ContentBox className="min-w-[280px] pomodoro-timer">
             <div className="flex justify-end -mr-14 -mt-8">
                 <FloatingButton onClick={openModal}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
