@@ -88,8 +88,8 @@ export default function Home() {
         <Joyride
           steps={[
             {
-              content: <h2>Let's begin our journey!</h2>,
-              locale: { skip: <strong aria-label="skip">S-K-I-P</strong> },
+              content: (<h2>{"Let's begin our journey!"}</h2>),
+              locale: { skip: (<strong aria-label="skip">{"S-K-I-P"}</strong>) },
               placement: 'center',
               target: 'body',
             },
@@ -107,7 +107,7 @@ export default function Home() {
             },
             {
               target: '.task-list-todo',
-              content: 'Here are your tasks to do, in the menu you can use our tool to add a priority to tasks. You can also pick one task and put it in the top with the fire button that appears when you hover over a task. You can also delete a task by clicking on the trash button.', 
+              content: 'Here are your tasks to do, in the menu you can use our tool to add a priority to tasks. You can also pick one task and put it in the top with the fire button that appears when you hover over a task. You can also delete a task by clicking on the trash button.',
             },
             {
               target: '.task-list-done',
@@ -118,7 +118,7 @@ export default function Home() {
               content: 'This is your routine, you can use it to track your pomodoros for your routines. You can assign a task list to a routine step, so when you finish a step, the task list will be selected automatically.',
             },
             {
-              content: <h2>That's it at the moment. I hope this tool help you as much as it helps me on my daily tasks. Have a productive day!</h2>,
+              content: (<h2>{"That's it at the moment. I hope this tool help you as much as it helps me on my daily tasks. Have a productive day!"}</h2>),
               placement: 'center',
               target: 'body',
             },
