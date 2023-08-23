@@ -9,7 +9,7 @@ export const useEndScreen = () => {
 
 const EndScreen: React.FC<{ className: string, children: ReactNode }> = ({ className, children }) => {
   return (
-    <div className={`xl:w-4/12 lg:w-4/12 sm:h-2/6 xl:h-screen lg:h-screen max-h-[90%] ${className}`}>
+    <div className={`xl:w-4/12 lg:w-4/12 md:w-4/12 sm:h-2/6 ${className}`}>
       {children}
     </div>
   );
