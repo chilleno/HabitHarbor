@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionListProps> = ({ onClose }) => {
+const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionListProps> = ({ onClose, showTour }) => {
     const listRef = useRef<HTMLDivElement>(null);
     const options: HelpButtonOption[] = [
         {
@@ -21,7 +21,7 @@ const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionL
         },
         {
             text: 'How to use',
-            url: 'https://google.com',
+            clickFunction: showTour,
         },
         {
             text: 'Pricing (soon)',
@@ -51,7 +51,7 @@ const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionL
             {options.map((option, index) => (
                 <>
                     {option.text === "Twitter" && <hr />}
-                    <div onClick={() => window.open(option.url, '_blank')} key={index} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer">
+                    <div onClick={(option.clickFunction ? option.clickFunction : () => window.open(option.url, '_blank'))} key={'help_option_'+index} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer">
                         {option.text}
                     </div>
                 </>
