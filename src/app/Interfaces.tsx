@@ -134,3 +134,23 @@ interface TrackerProps {
     tracker: HabitTracker
     handleUpdateRender: () => void;
 }
+
+enum EvaluationType {
+    Immediate = "Immediate",
+    Short = "Short Term",
+    Long = "Long Term",
+}
+
+enum effortType {
+    Low = "Low",
+    Medium = "Medium",
+    High = "High",
+}
+
+interface PriorityCalculation {
+    taskIndex: number;
+    priority: number;
+    benefit: EvaluationType | null;
+    impact: EvaluationType | null;
+    effort: effortType | null;
+}
