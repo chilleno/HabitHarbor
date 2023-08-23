@@ -13,7 +13,7 @@ import HelpOptionList from './components/HelpButton/HelpOptionList';
 import TaskListSelector from './components/TaskListSelector/TaskListSelector';
 import TodoTasks from './components/TodoTasks/TodoTasks';
 import DoneTasks from './components/DoneTasks/DoneTasks';
-import Joyride from 'react-joyride';
+import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 
 export default function Home() {
   const [currentTaskList, setCurrentTaskList] = useState<number>(-1);
@@ -26,6 +26,7 @@ export default function Home() {
   const { MiddleScreen } = useMiddleScreen();
   const { EndScreen } = useEndScreen();
   const [finishRender, setFinishRender] = useState<boolean>(false);
+  const [showTour, setShowTour] = useState<boolean>(false);
 
   const handleButtonClick = () => {
     setShowList(!showList);
@@ -42,8 +43,8 @@ export default function Home() {
     if (currentStoredTaskLists && currentStoredTaskLists.length > 0) {
       setCurrentTaskList(0);
     }
-    
-    if(currentStoredTaskLists.length === 0) {
+
+    if (currentStoredTaskLists.length === 0) {
 
       let taskList: TaskList = {
         name: 'Example Task List',
@@ -56,7 +57,7 @@ export default function Home() {
       localStorage.setItem('taskLists', JSON.stringify(taskLists));
       setCurrentTaskList(0);
     }
-
+    handleTour();
     setFinishRender(true);
   }, []);
 
@@ -95,12 +96,41 @@ export default function Home() {
     }
   }
 
+  const handleTour = () => {
+    const storedTour = localStorage.getItem('tour');
+    if (storedTour === null) {
+      localStorage.setItem('tour', JSON.stringify(true));
+    } else {
+      setShowTour(JSON.parse(storedTour));
+    }
+  }
+
+  const handleTourEnd = () => {
+    setShowTour(false);
+    localStorage.setItem('tour', JSON.stringify(false));
+  }
+
+  const handleTourStart = () => {
+    setShowTour(true);
+    localStorage.setItem('tour', JSON.stringify(true));
+  }
+
+  const handleJoyrideCallback = (data: CallBackProps) => {
+    const { status, type } = data;
+    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
+
+    if (finishedStatuses.includes(status)) {
+      handleTourEnd();
+    }
+  };
+
   if (!finishRender) {
     return null
   } else {
     return (
       <>
         <Joyride
+          callback={handleJoyrideCallback}
           steps={[
             {
               content: (<h2>{"Let's begin our journey!"}</h2>),
@@ -138,7 +168,7 @@ export default function Home() {
               target: 'body',
             },
           ]}
-          run={true}
+          run={showTour}
           showProgress
           showSkipButton
           continuous
@@ -199,7 +229,7 @@ export default function Home() {
           </EndScreen>
           <div className="relative">
             <HelpButton onClick={handleButtonClick} />
-            {showList && <HelpOptionList onClose={() => setShowList(false)} />}
+            {showList && <HelpOptionList onClose={() => setShowList(false)} showTour={handleTourStart} />}
           </div>
         </MainComponent>
       </>
