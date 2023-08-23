@@ -75,7 +75,7 @@ const DailyHabits = () => {
 
     return (
         <>
-            <ContentBox className="xl:min-w-[330px] lg:min-w-[290px] lg:max-w-[290px] -mt-2 h-[17rem] daily-habits md:max-h-[18rem] md:min-h-[18rem] lg:max-h-[18rem] lg:min-h-[18rem] xl:max-h-[29rem] xl:min-h-[29rem]">
+            <ContentBox className="xl:min-w-[330px] lg:min-w-[290px] lg:max-w-[290px] -mt-2 h-[17rem] daily-habits md:max-h-[18rem] md:min-h-[18rem] lg:max-h-[18rem] lg:min-h-[18rem] xl:max-h-[24rem] xl:min-h-[24rem]">
                 <div className="flex justify-end -mr-12 -mt-6">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
