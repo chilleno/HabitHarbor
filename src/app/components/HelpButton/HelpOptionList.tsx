@@ -5,19 +5,19 @@ const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionL
     const options: HelpButtonOption[] = [
         {
             text: 'Feature Request',
-            url: 'https://chaintask.canny.io/issues',
+            url: 'https://habitharbor.canny.io/issues',
         },
         {
             text: 'Report issue',
-            url: 'https://chaintask.canny.io/feature-requests',
+            url: 'https://habitharbor.canny.io/feature-requests',
         },
         {
             text: 'Roadmap',
-            url: 'https://chaintask.canny.io',
+            url: 'https://habitharbor.canny.io',
         },
         {
             text: 'What\'s new',
-            url: 'https://chaintask.canny.io/changelog',
+            url: 'https://habitharbor.canny.io/changelog',
         },
         {
             text: 'How to use',
