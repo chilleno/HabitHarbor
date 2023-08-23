@@ -84,7 +84,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
     };
 
     return (
-        <ContentBox className="min-w-full -mt-4 task-list-done">
+        <ContentBox className="min-w-full xl:max-h-[14rem] xl:min-h-[14rem] lg:max-h-[10.3rem] lg:min-h-[10.3rem] md:max-h-[14rem] md:min-h-[14rem] -mt-4 task-list-done">
             <div className="flex justify-end -mr-12 -mt-8">
                 <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
@@ -129,7 +129,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                 />
                             </div>
                         </div>
-                    )) : <i>no tasks created...</i>
+                    )) : <i className="text-center pt-10">no tasks created...</i>
                 }
             </div>
         </ContentBox>
