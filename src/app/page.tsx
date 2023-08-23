@@ -42,6 +42,21 @@ export default function Home() {
     if (currentStoredTaskLists && currentStoredTaskLists.length > 0) {
       setCurrentTaskList(0);
     }
+    
+    if(currentStoredTaskLists.length === 0) {
+
+      let taskList: TaskList = {
+        name: 'Example Task List',
+        highlightedTask: null,
+        tasks: [],
+      };
+
+      let taskLists: TaskList[] = [];
+      taskLists.push(taskList);
+      localStorage.setItem('taskLists', JSON.stringify(taskLists));
+      setCurrentTaskList(0);
+    }
+
     setFinishRender(true);
   }, []);
 
