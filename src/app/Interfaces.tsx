@@ -21,7 +21,8 @@ interface TaskList {
 
 interface HelpButtonOption {
     text: string;
-    url: string;
+    url?: string;
+    clickFunction?: () => void;
 }
 
 interface HabitTracker {
@@ -88,6 +89,7 @@ interface PrioritizedModalProps {
 
 interface HelpOptionListProps {
     onClose: () => void;
+    showTour: () => void;
 }
 
 interface TaskListOptionListProps {
