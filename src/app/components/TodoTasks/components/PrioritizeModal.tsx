@@ -11,16 +11,6 @@ enum effortType {
     Medium = "Medium",
     High = "High",
 }
-
-interface PriorityCalculation {
-    taskIndex: number;
-    priority: number;
-    benefit: EvaluationType | null;
-    impact: EvaluationType | null;
-    effort: effortType | null;
-}
-
-
 const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderList, currentTaskListIndex, taskList }) => {
 
     const [priorityCalculationList, setPriorityCalculationList] = useState<PriorityCalculation[]>([]);
@@ -157,9 +147,9 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
                         <tbody>
                             {priorityCalculationList.map((task, index) => (
                                 <tr key={index}>
-                                    <td className="border p-5">{taskList[task.taskIndex].header}</td>
+                                    <td className="border py-5 px-12">{taskList[task.taskIndex].header}</td>
                                     <td className="border p-2">
-                                        <select onChange={(e) => updateBenefit(e, index)} className="text-main-primary text-center">
+                                        <select onChange={(e) => updateBenefit(e, index)} className="bg-main-primary rounded-xl py-3 px-10 content-start focus:ring-0 border-1 italic border-white">
                                             <option selected disabled>select an option</option>
                                             <option value={EvaluationType.Immediate}>{EvaluationType.Immediate}</option>
                                             <option value={EvaluationType.Short}>{EvaluationType.Short}</option>
@@ -167,7 +157,7 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
                                         </select>
                                     </td>
                                     <td className="border p-2">
-                                        <select onChange={(e) => updateImpact(e, index)} className="text-main-primary text-center">
+                                        <select onChange={(e) => updateImpact(e, index)} className="bg-main-primary rounded-xl py-3 px-10 content-start focus:ring-0 border-1 italic border-white">
                                             <option selected disabled>select an option</option>
                                             <option value={EvaluationType.Immediate}>{EvaluationType.Immediate}</option>
                                             <option value={EvaluationType.Short}>{EvaluationType.Short}</option>
@@ -175,7 +165,7 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
                                         </select>
                                     </td>
                                     <td className="border p-2">
-                                        <select onChange={(e) => updateEffort(e, index)} className="text-main-primary text-center">
+                                        <select onChange={(e) => updateEffort(e, index)} className="bg-main-primary rounded-xl py-3 px-10 content-start focus:ring-0 border-1 italic border-white">
                                             <option selected disabled>select an option</option>
                                             <option value={effortType.Low}>{effortType.Low}</option>
                                             <option value={effortType.Medium}>{effortType.Medium}</option>
