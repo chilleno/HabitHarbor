@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import { PlayIcon, StopIcon, CogIcon, ForwardIcon } from '@heroicons/react/24/solid';
+import useSound from 'use-sound';
 
 const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepCount }) => {
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
@@ -25,13 +26,16 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     const [today] = useState<Date>(new Date());
     const [autoStart, setAutoStart] = useState<boolean>(false);
 
+    //sfx
+    const [finishPomodoroSfx, { stop }] = useSound('/static/sounds/finishPomodoro.wav');
+
     useEffect(() => {
         setFormattedTime(formatTime(minutes) + ':' + formatTime(seconds));
         let interval: NodeJS.Timeout;
         if (isActive) {
             interval = setInterval(() => {
                 if (seconds === 0 && minutes === 0) {
-                    playSoundFinishPomodoro();
+                    finishPomodoroSfx();
                     clearInterval(interval);
                     handleTimerFinish();
 
@@ -274,11 +278,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
 
     const closeModal = (): void => {
         setShowModal(false);
-    };
-
-    const playSoundFinishPomodoro = (): void => {
-        const audio = new Audio('/static/sounds/finishPomodoro.wav');
-        audio.play();
     };
 
     const handlePomodorosForLongBreakChange = (value: number): void => {
