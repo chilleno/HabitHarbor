@@ -4,10 +4,14 @@ import { CogIcon, TrashIcon } from '@heroicons/react/24/solid';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import OptionList from './components/OptionList';
+import useSound from 'use-sound';
 
 const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList }) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [showOptions, setShowOptions] = useState(false);
+
+    //sfx
+    const [playSoundCheckbox] = useSound('/static/sounds/uncheck.wav');
 
     const handleCheckboxChange = (taskIndex: number) => {
         if (timeoutRef.current) {
@@ -30,9 +34,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             setUpdateTaskList(!updateTaskList);
 
-            setTimeout(() => {
-                playSoundCheckbox();
-            }, (600))
+            playSoundCheckbox();
         }
     };
 
@@ -49,10 +51,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
         }
     };
 
-    const playSoundCheckbox = () => {
-        const audio = new Audio('/static/sounds/uncheck.wav');
-        audio.play();
-    };
+
 
     const handleChangeTaskText = (newText: string, taskIndex: number, element: any) => {
         if (newText.length <= 3) {
