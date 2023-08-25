@@ -3,6 +3,7 @@ import { CogIcon, PlusIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import EmojiPicker, { EmojiStyle, Emoji } from 'emoji-picker-react';
 import { TwitterPicker } from 'react-color';
+import useSound from 'use-sound';
 
 const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRender }) => {
     const [today] = useState(new Date());
@@ -22,6 +23,10 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
     let colors = ['#CE769C', '#7975D1', '#68A0CA', '#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']
 
 
+    //sfx
+    const [trackCountSfx, { stop: stopTrackCountSfx }] = useSound('/static/sounds/waterTrackCount.wav');
+    const [trackResetSfx, { stop: stopTrackResetSfx }] = useSound('/static/sounds/waterTrackReset.wav');
+
     const handleCurrentAmountChange = (newAmount: number, effectCount: boolean, effectReset: boolean) => {
         if (!isCooldown && newAmount >= 0 && newAmount <= tracker.maxValue) {
             setIsCooldown(true);
@@ -32,26 +37,16 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
 
             if (effectCount) {
-                playSoundCountWater();
+                trackCountSfx();
             }
             if (effectReset) {
-                playSoundResetWater();
+                trackResetSfx();
             }
             setTimeout(() => {
                 setIsCooldown(false);
             }, 1000);
         }
     }
-
-    const playSoundCountWater = () => {
-        const audio = new Audio('/static/sounds/waterTrackCount.wav');
-        audio.play();
-    };
-
-    const playSoundResetWater = () => {
-        const audio = new Audio('/static/sounds/waterTrackReset.wav');
-        audio.play();
-    };
 
     useEffect(() => {
         let dailyHabits = JSON.parse(localStorage.dailyHabits);
@@ -95,7 +90,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
     //function editHabitTracker that edit the tracker on the local storage with the new values
     const editHabitTracker = () => {
         if (!validateNewState()) return;
-        
+
         let dailyHabits = JSON.parse(localStorage.dailyHabits);
         dailyHabits[habitIndex].name = newName;
         dailyHabits[habitIndex].maxValue = newMaxValue;
