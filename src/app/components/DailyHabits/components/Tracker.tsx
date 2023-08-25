@@ -59,6 +59,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
             handleCurrentAmountChange(0, false, false);
             dailyHabits[habitIndex].firstTrackerDate = today.toString();
+            dailyHabits[habitIndex].currentValue = 0;
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
         }
         if (currentAmount === 1) {
@@ -73,6 +74,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
             handleCurrentAmountChange(0, false, false);
             dailyHabits[habitIndex].firstTrackerDate = today.toString();
+            dailyHabits[habitIndex].currentValue = 0;
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
         }
         setInitialRenderComplete(true);
