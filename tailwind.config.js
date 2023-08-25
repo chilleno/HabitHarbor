@@ -11,7 +11,7 @@ module.exports = withAnimations({
     screens: {
       sm: '320px',
       md: '428px',
-      lg: '976px',
+      lg: '1300px',
       xl: '1440px',
     },
     colors: {

@@ -17,6 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <div className="sm:inline xl:hidden lg:hidden md:inline">
+            <h1 className="text-center">This webapp only works on mobile screens, please try on a bigger screen</h1>
+        </div>
         {children}
       </body>
       <Analytics />

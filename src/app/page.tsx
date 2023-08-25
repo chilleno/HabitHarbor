@@ -128,7 +128,7 @@ export default function Home() {
     return null
   } else {
     return (
-      <>
+      <div className="sm:hidden xl:inline lg:inline md:hidden">
         <Joyride
           callback={handleJoyrideCallback}
           steps={[
@@ -232,7 +232,7 @@ export default function Home() {
             {showList && <HelpOptionList onClose={() => setShowList(false)} showTour={handleTourStart} />}
           </div>
         </MainComponent>
-      </>
+      </div>
     )
   }
 }
