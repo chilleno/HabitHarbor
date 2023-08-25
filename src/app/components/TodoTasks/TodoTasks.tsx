@@ -6,6 +6,8 @@ import FloatingButton from '@/app/designComponent/FloatingButton';
 import OptionList from './components/OptionList';
 import InputText from '@/app/designComponent/form/InputText';
 import PrioritizeModal from './components/PrioritizeModal';
+import useSound from 'use-sound';
+
 
 const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList }) => {
     const [newTask, setNewTask] = useState<string>('');
@@ -14,6 +16,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [highlightedTask, setHighlightedTask] = useState<number | null>(null);
     const [showPrioritizeModal, setShowPrioritizeModal] = useState<boolean>(false);
+
+    //sfx
+    const [checkSound, { stop: stopCheckSound }] = useSound('/static/sounds/check.wav');
+    const [newTaskSound, { stop: stopNewTaskSound }] = useSound('/static/sounds/newTask.wav');
+    const [errorSound, { stop: stopErrorSound }] = useSound('/static/sounds/error1.wav');
 
     const handlePressEnterButton = (event: any) => {
         if (event.key === 'Enter') {
@@ -84,7 +91,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                 }, (1))
 
                 setTimeout(() => {
-                    playSoundNewTask();
+                    newTaskSound();
                 }, (600))
             } else {
                 window.alert('You need to create a new list first.')
@@ -93,7 +100,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
     }
 
     const handleInputError = (): void => {
-        playSoundError();
+        errorSound();
         setShowError(true);
         setTimeout(() => {
             setShowError(false);
@@ -125,9 +132,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             handleRefreshList();
 
-            setTimeout(() => {
-                playSoundCheckbox();
-            }, (600))
+            checkSound();
         }
     };
 
@@ -150,21 +155,6 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
             handleRefreshList();
         }
-    };
-
-    const playSoundCheckbox = () => {
-        const audio = new Audio('/static/sounds/check.wav');
-        audio.play();
-    };
-
-    const playSoundNewTask = () => {
-        const audio = new Audio('/static/sounds/newTask.wav');
-        audio.play();
-    };
-
-    const playSoundError = () => {
-        const audio = new Audio('/static/sounds/error1.wav');
-        audio.play();
     };
 
     const handleChangeTaskText = (newText: string, taskIndex: number, element: any) => {
