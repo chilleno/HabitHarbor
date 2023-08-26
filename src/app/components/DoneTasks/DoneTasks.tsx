@@ -119,7 +119,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                 className="ml-2 w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
                                 style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                 defaultValue={task.header}
-                                onChange={(e) => handleChangeTaskText(e.target.value, index, e)}
+                                onBlur={(e) => handleChangeTaskText(e.target.value, index, e)}
                             />
                             <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3">
                                 <TrashIcon
