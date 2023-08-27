@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DoneTasksOptionListProps> = ({ onClose }) => {
+const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DoneTasksOptionListProps> = ({ onClose, deleteAllDoneTasks }) => {
     const listRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -9,6 +9,7 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DoneTasksOption
         }
     };
 
+   
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -18,8 +19,8 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, DoneTasksOption
 
     return (
         <div ref={listRef} className="absolute mt-6 ml-36 bg-main-primary border-2 w-50 rounded-lg shadow-md z-50">
-            <div onClick={() => console.log('soon')} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
-                no options
+            <div onClick={deleteAllDoneTasks} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
+                delete all done tasks
             </div>
         </div>
     );
