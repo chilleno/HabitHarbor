@@ -51,8 +51,6 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
         }
     };
 
-
-
     const handleChangeTaskText = (newText: string, taskIndex: number, element: any) => {
         if (newText.length <= 3) {
             element.target.classList.add('shake-error');
@@ -82,6 +80,25 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
         }
     };
 
+
+    //function that delete all the done tasks on the current task list
+    const deleteAllDoneTasks = (): void => {
+        if (typeof window !== 'undefined') {
+            const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            const currentTaskListIndex = JSON.parse(localStorage.getItem('currentTaskListIndex') || '0');
+            const currentTaskList = currentTaskLists[currentTaskListIndex];
+            const newTaskList: TaskList = {
+                name: currentTaskList.name,
+                highlightedTask: currentTaskList.highlightedTask,
+                tasks: currentTaskList.tasks.filter((task: Task) => !task.checked)
+            }
+            currentTaskLists[currentTaskListIndex] = newTaskList;
+            localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
+            setUpdateTaskList(!updateTaskList);
+        }
+    }
+
+
     return (
         <ContentBox className="min-w-full xl:max-h-[14rem] xl:min-h-[14rem] lg:max-h-[10.3rem] lg:min-h-[10.3rem] md:max-h-[14rem] md:min-h-[14rem] -mt-4 task-list-done">
             <div className="flex justify-end -mr-12 -mt-8">
@@ -93,6 +110,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                         showOptions &&
                         <OptionList
                             onClose={() => setShowOptions(false)}
+                            deleteAllDoneTasks={deleteAllDoneTasks}
                         />
                     }
                 </FloatingButton>
