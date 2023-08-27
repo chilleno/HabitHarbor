@@ -107,6 +107,7 @@ interface TodoTasksOptionListProps {
 
 interface DoneTasksOptionListProps {
     onClose: () => void;
+    deleteAllDoneTasks: () => void;
 }
 
 interface QuestionButtonProps {
