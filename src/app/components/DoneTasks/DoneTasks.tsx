@@ -85,7 +85,6 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
     const deleteAllDoneTasks = (): void => {
         if (typeof window !== 'undefined') {
             const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-            const currentTaskListIndex = JSON.parse(localStorage.getItem('currentTaskListIndex') || '0');
             const currentTaskList = currentTaskLists[currentTaskListIndex];
             const newTaskList: TaskList = {
                 name: currentTaskList.name,
