@@ -93,7 +93,7 @@ const DailyHabits = () => {
                 <div className="flex justify-center font-bold mb-2 -mt-8">
                     <h1>Daily habits</h1>
                 </div>
-                <div className="flex flex-col gap-16 bg-main-primary rounded-xl xl:w-[270px] lg:w-[260px] overflow-y-scroll xl:max-h-[22vh] xl:min-h-[22vh] lg:min-h-[32vh] lg:max-h-[32vh] xl:-ml-1 lg:-ml-4 py-2">
+                <div className="flex flex-col gap-16 bg-main-primary rounded-xl xl:w-[270px] lg:w-[260px] overflow-y-scroll xl:max-h-[20rem] xl:min-h-[20rem] lg:min-h-[14rem] lg:max-h-[14rem] xl:-ml-1 lg:-ml-4 py-2">
                     {
                         dailyHabits.map((habit, index) => (
                             habit.currentValue < habit.maxValue &&
