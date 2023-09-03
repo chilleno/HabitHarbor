@@ -2,6 +2,8 @@
 
 export default function Home() {
   return (
-    <h1>homepage c:</h1>
+    <>
+      <a href="/app" className="underline text-[lightblue]">Go to App</a>
+    </>
   )
 }
