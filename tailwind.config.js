@@ -22,7 +22,7 @@ module.exports = withAnimations({
       sm: '320px',
       md: '682px',
       lg: '1300px',
-      xl: '1440px',
+      xl: '1920px',
     },
     colors: {
       secondary: "#F4F2ED",
