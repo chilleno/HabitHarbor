@@ -320,7 +320,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 </FloatingButton>
             </div>
             <div className="flex flex-col justify-center content-center">
-                <div className="flex content-center justify-center text-main-primary">
+                <div className="flex content-center justify-center text-main-primary -mt-5">
                     <div className={`rounded-full w-[180px] h-[180px] ${(isBreak == true ? (isLongBreak == true ? 'bg-pomodoro-green' : isShortBreak == true ? 'bg-pomodoro-green' : null) : 'bg-pomodoro-red')}`}>
                         <div className="flex flex-col items-center h-full justify-center leading-10 -mt-4">
                             <div className="text-[16px]">
@@ -332,24 +332,24 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                         </div>
                     </div>
                 </div>
-                <div className="flex content-center justify-center -mt-10 gap-1">
+                <div className="flex content-center justify-center -mt-14 gap-1">
                     <FloatingButton onClick={startTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <PlayIcon className="h-[24px] w-[24px] text-white-500" />
+                            <PlayIcon className="h-[24px] w-[24px] text-white" />
                         </span>
                     </FloatingButton>
                     <FloatingButton onClick={stopTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <StopIcon className="h-[24px] w-[24px] text-white-500" />
+                            <StopIcon className="h-[24px] w-[24px] text-white" />
                         </span>
                     </FloatingButton>
                     <FloatingButton onClick={nextTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <ForwardIcon className="h-[24px] w-[24px] text-white-500" />
+                            <ForwardIcon className="h-[24px] w-[24px] text-white" />
                         </span>
                     </FloatingButton>
                 </div>
-                <div className="lg:text-sm sm:text-xs lg:mt-6 xl:text-lg xl:mb-5">
+                <div className="lg:text-sm sm:text-xs lg:mt-6 xl:text-lg xl:mb-5 text-white">
                     <div className="w-full flex justify-center items-center">
                         Pomodoros: {pomodoroTotalCount}
                     </div>
