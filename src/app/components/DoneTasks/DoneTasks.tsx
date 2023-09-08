@@ -117,7 +117,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             <div className="flex justify-center items-center font-bold -mt-6">
                 <h1>Done Tasks</h1>
             </div>
-            <div className="flex flex-col max-h-28 h-28 min-h-28 xl:max-h-60 xl:h-60 xl:min-h-60 overflow-y-auto">
+            <div className="flex flex-col max-h-28 h-28 min-h-28 xl:max-h-60 xl:h-60 xl:min-h-60 overflow-y-auto no-scrollbar">
                 {
                     taskList && taskList.length > 0 ? taskList.map((task, index) => (
                         task.checked == true &&
