@@ -44,3 +44,7 @@ body {
     margin-left: 0rem;
   }
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
