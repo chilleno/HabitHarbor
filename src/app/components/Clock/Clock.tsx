@@ -23,14 +23,14 @@ const Clock: React.FC = () => {
     return (
         <ContentBox className="min-w-[400px]">
             <div className="flex flex-row items-center justify-center font-bold gap-1">
-                <div className="text-6xl">
+                <div className="text-6xl text-white">
                     {dateState && dateState.toLocaleString('en-US', {
                         hour: 'numeric',
                         minute: 'numeric',
                         hour12: true,
                     }).slice(0, -2)}
                 </div>
-                <div className="-rotate-90 text-3xl">
+                <div className="-rotate-90 text-3xl text-white">
                     {dateState && dateState.toLocaleString('en-US', {
                         hour: 'numeric',
                         minute: 'numeric',
@@ -38,7 +38,7 @@ const Clock: React.FC = () => {
                     }).slice(-2)}
                 </div>
             </div>
-            <div className="flex justify-center content-center text-xl">
+            <div className="flex justify-center content-center text-xl text-white">
                 {dateState && dateState.toLocaleDateString('en-GB', {
                     weekday: 'short',
                     day: 'numeric',

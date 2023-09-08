@@ -33,7 +33,7 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
             <div className="flex justify-end -mr-12 -mt-8">
                 <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
-                        <CogIcon className="h-[24px] w-[24px] text-white-500" />
+                        <CogIcon className="h-[24px] w-[24px] text-white" />
                     </span>
                     {
                         showOptions &&

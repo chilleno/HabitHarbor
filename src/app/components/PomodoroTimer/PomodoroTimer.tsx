@@ -315,7 +315,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
             <div className="flex justify-end -mr-14 -mt-8">
                 <FloatingButton onClick={openModal}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
-                        <CogIcon className="h-[24px] w-[24px] text-white-500" />
+                        <CogIcon className="h-[24px] w-[24px] text-white" />
                     </span>
                 </FloatingButton>
             </div>

@@ -259,13 +259,13 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                             <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-3">
                                 <b
                                     onClick={() => handleHighlightTask(null)}
-                                    className="text-xs text-white-500 hover:cursor-pointer"
+                                    className="text-xs text-white hover:cursor-pointer"
                                 >
                                     🧯
                                 </b>
                                 <TrashIcon
                                     onClick={() => handleDeleteTask(highlightedTask)}
-                                    className="h-4 w-4 text-white-500 hover:cursor-pointer"
+                                    className="h-4 w-4 text-white hover:cursor-pointer"
                                 />
                             </div>
                         </div>
@@ -298,13 +298,13 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                 <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-2">
                                     <b
                                         onClick={() => handleHighlightTask(index)}
-                                        className="text-xs text-white-500 hover:cursor-pointer"
+                                        className="text-xs text-white hover:cursor-pointer"
                                     >
                                         🔥
                                     </b>
                                     <TrashIcon
                                         onClick={() => handleDeleteTask(index)}
-                                        className="h-4 w-4 text-white-500 hover:cursor-pointer"
+                                        className="h-4 w-4 text-white hover:cursor-pointer"
                                     />
                                 </div>
                             </div>
