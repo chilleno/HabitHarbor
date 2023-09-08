@@ -232,7 +232,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                         <i>Please add a text longer than 3 characters.</i>
                     </b>
                 </div>
-                <div className="flex flex-col max-h-[11rem] h-[11rem] min-h-[11rem] xl:max-h-80 xl:h-80 xl:min-h-80 overflow-y-auto no-scrollbar">
+                <div className="flex flex-col max-h-[6.5rem] h-[6.5rem] min-h-[6.5rem] xl:max-h-80 xl:h-80 xl:min-h-80 overflow-y-auto no-scrollbar">
                     {
                         (highlightedTask !== null && taskList[highlightedTask]) &&
                         <div
