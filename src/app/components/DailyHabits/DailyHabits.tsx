@@ -75,7 +75,7 @@ const DailyHabits = () => {
 
     return (
         <>
-            <ContentBox className="xl:min-w-[330px] lg:min-w-[290px] lg:max-w-[290px] -mt-2 h-[17rem] daily-habits md:max-h-[18rem] md:min-h-[18rem] lg:max-h-[18rem] lg:min-h-[18rem] xl:max-h-[24rem] xl:min-h-[24rem]">
+            <ContentBox className="xl:min-w-[330px] lg:min-w-[290px] lg:max-w-[290px] -mt-5 h-[14rem] daily-habits md:max-h-[18rem] md:min-h-[18rem] lg:max-h-[16rem] lg:min-h-[16rem] xl:max-h-[27rem] xl:min-h-[27rem]">
                 <div className="flex justify-end -mr-12 -mt-6">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
@@ -93,7 +93,7 @@ const DailyHabits = () => {
                 <div className="flex justify-center font-bold mb-2 -mt-8">
                     <h1>Daily habits</h1>
                 </div>
-                <div className="flex flex-col gap-16 bg-main-primary rounded-xl xl:w-[270px] lg:w-[260px] overflow-y-scroll xl:max-h-[20rem] xl:min-h-[20rem] lg:min-h-[14rem] lg:max-h-[14rem] xl:-ml-1 lg:-ml-4 py-2">
+                <div className="flex flex-col gap-16 bg-main-primary rounded-xl xl:w-[270px] lg:w-[260px] overflow-y-scroll xl:max-h-[22rem] xl:min-h-[22rem] lg:min-h-[12rem] lg:max-h-[12rem] xl:-ml-1 lg:-ml-4 py-2">
                     {
                         dailyHabits.map((habit, index) => (
                             habit.currentValue < habit.maxValue &&
