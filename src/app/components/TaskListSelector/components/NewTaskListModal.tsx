@@ -4,6 +4,7 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
     const [name, setName] = useState('');
 
     const createNewTaskList = (): void => {
+        if(name === '') return;
         if (typeof window !== 'undefined') {
             const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             const newTaskList: TaskList = {
@@ -21,8 +22,8 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
 
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
-            <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
-                <h2 className="text-xl font-bold mb-4">New Task List</h2>
+            <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80  border-[2px] border-white">
+                <h2 className="text-xl font-bold mb-4 text-white">New Task List</h2>
                 <div className="flex flex-col">
                     <input
                         type='text'
@@ -31,11 +32,11 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
                         value={name} onChange={(e) => setName(e.target.value)}
                     />
                 </div>
-                <div className="flex justify-end mt-4">
-                    <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-full text-white" onClick={createNewTaskList}>
+                <div className="flex justify-end mt-4 gap-2">
+                    <button className="border-2 border-white hover:bg-white hover:text-black px-4 py-2 rounded-full text-white" onClick={createNewTaskList}>
                         Save
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-full text-white" onClick={closeModal}>
+                    <button className="border-2 border-white hover:bg-white hover:text-black px-4 py-2 rounded-full text-white" onClick={closeModal}>
                         Close
                     </button>
                 </div>
