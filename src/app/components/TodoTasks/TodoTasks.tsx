@@ -216,7 +216,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                     </FloatingButton>
                 </div>
                 <div className="flex justify-center items-center font-bold -mt-6 mb-2">
-                    <h1>TODO Tasks</h1>
+                    <h1 className="text-white">TODO Tasks</h1>
                 </div>
                 <div className="flex flex-col justify-center content-center">
                     <InputText
@@ -289,7 +289,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                     {task.priority}
                                 </div>
                                 <input
-                                    className="w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
+                                    className="w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white text-white"
                                     style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                     defaultValue={task.header}
                                     onBlur={(e) => handleChangeTaskText(e.target.value, index, e)}
