@@ -42,6 +42,10 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             if (effectReset) {
                 trackResetSfx();
             }
+
+            const event = new CustomEvent('habitsdatachanged') as any;
+            document.dispatchEvent(event);
+
             setTimeout(() => {
                 setIsCooldown(false);
             }, 1000);
@@ -61,6 +65,8 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             dailyHabits[habitIndex].firstTrackerDate = today.toString();
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
         }
+        const event = new CustomEvent('habitsdatachanged') as any;
+        document.dispatchEvent(event);
     }, [currentAmount]);
 
     useEffect(() => {
@@ -71,6 +77,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             dailyHabits[habitIndex].firstTrackerDate = today.toString();
             dailyHabits[habitIndex].currentValue = 0;
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+
+            const event = new CustomEvent('habitsdatachanged') as any;
+            document.dispatchEvent(event);
         }
         setInitialRenderComplete(true);
     }, []);
@@ -100,6 +109,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         dailyHabits[habitIndex].currentValue = 0;
         dailyHabits[habitIndex].firstTrackerDate = today.toString();
         localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+
+        const event = new CustomEvent('habitsdatachanged') as any;
+        document.dispatchEvent(event);
         handleUpdateRender();
         closeModal();
     }
@@ -139,6 +151,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         let dailyHabits = JSON.parse(localStorage.dailyHabits);
         dailyHabits.splice(habitIndex, 1);
         localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+        const event = new CustomEvent('habitsdatachanged') as any;
+        document.dispatchEvent(event);
+        
         handleUpdateRender();
         setInterval(() => {
             closeModal();

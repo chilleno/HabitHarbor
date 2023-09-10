@@ -11,11 +11,12 @@ const EventProvider = (props: EventProviderProps) => {
         document.addEventListener('pomodorodatachanged', () => {
             console.log('pomodoro data changed');
         });
+    }, []);
 
+    useEffect(() => {
         document.addEventListener('habitsdatachanged', () => {
             console.log('habits data changed');
         });
-
     }, []);
 
     return <>
