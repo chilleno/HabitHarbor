@@ -24,8 +24,8 @@ const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionL
             clickFunction: showTour,
         },
         {
-            text: 'Pricing (soon)',
-            url: 'https://google.com',
+            text: 'Pricing',
+            url: '/#pricing',
         },
         {
             text: 'Twitter',
