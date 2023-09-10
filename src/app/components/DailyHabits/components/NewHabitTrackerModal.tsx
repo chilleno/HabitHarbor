@@ -9,7 +9,7 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
     const [color, setColor] = useState<string>('');
     const [maxValue, setMaxValue] = useState<number>(0);
     const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
-    let colors = ['#CE769C','#7975D1','#68A0CA','#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']
+    let colors = ['#CE769C', '#7975D1', '#68A0CA', '#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']
 
     const addHabitTracker = () => {
         if (validateForm()) {
@@ -88,11 +88,11 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
                         >
                             Edit Icon
                         </button>
-                        <Emoji unified={icon} size={25} />
+                        <Emoji unified={icon} size={25}/>
                     </div>
                     {
                         showEmojiPicker === true &&
-                        <div className="absolute">
+                        <div className="absolute z-50">
                             <EmojiPicker
                                 emojiStyle={EmojiStyle.APPLE}
                                 onEmojiClick={(e) => handleSetEmoji(e.unified)}
