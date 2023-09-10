@@ -21,7 +21,7 @@ const Clock: React.FC = () => {
     }
 
     return (
-        <ContentBox className="min-w-[400px]">
+        <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] md:min-w-[18rem]">
             <div className="flex flex-row items-center justify-center font-bold gap-1">
                 <div className="text-6xl text-white">
                     {dateState && dateState.toLocaleString('en-US', {
