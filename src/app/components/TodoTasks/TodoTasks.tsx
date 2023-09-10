@@ -225,10 +225,10 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                         id="newTaskInput"
                         onChange={(value) => setNewTask(value)}
                         onKeyDown={handlePressEnterButton}
-                        className="focus:ring-0 focus:border-main-primary"
+                        className="focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
                         name="task-name-new"
                     />
-                    <b className={` ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
+                    <b className={`xl:text-md lg:text-xs md:text-xs ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
                         <i>Please add a text longer than 3 characters.</i>
                     </b>
                 </div>
@@ -236,7 +236,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                     {
                         (highlightedTask !== null && taskList[highlightedTask]) &&
                         <div
-                            className={`gap-1 group/item flex items-center bg-main-primary mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl animate-backInDown`}
+                            className={`gap-1 group/item flex items-center bg-main-primary xl:mb-2 lg:mb-1 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl animate-backInDown`}
                         >
                             <input
                                 checked={taskList[highlightedTask].checked || false}
@@ -244,14 +244,14 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                 type='checkbox'
                                 className="w-[20px] h-[20px] rounded-3xl focus:rounded-full bg-main-primary border-[#3D3E42] border-2 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
                             />
-                            <div className="animate-heartBeat animate-infinite ml-1">
+                            <div className="animate-heartBeat animate-infinite ml-1 xl:text-lg lg:text-xs md:text-xs">
                                 🔥
                             </div>
-                            <div className="animate-heartBeat animate-delay-75 animate-infinite ml-2">
+                            <div className="animate-heartBeat animate-delay-75 animate-infinite ml-2 xl:text-lg lg:text-xs md:text-xs">
                                 {taskList[highlightedTask].priority}
                             </div>
                             <input
-                                className="ml-2 w-full bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
+                                className="xl:text-lg lg:text-xs md:text-xs lg:placeholder:text-xs ml-2 w-full bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white"
                                 style={{ textDecoration: taskList[highlightedTask].checked ? 'line-through' : 'none' }}
                                 defaultValue={taskList[highlightedTask].header}
                                 onChange={(e) => handleChangeTaskText(e.target.value, highlightedTask, e)}
@@ -276,7 +276,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                             (task.checked == false && index !== highlightedTask) &&
                             <div
                                 key={'task_' + currentTaskListIndex + '_content_' + index}
-                                className={`gap-3 group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                                className={`gap-3 group/item flex items-center bg-main-primary w-full xl:mb-2 lg:mb-1 md:mb-1 min-h-[2rem] h-[2rem] max-h-[2rem] text-start py-3 px-3 rounded-3xl`}
                             >
                                 <input
                                     checked={task.checked || false}
@@ -285,11 +285,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                     type='checkbox'
                                     className="w-[20px] h-[20px] rounded-3xl focus:rounded-full bg-main-primary border-[#3D3E42] border-2 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
                                 />
-                                <div className={`animate-fadeIn animate-delay-[${index}ms]} ml-7`}>
+                                <div className={`animate-fadeIn animate-delay-[${index}ms]} ml-7 xl:text-lg lg:text-xs md:text-xs`}>
                                     {task.priority}
                                 </div>
                                 <input
-                                    className="w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white text-white"
+                                    className="w-10/12 xl:text-lg lg:text-xs md:text-xs bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white text-white"
                                     style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                     defaultValue={task.header}
                                     onBlur={(e) => handleChangeTaskText(e.target.value, index, e)}
