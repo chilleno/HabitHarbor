@@ -82,9 +82,19 @@ export default function App() {
           step.currentPomodorosCount = step.currentPomodorosCount + 1;
           currentRoutine[currentRoutineStep] = step;
           localStorage.setItem('routine', JSON.stringify(currentRoutine));
+
+          // fired custom event on localStorage data changed
+          const event = new CustomEvent('routinedatachanged') as any;
+          document.dispatchEvent(event);
+
           if (step.currentPomodorosCount === step.pomodoros) {
             currentRoutineStep = currentRoutineStep + 1;
             localStorage.setItem('currentRoutineStep', currentRoutineStep.toString());
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+
             let newSelectedStep: Step = currentRoutine[currentRoutineStep];
             if (newSelectedStep && newSelectedStep.assignedTaskList > -1) {
               changeTaskList(newSelectedStep.assignedTaskList);

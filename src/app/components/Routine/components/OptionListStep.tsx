@@ -21,6 +21,11 @@ const OptionListStep: React.ForwardRefRenderFunction<HTMLDivElement, RoutineStep
     const selectCurrentStep = (): void => {
         if (typeof window !== 'undefined') {
             localStorage.setItem('currentRoutineStep', stepIndex.toString());
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+
             refreshRoutine();
         }
     }
@@ -32,6 +37,11 @@ const OptionListStep: React.ForwardRefRenderFunction<HTMLDivElement, RoutineStep
             currentRoutine.splice(stepIndex, 1);
             localStorage.setItem('routine', JSON.stringify(currentRoutine));
             localStorage.setItem('currentRoutineStep', '0');
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+
             refreshRoutine();
         }
     }

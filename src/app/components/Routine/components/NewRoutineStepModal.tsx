@@ -18,8 +18,18 @@ const NewRoutineStepModal: React.FC<NewRoutineStepModalProps> = ({ closeModal, s
             }
             currentRoutine.push(newStep);
             localStorage.setItem('routine', JSON.stringify(currentRoutine))
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+
             if (currentRoutine.length === 1) {
                 localStorage.setItem('currentRoutineStep', JSON.stringify(0));
+
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('routinedatachanged') as any;
+                document.dispatchEvent(event);
+
             }
             setUpdateRoutineStep(!updateRoutineStep);
             closeModal();

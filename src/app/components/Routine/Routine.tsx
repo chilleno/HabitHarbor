@@ -58,6 +58,11 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     const resetCurrentStep = (): void => {
         if (window.confirm('are you sure you want to reset the routine?')) {
             localStorage.setItem('currentRoutineStep', '0');
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+
             resetCurrentRoutineStepCount();
             setCurrentStep(0);
         }
@@ -65,6 +70,11 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     const resetCurrentStepNoConfirm = (): void => {
         localStorage.setItem('currentRoutineStep', '0');
+
+        // fired custom event on localStorage data changed
+        const event = new CustomEvent('routinedatachanged') as any;
+        document.dispatchEvent(event);
+
         resetCurrentRoutineStepCount();
         setCurrentStep(0);
     }
@@ -76,6 +86,11 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
             return step;
         });
         localStorage.setItem('routine', JSON.stringify(updatedRoutine));
+
+        // fired custom event on localStorage data changed
+        const event = new CustomEvent('routinedatachanged') as any;
+        document.dispatchEvent(event);
+
         setUpdateRoutineStep(!updateRoutineStep);
     }
 
@@ -83,6 +98,10 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         if (!localStorage.getItem('currentDayRoutine')) {
             let currentDay = new Date();
             localStorage.setItem('currentDayRoutine', currentDay.toString());
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
         }
         checkCurrentDay();
     }, []);
@@ -93,6 +112,11 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         if (currentDay.setHours(0, 0, 0, 0) > currentLocalStorageDay.getTime()) {
             resetCurrentStepNoConfirm();
             localStorage.setItem('currentDayRoutine', currentDay.toString());
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+            
         }
     }
 
