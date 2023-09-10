@@ -19,6 +19,12 @@ const EventProvider = (props: EventProviderProps) => {
         });
     }, []);
 
+    useEffect(() => {
+        document.addEventListener('routinedatachanged', () => {
+            console.log('routine data changed');
+        });
+    }, []);
+
     return <>
         {props.children}
     </>;
