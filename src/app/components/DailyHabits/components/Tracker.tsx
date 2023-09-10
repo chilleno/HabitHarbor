@@ -156,11 +156,11 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         return (
             <>
                 <div className="flex flex-col">
-                    <div style={{ borderColor: tracker.color }} className={`absolute w-[250px] z-0 h-14 bg-white border-2 rounded-xl p-2`}>
+                    <div style={{ borderColor: tracker.color }} className={`absolute xl:w-[16rem] lg:w-[12rem] md:w-[12rem] z-0 xl:h-14 lg:h-12 md:h-12 bg-white border-2 rounded-xl p-2`}>
                     </div>
-                    <div className="absolute z-10 h-14 w-[250px]">
+                    <div className="absolute z-10 xl:h-14 lg:h-12 md:h-12 xl:w-[16rem] lg:w-[12rem] md:w-[12rem]">
                         <div
-                            className={`z-10 h-14 rounded-xl animate-fill-both duration-500 ${getPercentage(currentAmount, tracker.maxValue) === 0 && 'opacity-0'}`}
+                            className={`z-10 xl:h-14 lg:h-12 md:h-12 rounded-xl animate-fill-both duration-500 ${getPercentage(currentAmount, tracker.maxValue) === 0 && 'opacity-0'}`}
                             style={{
                                 width: `${(currentAmount / tracker.maxValue) * 100}%`,
                                 backgroundColor: tracker.color
@@ -168,24 +168,27 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                         >
                         </div>
                     </div>
-                    <div className="absolute z-20 h-14 p-2 w-[250px]">
+                    <div className="absolute z-20 xl:h-14 lg:h-12 md:h-12 p-2 xl:w-[16rem] lg:w-[12rem] md:w-[12rem]">
                         <div className="flex flex-row gap-3">
                             <div className="w-2/12">
-                                <div style={{ backgroundColor: tracker.color }} className={`h-[34px] w-[34px] rounded-md shadow-habit py-2 text-xl justify-center content-center flex`}>
+                                <div 
+                                style={{ backgroundColor: tracker.color }} 
+                                className={`h-[2rem] w-[2rem] rounded-md shadow-habit py-1 text-xl justify-center content-center flex`}
+                                >
                                     <Emoji unified={tracker.icon} size={20} />
                                 </div>
                             </div>
-                            <div className="w-8/12">
-                                <h1 className="text-main-primary font-bold text-sm">{tracker.name.toUpperCase()}</h1>
-                                <h1 className="text-gray font-bold text-xs"> {currentAmount}/{tracker.maxValue} {tracker.unit.toUpperCase()}</h1>
+                            <div className="xl:w-8/12 lg:w-10/12">
+                                <h1 className="text-main-primary font-bold xl:text-sm lg:text-[0.6rem] md:text-[0.6rem]">{tracker.name.toUpperCase()}</h1>
+                                <h1 className="text-gray font-bold xl:text-[0.6rem] lg:text-[0.6rem]"> {currentAmount}/{tracker.maxValue} {tracker.unit.toUpperCase()}</h1>
                             </div>
                             <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer">
-                                <CogIcon className="h-[24px] w-[24px] text-gray" />
+                                <CogIcon className="xl:h-[1.5rem] xl:w-[1.5rem] lg:h-[1.2rem] lg:w-[1.2rem] text-gray" />
                             </span>
-                            <div className={`w-2/12 flex justify-center content-center py-2`}>
+                            <div className={`xl:w-2/12 lg:w-1/12 flex justify-center content-center xl:py-2 lg:py-1 md:py-1`}>
                                 <PlusIcon
                                     className={`animate-delay-100 animate-fadeIn ${currentAmount === tracker.maxValue && 'hidden'
-                                        } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[24px] w-[24px] text-gray hover:cursor-pointer`}
+                                        } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[1.5rem] w-[1.5rem] text-gray hover:cursor-pointer`}
                                     onClick={() => handleCurrentAmountChange(currentAmount + 1, true, false)}
                                 />
                                 <div className={`absolute ${!isCooldown ? 'animate-fadeOut' : 'animate-fadeIn'}`}>
@@ -193,12 +196,12 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                                         width={20}
                                         height={20}
                                         src="/icons/loading.svg"
-                                        className={`animate-twSpin animate-infinite h-[24px] w-[24px] text-gray`}
+                                        className={`animate-twSpin animate-infinite h-[1.5rem] w-[1.5rem] text-gray`}
                                         alt="loading..."
                                     />
                                 </div>
                                 <ArrowPathIcon
-                                    className={`animate-delay-100 animate-fadeIn ${!(currentAmount === tracker.maxValue) && 'hidden'} ${isCooldown && 'opacity-0'} h-[24px] w-[24px] text-gray hover:cursor-pointer`}
+                                    className={`animate-delay-100 animate-fadeIn ${!(currentAmount === tracker.maxValue) && 'hidden'} ${isCooldown && 'opacity-0'} h-[1.5rem] w-[1.5rem] text-gray hover:cursor-pointer`}
                                     onClick={() => handleCurrentAmountChange(0, false, true)}
                                 />
                             </div>
