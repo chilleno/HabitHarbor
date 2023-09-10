@@ -200,7 +200,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
 
     return (
         <>
-            <ContentBox className="min-w-full xl:min-h-[23.5rem] xl:max-h-[23.5rem] lg:min-h-[14rem] lg:max-h-[14rem] md:min-h-[14rem] md:max-h-[14rem] -mt-4 task-list-todo">
+            <ContentBox className="min-w-full xl:min-h-[23.5rem] xl:max-h-[23.5rem] lg:min-h-[15rem] lg:max-h-[15rem] md:min-h-[14rem] md:max-h-[14rem] -mt-4 task-list-todo">
                 <div className="flex justify-end -mr-12 -mt-8">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
@@ -216,7 +216,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                     </FloatingButton>
                 </div>
                 <div className="flex justify-center items-center font-bold -mt-6 mb-2">
-                    <h1 className="text-white">TODO Tasks</h1>
+                    <h1 className="text-white xl:text-xl lg:text-md md:tex-md">TODO Tasks</h1>
                 </div>
                 <div className="flex flex-col justify-center content-center">
                     <InputText

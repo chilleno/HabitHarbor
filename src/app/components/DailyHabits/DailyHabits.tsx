@@ -91,7 +91,7 @@ const DailyHabits = () => {
                     </FloatingButton>
                 </div>
                 <div className="flex justify-center font-bold mb-2 -mt-8">
-                    <h1 className="text-white">Daily habits</h1>
+                    <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
                 </div>
                 <div className="flex flex-col xl:gap-16 lg:gap-14 bg-main-primary rounded-xl xl:w-[17rem] lg:w-[13rem] overflow-y-scroll xl:max-h-[22rem] xl:min-h-[22rem] lg:min-h-[15rem] lg:max-h-[15rem] xl:-ml-0 lg:-ml-4 py-2 no-scrollbar">
                     {

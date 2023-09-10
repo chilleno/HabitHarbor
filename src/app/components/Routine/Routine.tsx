@@ -136,7 +136,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                     </FloatingButton>
                 </div>
                 <div className="flex justify-center font-bold mb-2 -mt-6">
-                    <h1>Routine</h1>
+                    <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Routine</h1>
                 </div>
                 <div className="xl:max-h-fit pb-3 xl:h-fit max-h-[64vh] overflow-y-auto flex flex-col no-scrollbar min-w-[16rem]">
                     <ArcherContainer>

@@ -48,13 +48,13 @@ const TaskListSelector: React.FC<TaskListProps> = ({ currentTaskListIndex, chang
                 </FloatingButton>
             </div>
             <div className="flex justify-center items-center font-bold -mt-6 mb-2 ">
-                <h1 className="text-white">Task lists</h1>
+                <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
             </div>
             <div className="flex justify-center content-center">
                 <select
                     value={currentTaskListIndex}
                     onChange={(e) => changeTaskList(Number(e.target.value))}
-                    className="w-3/6 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic text-white"
+                    className="w-3/6 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
                 >
                     <option value={-1}>
                         No task list selected
