@@ -123,7 +123,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                         task.checked == true &&
                         <div
                             key={'task_content_' + index}
-                            className={`group/item flex items-center bg-main-primary w-full mb-2 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
+                            className={`group/item flex items-center bg-main-primary w-full xl:mb-2 lg:mb-1 md:mb-1 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl`}
                         >
                             <input
                                 checked={task.checked || false}
@@ -133,7 +133,7 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                                 className="w-[20px] h-[20px] rounded-3xl focus:rounded-full checked:bg-main-primary checked:border-[#3D3E42] checked:border-2 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             />
                             <input
-                                className="ml-2 w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white text-white"
+                                className="ml-2 w-10/12 bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white text-white xl:text-lg lg:text-xs"
                                 style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                                 defaultValue={task.header}
                                 onBlur={(e) => handleChangeTaskText(e.target.value, index, e)}
