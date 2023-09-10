@@ -8,11 +8,16 @@ interface EventProviderProps {
 const EventProvider = (props: EventProviderProps) => {
 
     useEffect(() => {
-        document.addEventListener('localdatachanged', () => {
-            console.log('local data changed');
+        document.addEventListener('pomodorodatachanged', () => {
+            console.log('pomodoro data changed');
         });
+
+        document.addEventListener('habitsdatachanged', () => {
+            console.log('habits data changed');
+        });
+
     }, []);
-    
+
     return <>
         {props.children}
     </>;

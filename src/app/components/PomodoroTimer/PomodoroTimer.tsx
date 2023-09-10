@@ -135,7 +135,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
             localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
         // fired custom event on localStorage data changed
-        const event = new CustomEvent('localdatachanged') as any;
+        const event = new CustomEvent('pomodorodatachanged') as any;
         document.dispatchEvent(event);
     }, [
         pomodoroDuration,
@@ -165,7 +165,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         localStorage.setItem('longBreakCount', longBreakCount.toString());
 
         // fired custom event on localStorage data changed
-        const event = new CustomEvent('localdatachanged') as any;
+        const event = new CustomEvent('pomodorodatachanged') as any;
         document.dispatchEvent(event);
     }
 
