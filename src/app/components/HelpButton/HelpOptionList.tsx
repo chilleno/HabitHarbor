@@ -49,12 +49,12 @@ const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionL
     return (
         <div ref={listRef} className="absolute bottom-16 right-4 bg-main-primary border-2 w-40 rounded-lg shadow-md">
             {options.map((option, index) => (
-                <>
+                <div key={'help_option_' + index}>
                     {option.text === "Twitter" && <hr />}
-                    <div onClick={(option.clickFunction ? option.clickFunction : () => window.open(option.url, '_blank'))} key={'help_option_'+index} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer">
+                    <div onClick={(option.clickFunction ? option.clickFunction : () => window.open(option.url, '_blank'))} key={'help_option_' + index} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer">
                         {option.text}
                     </div>
-                </>
+                </div>
             ))}
         </div>
     );
