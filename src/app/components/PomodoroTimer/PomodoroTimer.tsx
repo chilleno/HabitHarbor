@@ -311,7 +311,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
 
 
     return (
-        <ContentBox className="min-w-[280px] pomodoro-timer">
+        <ContentBox className="xl:min-w-[18rem] lg:min-w-[13rem] pomodoro-timer">
             <div className="flex justify-end -mr-14 -mt-8">
                 <FloatingButton onClick={openModal}>
                     <span className="flex items-center justify-center hover:cursor-pointer">
@@ -321,35 +321,35 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
             </div>
             <div className="flex flex-col justify-center content-center">
                 <div className="flex content-center justify-center text-main-primary -mt-5">
-                    <div className={`rounded-full w-[180px] h-[180px] ${(isBreak == true ? (isLongBreak == true ? 'bg-pomodoro-green' : isShortBreak == true ? 'bg-pomodoro-green' : null) : 'bg-pomodoro-red')}`}>
+                    <div className={`rounded-full xl:w-[11rem] xl:h-[11rem] lg:w-[9rem] lg:h-[9rem] md:w-[9rem] md:h-[9rem] ${(isBreak == true ? (isLongBreak == true ? 'bg-pomodoro-green' : isShortBreak == true ? 'bg-pomodoro-green' : null) : 'bg-pomodoro-red')}`}>
                         <div className="flex flex-col items-center h-full justify-center leading-10 -mt-4">
-                            <div className="text-[16px]">
+                            <div className="xl:text-[16px] lg:text-[14px] md:text-[14px]">
                                 {(isBreak == true ? (isLongBreak == true ? 'Long break' : isShortBreak == true ? 'Short break' : null) : 'Pomodoro')}
                             </div>
-                            <div className="text-[55px]">
+                            <div className="xl:text-[55px] lg:text-[40px] md:text-[40px]">
                                 {formattedTime}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="flex content-center justify-center -mt-14 gap-1">
-                    <FloatingButton onClick={startTimer}>
+                <div className="flex content-center justify-center xl:-mt-14 lg:-mt-11 md:-mt-11 gap-1">
+                    <FloatingButton className="xl:w-[50px] xl:h-[50px] lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px]" onClick={startTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <PlayIcon className="h-[24px] w-[24px] text-white" />
+                            <PlayIcon className="xl:h-[24px] xl:w-[24px] lg:h-[20px] lg:w-[20px] md:h-[20px] md:w-[20px] text-white" />
                         </span>
                     </FloatingButton>
-                    <FloatingButton onClick={stopTimer}>
+                    <FloatingButton className="xl:w-[50px] xl:h-[50px] lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px]" onClick={stopTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <StopIcon className="h-[24px] w-[24px] text-white" />
+                            <StopIcon className="xl:h-[24px] xl:w-[24px] lg:h-[20px] lg:w-[20px] md:h-[20px] md:w-[20px] text-white" />
                         </span>
                     </FloatingButton>
-                    <FloatingButton onClick={nextTimer}>
+                    <FloatingButton className="xl:w-[50px] xl:h-[50px] lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px]" onClick={nextTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <ForwardIcon className="h-[24px] w-[24px] text-white" />
+                            <ForwardIcon className="xl:h-[24px] xl:w-[24px] lg:h-[20px] lg:w-[20px] md:h-[20px] md:w-[20px] text-white" />
                         </span>
                     </FloatingButton>
                 </div>
-                <div className="lg:text-sm sm:text-xs lg:mt-6 xl:text-lg xl:mb-5 text-white">
+                <div className="lg:text-xs md:text-xs lg:mt-6 xl:text-lg xl:mb-5 text-white">
                     <div className="w-full flex justify-center items-center">
                         Pomodoros: {pomodoroTotalCount}
                     </div>
