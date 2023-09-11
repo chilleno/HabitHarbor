@@ -31,6 +31,12 @@ const EventProvider = (props: EventProviderProps) => {
         });
     }, []);
 
+    useEffect(() => {
+        document.addEventListener('tasksdatachanged', () => {
+            console.log('tasks data changed');
+        });
+    }, []);
+
     return <>
         {props.children}
     </>;
