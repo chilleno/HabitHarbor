@@ -25,6 +25,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     const [formattedTime, setFormattedTime] = useState<string>('00:00');
     const [today] = useState<Date>(new Date());
     const [autoStart, setAutoStart] = useState<boolean>(false);
+    
+    const [firstRender, setFirstRender] = useState<boolean>(false);
 
     //sfx
     const [finishPomodoroSfx, { stop }] = useSound('/static/sounds/finishPomodoro.wav');
@@ -117,6 +119,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         if (firstRepaymentDate.getTime() < today.setHours(0, 0, 0, 0)) {
             resetTimer(false, false);
         }
+        setFirstRender(true);
     }, []);
 
     useEffect(() => {
@@ -134,9 +137,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         if (pomodoroCount === 1) {
             localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
-        // fired custom event on localStorage data changed
-        const event = new CustomEvent('pomodorodatachanged') as any;
-        document.dispatchEvent(event);
     }, [
         pomodoroDuration,
         shortBreakDuration,
@@ -316,6 +316,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
         localStorage.setItem('autoStart', autoStart.toString());
     }, [autoStart]);
 
+
+    if(!firstRender){
+        return null;
+    }
 
     return (
         <ContentBox className="xl:min-w-[18rem] lg:min-w-[13rem] pomodoro-timer">
