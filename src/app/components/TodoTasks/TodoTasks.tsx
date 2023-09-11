@@ -49,6 +49,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             if (localStorageTaskLists.length > 0) {
                 localStorageTaskLists[currentTaskListIndex].highlightedTask = highlightedTask;
                 localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
+
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('tasksdatachanged') as any;
+                document.dispatchEvent(event);
+
             }
         }
     }, [highlightedTask]);
@@ -84,6 +89,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                 localStorageTaskLists[currentTaskListIndex].tasks = updatedTaskLists;
 
                 localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
+
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('tasksdatachanged') as any;
+                document.dispatchEvent(event);
+
                 handleRefreshList();
 
                 setTimeout(() => {
@@ -130,6 +140,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             });
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('tasksdatachanged') as any;
+            document.dispatchEvent(event);
+
             handleRefreshList();
 
             checkSound();
@@ -153,6 +168,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('tasksdatachanged') as any;
+            document.dispatchEvent(event);
+
             handleRefreshList();
         }
     };
@@ -181,6 +201,11 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
 
                 currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
                 localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('tasksdatachanged') as any;
+                document.dispatchEvent(event);
+
                 handleRefreshList();
             }
         }

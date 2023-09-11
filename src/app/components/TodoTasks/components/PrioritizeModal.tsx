@@ -124,6 +124,10 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
 
         localStorage.setItem("taskLists", JSON.stringify(taskLists));
 
+        // fired custom event on localStorage data changed
+        const event = new CustomEvent('tasksdatachanged') as any;
+        document.dispatchEvent(event);
+
         renderList();
         closeModal();
     }

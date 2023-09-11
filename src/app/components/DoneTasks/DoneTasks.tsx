@@ -32,6 +32,11 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             });
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('tasksdatachanged') as any;
+            document.dispatchEvent(event);
+
             setUpdateTaskList(!updateTaskList);
 
             playSoundCheckbox();
@@ -47,6 +52,11 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
 
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('tasksdatachanged') as any;
+            document.dispatchEvent(event);
+
             setUpdateTaskList(!updateTaskList);
         }
     };
@@ -75,6 +85,11 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
 
                 currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
                 localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
+
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('tasksdatachanged') as any;
+                document.dispatchEvent(event);
+
                 setUpdateTaskList(!updateTaskList);
             }
         }
@@ -93,6 +108,11 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             }
             currentTaskLists[currentTaskListIndex] = newTaskList;
             localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('tasksdatachanged') as any;
+            document.dispatchEvent(event);
+
             setUpdateTaskList(!updateTaskList);
         }
     }
