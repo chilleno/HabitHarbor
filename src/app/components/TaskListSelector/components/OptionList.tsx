@@ -17,6 +17,10 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TaskListOptionL
 
                 localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
 
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('taskListdatachanged') as any;
+                document.dispatchEvent(event);
+
                 renderTaskLists();
                 handleChangeTaskList(updatedTaskLists.length - 1);
             }

@@ -4,7 +4,7 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
     const [name, setName] = useState('');
 
     const createNewTaskList = (): void => {
-        if(name === '') return;
+        if (name === '') return;
         if (typeof window !== 'undefined') {
             const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
             const newTaskList: TaskList = {
@@ -14,6 +14,11 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
             }
             currentTaskLists.push(newTaskList);
             localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('taskListdatachanged') as any;
+            document.dispatchEvent(event);
+
             handleChangeTaskList(currentTaskLists.length - 1)
             renderList();
             closeModal();
