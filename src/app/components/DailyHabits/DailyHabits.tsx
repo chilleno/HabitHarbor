@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
-import Water from './Trackers/Water';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import { CogIcon } from '@heroicons/react/24/solid';
 import OptionList from './components/OptionList';

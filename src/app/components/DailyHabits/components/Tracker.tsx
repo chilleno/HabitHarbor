@@ -60,13 +60,18 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             dailyHabits[habitIndex].firstTrackerDate = today.toString();
             dailyHabits[habitIndex].currentValue = 0;
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+
+            const event = new CustomEvent('habitsdatachanged') as any;
+            document.dispatchEvent(event);
         }
         if (currentAmount === 1) {
             dailyHabits[habitIndex].firstTrackerDate = today.toString();
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+
+            const event = new CustomEvent('habitsdatachanged') as any;
+            document.dispatchEvent(event);
         }
-        const event = new CustomEvent('habitsdatachanged') as any;
-        document.dispatchEvent(event);
+
     }, [currentAmount]);
 
     useEffect(() => {
@@ -153,7 +158,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
         const event = new CustomEvent('habitsdatachanged') as any;
         document.dispatchEvent(event);
-        
+
         handleUpdateRender();
         setInterval(() => {
             closeModal();
@@ -186,9 +191,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                     <div className="absolute z-20 xl:h-14 lg:h-12 md:h-12 p-2 xl:w-[16rem] lg:w-[12rem] md:w-[12rem]">
                         <div className="flex flex-row gap-3">
                             <div className="w-2/12">
-                                <div 
-                                style={{ backgroundColor: tracker.color }} 
-                                className={`h-[2rem] w-[2rem] rounded-md shadow-habit py-1 text-xl justify-center content-center flex`}
+                                <div
+                                    style={{ backgroundColor: tracker.color }}
+                                    className={`h-[2rem] w-[2rem] rounded-md shadow-habit py-1 text-xl justify-center content-center flex`}
                                 >
                                     <Emoji unified={tracker.icon} size={20} />
                                 </div>
