@@ -25,6 +25,12 @@ const EventProvider = (props: EventProviderProps) => {
         });
     }, []);
 
+    useEffect(() => {
+        document.addEventListener('taskListdatachanged', () => {
+            console.log('taskList data changed');
+        });
+    }, []);
+
     return <>
         {props.children}
     </>;
