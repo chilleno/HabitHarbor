@@ -4,7 +4,8 @@ import { QueueListIcon, TrashIcon, InboxArrowDownIcon } from '@heroicons/react/2
 import InputText from '@/app/designComponent/form/InputText';
 import PrioritizeModal from './PrioritizeModal';
 import useSound from 'use-sound';
-
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 
 const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask }) => {
@@ -186,7 +187,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
     //function that delete all the done tasks on the current task list
     const deleteAllDoneTasks = (): void => {
         //confirm if the user wants to delete all the done tasks
-        if(!window.confirm('Are you sure you want to delete all the done tasks?')) return;
+        if (!window.confirm('Are you sure you want to delete all the done tasks?')) return;
 
         if (typeof window !== 'undefined') {
             const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
@@ -232,14 +233,14 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                         id="newTaskInput"
                         onChange={(value) => setNewTask(value)}
                         onKeyDown={handlePressEnterButton}
-                        className="xl:w-7/12 lg:w-7/12 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
+                        className="xl:w-6/12 lg:w-7/12 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
                         name="task-name-new"
                     />
                     <div className="flex w-4/12 gap-3">
-                        <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
+                        <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
                             <QueueListIcon className="h-[24px] w-[24px]" />
                         </button>
-                        <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
+                        <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
                             <InboxArrowDownIcon className="h-[24px] w-[24px]" />
                         </button>
                     </div>
@@ -302,6 +303,17 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                     taskList={taskList}
                 />
             }
+
+            <ReactTooltip
+                id="prioritizeTooltip"
+                place="bottom"
+                content="Prioritize tasks from current task list"
+            />
+            <ReactTooltip
+                id="deleteFinishedTasksTooltip"
+                place="bottom"
+                content="Delete finished tasks from current task list"
+            />
         </div>
 
     );
