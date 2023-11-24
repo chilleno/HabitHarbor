@@ -35,7 +35,7 @@ const OptionList: React.ForwardRefRenderFunction<HTMLDivElement, TaskListOptionL
     }, []);
 
     return (
-        <div ref={listRef} className="absolute mt-6 ml-36 bg-main-primary border-2 w-50 rounded-lg shadow-md">
+        <div ref={listRef} className="absolute mt-6 -ml-40 bg-main-primary border-2 w-50 rounded-lg shadow-md">
             <div onClick={openModal} className="px-4 py-2 hover:bg-white hover:text-main-primary cursor-pointer justify-start flex">
                 New task list
             </div>
