@@ -14,6 +14,7 @@ import TaskListSelector from '../components/TaskListSelector/TaskListSelector';
 import TodoTasks from '../components/TodoTasks/TodoTasks';
 import DoneTasks from '../components/DoneTasks/DoneTasks';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
+import Tasks from '../components/Tasks/Tasks';
 
 export default function App() {
   const [currentTaskList, setCurrentTaskList] = useState<number>(-1);
@@ -201,33 +202,12 @@ export default function App() {
             </div>
           </StartScreen>
           <MiddleScreen className="">
-            <div className="flex justify-center content-center mt-10">
-              <TaskListSelector
+            <div className="flex justify-center content-center">
+              <Tasks
                 currentTaskListIndex={currentTaskList}
                 changeTaskList={setCurrentTaskList}
               />
             </div>
-            {
-              currentTaskList >= 0 &&
-              <>
-                <div className="flex justify-center content-center mt-10 mb-5">
-                  <TodoTasks
-                    currentTaskListIndex={currentTaskList}
-                    taskList={taskList}
-                    setUpdateTaskList={setUpdateTaskList}
-                    updateTaskList={updateTaskList}
-                  />
-                </div>
-                <div className="flex justify-center content-center mt-10">
-                  <DoneTasks
-                    currentTaskListIndex={currentTaskList}
-                    taskList={taskList}
-                    setUpdateTaskList={setUpdateTaskList}
-                    updateTaskList={updateTaskList}
-                  />
-                </div>
-              </>
-            }
           </MiddleScreen>
           <EndScreen className=''>
             <div className="flex justify-center content-center mt-4 mb-6">
