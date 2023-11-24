@@ -9,7 +9,7 @@ export const useMiddleScreen = () => {
 
 const MiddleScreen: React.FC<{ className: string, children: ReactNode }> = ({ className, children }) => {
   return (
-    <div className={`w-6/12 ${className}`}>
+    <div className={`w-6/12 mx-auto ${className}`}>
       {children}
     </div>
   );
