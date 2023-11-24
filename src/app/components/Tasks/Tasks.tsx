@@ -5,6 +5,8 @@ import NewTaskListModal from './components/NewTaskListModal';
 import TodoTasks from './components/TodoTasks';
 import DoneTasks from './components/DoneTasks';
 import CreateTask from './components/CreateTask';
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }) => {
     const [lists, setLists] = useState<TaskList[]>();
@@ -89,76 +91,91 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     }, [currentTaskListIndex])
 
     return (
-        <div className="min-w-full task-list-selector min-h-screen">
-            <div className="fixed min-w-[50%] bg-[#323333] border-b-2 border-gray">
-                <div className="flex justify-center items-center font-bold py-4">
-                    <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
-                </div>
-                <div className="flex justify-center content-center items-center gap-2">
-                    <select
-                        value={currentTaskListIndex}
-                        onChange={(e) => changeTaskList(Number(e.target.value))}
-                        className="w-6/12 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
-                    >
-                        <option value={-1}>
-                            No task list selected
-                        </option>
-                        {
-                            lists &&
-                            lists.length > 0 &&
-                            lists.map((list, index) => (
-                                <option
-                                    key={'task_list_' + index}
-                                    value={index}
+        <>
 
-                                >
-                                    {list.name}
-                                </option>
-                            ))
-                        }
-                    </select>
-                    <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openModal()}>
-                        <PlusIcon className="h-[24px] w-[24px]" />
-                    </button>
-                    <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleDeleteTaskList()}>
-                        <TrashIcon className="h-[24px] w-[24px]" />
-                    </button>
+            <div className="min-w-full task-list-selector min-h-screen">
+                <div className="fixed min-w-[50%] bg-[#323333] border-b-2 border-gray z-50">
+                    <div className="flex justify-center items-center font-bold py-4">
+                        <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
+                    </div>
+                    <div className="flex justify-center content-center items-center gap-2">
+                        <select
+                            defaultValue={currentTaskListIndex}
+                            onChange={(e) => changeTaskList(Number(e.target.value))}
+                            className="h-[50px] w-5/12 py-3 px-8 bg-main-primary rounded-xl content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
+                        >
+                            <option disabled value={-1}>
+                                No task list selected
+                            </option>
+                            {
+                                lists &&
+                                lists.length > 0 &&
+                                lists.map((list, index) => (
+                                    <option
+                                        key={'task_list_' + index}
+                                        value={index}
+
+                                    >
+                                        {list.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                        <button data-tooltip-id="addNewTaskList" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openModal()}>
+                            <PlusIcon className="h-[24px] w-[24px]" />
+                        </button>
+                        <button data-tooltip-id="removeCurrentTaskList" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleDeleteTaskList()}>
+                            <TrashIcon className="h-[24px] w-[24px]" />
+                        </button>
+
+                        <ReactTooltip
+                            id="addNewTaskList"
+                            place="bottom"
+                            content="Create a new task list"
+                        />
+                        <ReactTooltip
+                            id="removeCurrentTaskList"
+                            place="bottom"
+                            content="Delete selected task list"
+                        />
+                    </div>
+                    <CreateTask
+                        currentTaskListIndex={currentTaskListIndex}
+                        taskList={currentTaskList || []}
+                        updateTaskList={updateTaskList}
+                        setUpdateTaskList={setUpdateTaskList}
+                        highlightedTask={highlightedTask}
+                        setHighlightedTask={setHighlightedTask}
+                    />
                 </div>
-                <CreateTask
-                    currentTaskListIndex={currentTaskListIndex}
-                    taskList={currentTaskList || []}
-                    updateTaskList={updateTaskList}
-                    setUpdateTaskList={setUpdateTaskList}
-                    highlightedTask={highlightedTask}
-                    setHighlightedTask={setHighlightedTask}
-                />
+                <div className="xl:pt-[21%] lg:pt-[26%] px-12">
+                    <TodoTasks
+                        currentTaskListIndex={currentTaskListIndex}
+                        taskList={currentTaskList || []}
+                        updateTaskList={updateTaskList}
+                        setUpdateTaskList={setUpdateTaskList}
+                        highlightedTask={highlightedTask}
+                        setHighlightedTask={setHighlightedTask}
+                    />
+                    <DoneTasks
+                        currentTaskListIndex={currentTaskListIndex}
+                        taskList={currentTaskList || []}
+                        updateTaskList={updateTaskList}
+                        setUpdateTaskList={setUpdateTaskList}
+                        highlightedTask={highlightedTask}
+                        setHighlightedTask={setHighlightedTask}
+                    />
+                </div>
+                {showModal && (
+                    <NewTaskListModal
+                        closeModal={closeModal}
+                        renderList={renderTaskLists}
+                        handleChangeTaskList={changeTaskList}
+                    />
+                )}
             </div>
-            <div className="xl:pt-[21%] lg:pt-[26%] px-12">
-                <TodoTasks
-                    currentTaskListIndex={currentTaskListIndex}
-                    taskList={currentTaskList || []}
-                    updateTaskList={updateTaskList}
-                    setUpdateTaskList={setUpdateTaskList}
-                    highlightedTask={highlightedTask}
-                    setHighlightedTask={setHighlightedTask}
-                />
-                <DoneTasks
-                    currentTaskListIndex={currentTaskListIndex}
-                    taskList={currentTaskList || []}
-                    updateTaskList={updateTaskList}
-                    setUpdateTaskList={setUpdateTaskList}
-                    highlightedTask={highlightedTask}
-                    setHighlightedTask={setHighlightedTask}
-                />
-            </div>
-            {showModal && (
-                <NewTaskListModal
-                    closeModal={closeModal}
-                    renderList={renderTaskLists}
-                    handleChangeTaskList={changeTaskList}
-                />
-            )}
-        </div>
+
+        </>
     );
 };
 
