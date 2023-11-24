@@ -118,7 +118,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
 
             checkSound();
         }
-    };
+    }
 
     const handleDeleteTask = (taskIndex: number) => {
         if (timeoutRef.current) {
@@ -144,7 +144,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
 
             handleRefreshList();
         }
-    };
+    }
 
     const handleChangeTaskText = (newText: string, taskIndex: number, element: any) => {
         if (newText.length <= 3) {
