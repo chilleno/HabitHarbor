@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
-import TodoTasks from './components/TodoTasks/TodoTasks';
+import TodoTasks from './components/TodoTasks';
 import DoneTasks from './components/DoneTasks/DoneTasks';
 import CreateTask from './components/CreateTask';
 
