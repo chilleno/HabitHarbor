@@ -6,6 +6,7 @@ import NewTaskListModal from './components/NewTaskListModal';
 import OptionList from './components/OptionList';
 import TodoTasks from './components/TodoTasks/TodoTasks';
 import DoneTasks from './components/DoneTasks/DoneTasks';
+import CreateTask from './components/CreateTask';
 
 const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }) => {
     const [lists, setLists] = useState<TaskList[]>();
@@ -13,6 +14,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     const [showOptions, setShowOptions] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
+    const [highlightedTask, setHighlightedTask] = useState<number | null>(null);
 
     const openModal = () => {
         setShowModal(true);
@@ -48,6 +50,29 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
             setUpdateTaskList(!updateTaskList);
         }
     }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let localStorageTaskLists: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (localStorageTaskLists.length > 0) {
+                setHighlightedTask(localStorageTaskLists[currentTaskListIndex].highlightedTask);
+            }
+        }
+    }, [currentTaskListIndex]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let localStorageTaskLists: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            if (localStorageTaskLists.length > 0) {
+                localStorageTaskLists[currentTaskListIndex].highlightedTask = highlightedTask;
+                localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
+
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('tasksdatachanged') as any;
+                document.dispatchEvent(event);
+            }
+        }
+    }, [highlightedTask]);
 
     useEffect(() => {
         renderTaskLists();
@@ -116,20 +141,31 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                         }
                     </select>
                 </div>
+                <CreateTask
+                    currentTaskListIndex={currentTaskListIndex}
+                    taskList={currentTaskList || []}
+                    updateTaskList={updateTaskList}
+                    setUpdateTaskList={setUpdateTaskList}
+                    highlightedTask={highlightedTask}
+                    setHighlightedTask={setHighlightedTask}
+                />
             </div>
-            <div className="pt-48 px-12">
+            <div className="xl:pt-[30%] lg:pt-[35%] px-12">
                 <TodoTasks
                     currentTaskListIndex={currentTaskListIndex}
                     taskList={currentTaskList || []}
                     updateTaskList={updateTaskList}
                     setUpdateTaskList={setUpdateTaskList}
+                    highlightedTask={highlightedTask}
+                    setHighlightedTask={setHighlightedTask}
                 />
-
                 <DoneTasks
                     currentTaskListIndex={currentTaskListIndex}
                     taskList={currentTaskList || []}
                     updateTaskList={updateTaskList}
                     setUpdateTaskList={setUpdateTaskList}
+                    highlightedTask={highlightedTask}
+                    setHighlightedTask={setHighlightedTask}
                 />
             </div>
             {showModal && (
