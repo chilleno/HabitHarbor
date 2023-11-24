@@ -1,14 +1,17 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { TrashIcon } from '@heroicons/react/24/solid';
+import { QueueListIcon, TrashIcon } from '@heroicons/react/24/solid';
 import InputText from '@/app/designComponent/form/InputText';
+import PrioritizeModal from './PrioritizeModal';
 import useSound from 'use-sound';
+
 
 
 const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask }) => {
     const [newTask, setNewTask] = useState<string>('');
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [showError, setShowError] = useState<boolean>(false);
+    const [showPrioritizeModal, setShowPrioritizeModal] = useState<boolean>(false);
 
     //sfx
     const [checkSound, { stop: stopCheckSound }] = useSound('/static/sounds/check.wav');
@@ -184,21 +187,36 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
         setUpdateTaskList(!updateTaskList);
     }
 
+    const closePrioritizeModal = () => {
+        setShowPrioritizeModal(false);
+    }
+
+    const openPrioritizeModal = () => {
+        setShowPrioritizeModal(true);
+    }
+
     return (
         <div className="mt-8">
             <div className="flex justify-center items-center font-bold -mt-6 mb-2">
                 <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Tasks</h1>
             </div>
-            <div className="flex flex-col justify-center content-center">
-                <InputText
-                    placeholder="Type and press enter to create a task..."
-                    value={newTask}
-                    id="newTaskInput"
-                    onChange={(value) => setNewTask(value)}
-                    onKeyDown={handlePressEnterButton}
-                    className="focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
-                    name="task-name-new"
-                />
+            <div className="flex flex-col justify-center content-center ml-56">
+                <div className="flex gap-5">
+                    <InputText
+                        placeholder="Type and press enter to create a task..."
+                        value={newTask}
+                        id="newTaskInput"
+                        onChange={(value) => setNewTask(value)}
+                        onKeyDown={handlePressEnterButton}
+                        className="w-7/12 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
+                        name="task-name-new"
+                    />
+                    <div className="flex w-4/12 gap-3">
+                        <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
+                            <QueueListIcon className="h-[24px] w-[24px]" />
+                        </button>
+                    </div>
+                </div>
                 <b className={`xl:text-md lg:text-xs md:text-xs ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
                     <i>Please add a text longer than 3 characters.</i>
                 </b>
@@ -248,7 +266,17 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                     </div>
                 </div>
             }
+            {
+                showPrioritizeModal &&
+                <PrioritizeModal
+                    closeModal={closePrioritizeModal}
+                    renderList={handleRefreshList}
+                    currentTaskListIndex={currentTaskListIndex}
+                    taskList={taskList}
+                />
+            }
         </div>
+        
     );
 };
 
