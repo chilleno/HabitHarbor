@@ -1,9 +1,7 @@
 "use client"
-import React, { useState, useEffect, use } from 'react';
-import { CogIcon } from '@heroicons/react/24/solid';
-import FloatingButton from '@/app/designComponent/FloatingButton';
+import React, { useState, useEffect } from 'react';
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
-import OptionList from './components/OptionList';
 import TodoTasks from './components/TodoTasks/TodoTasks';
 import DoneTasks from './components/DoneTasks/DoneTasks';
 import CreateTask from './components/CreateTask';
@@ -11,7 +9,6 @@ import CreateTask from './components/CreateTask';
 const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }) => {
     const [lists, setLists] = useState<TaskList[]>();
     const [currentTaskList, setCurrentTaskList] = useState<Task[]>();
-    const [showOptions, setShowOptions] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
     const [highlightedTask, setHighlightedTask] = useState<number | null>(null);
@@ -29,6 +26,24 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
         setLists(currentTaskLists);
         setCurrentTaskList(currentTaskLists[currentTaskListIndex]);
     }
+
+    const handleDeleteTaskList = (): void => {
+        if (typeof window !== 'undefined') {
+            if (window.confirm('are you sure you want to delete the entire task list?')) {
+                let currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+                let updatedTaskLists = currentStoredTaskLists.filter((taskList, index) => index !== currentTaskListIndex);
+
+                localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
+
+                // fired custom event on localStorage data changed
+                const event = new CustomEvent('taskListdatachanged') as any;
+                document.dispatchEvent(event);
+
+                renderTaskLists();
+                changeTaskList(updatedTaskLists.length - 1);
+            }
+        }
+    };
 
     //function that delete all the done tasks on the current task list
     const deleteAllDoneTasks = (): void => {
@@ -95,29 +110,12 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     }, [currentTaskListIndex])
 
     return (
-        <div className="min-w-full -mt-4 task-list-selector min-h-screen border-x-2 ">
+        <div className="min-w-full task-list-selector min-h-screen border-x-2 ">
             <div className="fixed w-[48%] py-5 ml-5 bg-[#323333]">
-                <div className="flex justify-end mr-10 mt-5">
-                    <FloatingButton onClick={() => setShowOptions(!showOptions)}>
-                        <span className="flex items-center justify-center hover:cursor-pointer">
-                            <CogIcon className="h-[24px] w-[24px] text-white" />
-                        </span>
-                        {
-                            showOptions &&
-                            <OptionList
-                                openModal={openModal}
-                                onClose={() => setShowOptions(false)}
-                                currentSelection={currentTaskListIndex}
-                                handleChangeTaskList={changeTaskList}
-                                renderTaskLists={renderTaskLists}
-                            />
-                        }
-                    </FloatingButton>
-                </div>
-                <div className="flex justify-center items-center font-bold -mt-6 mb-2">
+                <div className="flex justify-center items-center font-bold mb-2">
                     <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
                 </div>
-                <div className="flex justify-center content-center">
+                <div className="flex justify-center content-center items-center gap-2">
                     <select
                         value={currentTaskListIndex}
                         onChange={(e) => changeTaskList(Number(e.target.value))}
@@ -140,6 +138,12 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                             ))
                         }
                     </select>
+                    <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openModal()}>
+                        <PlusIcon className="h-[24px] w-[24px]" />
+                    </button>
+                    <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleDeleteTaskList()}>
+                        <TrashIcon className="h-[24px] w-[24px]" />
+                    </button>
                 </div>
                 <CreateTask
                     currentTaskListIndex={currentTaskListIndex}
@@ -150,7 +154,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                     setHighlightedTask={setHighlightedTask}
                 />
             </div>
-            <div className="xl:pt-[30%] lg:pt-[35%] px-12">
+            <div className="xl:pt-[20%] lg:pt-[25%] px-12">
                 <TodoTasks
                     currentTaskListIndex={currentTaskListIndex}
                     taskList={currentTaskList || []}
