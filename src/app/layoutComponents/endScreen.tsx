@@ -9,7 +9,7 @@ export const useEndScreen = () => {
 
 const EndScreen: React.FC<{ className: string, children: ReactNode }> = ({ className, children }) => {
   return (
-    <div className={`w-3/12 fixed inset-y-0 right-0  ${className}`}>
+    <div className={`w-3/12 fixed border-l-2 border-gray inset-y-0 right-0  ${className}`}>
       {children}
     </div>
   );
