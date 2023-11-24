@@ -220,19 +220,19 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
     }
 
     return (
-        <div className="mt-8">
+        <div className="mt-10">
             <div className="flex justify-center items-center font-bold -mt-6 mb-2">
                 <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Tasks</h1>
             </div>
-            <div className="flex flex-col justify-center content-center ml-56">
-                <div className="flex gap-5">
+            <div className="flex flex-col justify-center content-center xl:ml-44 lg:ml-28">
+                <div className="flex justify-center content-center items-center gap-2">
                     <InputText
                         placeholder="Type and press enter to create a task..."
                         value={newTask}
                         id="newTaskInput"
                         onChange={(value) => setNewTask(value)}
                         onKeyDown={handlePressEnterButton}
-                        className="w-7/12 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
+                        className="xl:w-7/12 lg:w-7/12 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
                         name="task-name-new"
                     />
                     <div className="flex w-4/12 gap-3">
