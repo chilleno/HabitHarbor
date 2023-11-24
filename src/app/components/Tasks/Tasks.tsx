@@ -70,8 +70,8 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     }, [currentTaskListIndex])
 
     return (
-        <div className="min-w-full -mt-4 task-list-selector min-h-screen border-x-2 px-12">
-            <div className="fixed w-[50%] -ml-5 bg-[#323333] py-5">
+        <div className="min-w-full -mt-4 task-list-selector min-h-screen border-x-2 ">
+            <div className="fixed w-[48%] py-5 ml-5 bg-[#323333]">
                 <div className="flex justify-end mr-10 mt-5">
                     <FloatingButton onClick={() => setShowOptions(!showOptions)}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
@@ -117,7 +117,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                     </select>
                 </div>
             </div>
-            <div className="pt-48">
+            <div className="pt-48 px-12">
                 <TodoTasks
                     currentTaskListIndex={currentTaskListIndex}
                     taskList={currentTaskList || []}
