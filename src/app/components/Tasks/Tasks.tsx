@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewTaskListModal from './components/NewTaskListModal';
 import TodoTasks from './components/TodoTasks';
-import DoneTasks from './components/DoneTasks/DoneTasks';
+import DoneTasks from './components/DoneTasks';
 import CreateTask from './components/CreateTask';
 
 const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }) => {
@@ -44,27 +44,6 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
             }
         }
     };
-
-    //function that delete all the done tasks on the current task list
-    const deleteAllDoneTasks = (): void => {
-        if (typeof window !== 'undefined') {
-            const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-            const currentTaskList = currentTaskLists[currentTaskListIndex];
-            const newTaskList: TaskList = {
-                name: currentTaskList.name,
-                highlightedTask: currentTaskList.highlightedTask,
-                tasks: currentTaskList.tasks.filter((task: Task) => !task.checked)
-            }
-            currentTaskLists[currentTaskListIndex] = newTaskList;
-            localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
-
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
-
-            setUpdateTaskList(!updateTaskList);
-        }
-    }
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
