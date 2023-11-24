@@ -89,16 +89,16 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     }, [currentTaskListIndex])
 
     return (
-        <div className="min-w-full task-list-selector min-h-screen border-x-2 ">
-            <div className="fixed w-[48%] py-5 ml-5 bg-[#323333]">
-                <div className="flex justify-center items-center font-bold mb-2">
+        <div className="min-w-full task-list-selector min-h-screen">
+            <div className="fixed min-w-[50%] bg-[#323333] border-b-2 border-gray">
+                <div className="flex justify-center items-center font-bold py-4">
                     <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
                 </div>
                 <div className="flex justify-center content-center items-center gap-2">
                     <select
                         value={currentTaskListIndex}
                         onChange={(e) => changeTaskList(Number(e.target.value))}
-                        className="w-3/6 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
+                        className="w-6/12 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
                     >
                         <option value={-1}>
                             No task list selected
@@ -133,7 +133,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                     setHighlightedTask={setHighlightedTask}
                 />
             </div>
-            <div className="xl:pt-[20%] lg:pt-[25%] px-12">
+            <div className="xl:pt-[21%] lg:pt-[26%] px-12">
                 <TodoTasks
                     currentTaskListIndex={currentTaskListIndex}
                     taskList={currentTaskList || []}
