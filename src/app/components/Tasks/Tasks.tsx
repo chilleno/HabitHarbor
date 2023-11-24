@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect, use } from 'react';
 import { CogIcon } from '@heroicons/react/24/solid';
-import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import NewTaskListModal from './components/NewTaskListModal';
 import OptionList from './components/OptionList';
@@ -71,66 +70,68 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     }, [currentTaskListIndex])
 
     return (
-        <div className="min-w-full -mt-4 task-list-selector min-h-screen border-x-2 px-5">
-            <div className="flex justify-end -mr-12 mt-5">
-                <FloatingButton onClick={() => setShowOptions(!showOptions)}>
-                    <span className="flex items-center justify-center hover:cursor-pointer">
-                        <CogIcon className="h-[24px] w-[24px] text-white" />
-                    </span>
-                    {
-                        showOptions &&
-                        <OptionList
-                            openModal={openModal}
-                            onClose={() => setShowOptions(false)}
-                            currentSelection={currentTaskListIndex}
-                            handleChangeTaskList={changeTaskList}
-                            renderTaskLists={renderTaskLists}
-                        />
-                    }
-                </FloatingButton>
+        <div className="min-w-full -mt-4 task-list-selector min-h-screen border-x-2 px-12">
+            <div className="fixed w-[50%] -ml-5 bg-[#323333] py-5">
+                <div className="flex justify-end mr-10 mt-5">
+                    <FloatingButton onClick={() => setShowOptions(!showOptions)}>
+                        <span className="flex items-center justify-center hover:cursor-pointer">
+                            <CogIcon className="h-[24px] w-[24px] text-white" />
+                        </span>
+                        {
+                            showOptions &&
+                            <OptionList
+                                openModal={openModal}
+                                onClose={() => setShowOptions(false)}
+                                currentSelection={currentTaskListIndex}
+                                handleChangeTaskList={changeTaskList}
+                                renderTaskLists={renderTaskLists}
+                            />
+                        }
+                    </FloatingButton>
+                </div>
+                <div className="flex justify-center items-center font-bold -mt-6 mb-2">
+                    <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
+                </div>
+                <div className="flex justify-center content-center">
+                    <select
+                        value={currentTaskListIndex}
+                        onChange={(e) => changeTaskList(Number(e.target.value))}
+                        className="w-3/6 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
+                    >
+                        <option value={-1}>
+                            No task list selected
+                        </option>
+                        {
+                            lists &&
+                            lists.length > 0 &&
+                            lists.map((list, index) => (
+                                <option
+                                    key={'task_list_' + index}
+                                    value={index}
+
+                                >
+                                    {list.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
             </div>
-            <div className="flex justify-center items-center font-bold -mt-6 mb-2 ">
-                <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
+            <div className="pt-48">
+                <TodoTasks
+                    currentTaskListIndex={currentTaskListIndex}
+                    taskList={currentTaskList || []}
+                    updateTaskList={updateTaskList}
+                    setUpdateTaskList={setUpdateTaskList}
+                />
+
+                <DoneTasks
+                    currentTaskListIndex={currentTaskListIndex}
+                    taskList={currentTaskList || []}
+                    updateTaskList={updateTaskList}
+                    setUpdateTaskList={setUpdateTaskList}
+                />
             </div>
-            <div className="flex justify-center content-center">
-                <select
-                    value={currentTaskListIndex}
-                    onChange={(e) => changeTaskList(Number(e.target.value))}
-                    className="w-3/6 bg-main-primary rounded-xl p-3 content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
-                >
-                    <option value={-1}>
-                        No task list selected
-                    </option>
-                    {
-                        lists &&
-                        lists.length > 0 &&
-                        lists.map((list, index) => (
-                            <option
-                                key={'task_list_' + index}
-                                value={index}
-
-                            >
-                                {list.name}
-                            </option>
-                        ))
-                    }
-                </select>
-            </div>
-
-            <TodoTasks
-                currentTaskListIndex={currentTaskListIndex}
-                taskList={currentTaskList || []}
-                updateTaskList={updateTaskList}
-                setUpdateTaskList={setUpdateTaskList}
-            />
-
-            <DoneTasks
-                currentTaskListIndex={currentTaskListIndex}
-                taskList={currentTaskList || []}
-                updateTaskList={updateTaskList}
-                setUpdateTaskList={setUpdateTaskList}
-            />
-
             {showModal && (
                 <NewTaskListModal
                     closeModal={closeModal}
