@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, use } from 'react';
 import { ArcherContainer, ArcherElement, } from 'react-archer';
-import { CogIcon } from '@heroicons/react/24/solid';
+import { ArrowsRightLeftIcon, EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewRoutineStepModal from './components/NewRoutineStepModal';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
@@ -8,6 +8,8 @@ import OptionList from './components/OptionList';
 import OptionListStep from './components/OptionListStep';
 import EditRoutineStepModal from './components/EditRoutineStepModal';
 import './Routine.scss';
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
     const [routine, setRoutine] = useState<Step[]>([])
@@ -116,7 +118,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
             // fired custom event on localStorage data changed
             const event = new CustomEvent('routinedatachanged') as any;
             document.dispatchEvent(event);
-            
+
         }
     }
 
@@ -141,30 +143,58 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
         setShowEditModal(!showEditModal);
     }
 
+
+    //function that select current step
+    const selectCurrentStep = (index): void => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('currentRoutineStep', index.toString());
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+
+            handleRefreshRoutine();
+        }
+    }
+
+    //function that delete current step
+    const deleteCurrentStep = (index): void => {
+        if (typeof window !== 'undefined') {
+            const currentRoutine = JSON.parse(localStorage.getItem('routine') || '{}');
+            currentRoutine.splice(index, 1);
+            localStorage.setItem('routine', JSON.stringify(currentRoutine));
+            localStorage.setItem('currentRoutineStep', '0');
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('routinedatachanged') as any;
+            document.dispatchEvent(event);
+
+            handleRefreshRoutine();
+        }
+    }
+
     return (
         <>
             <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] lg:max-w-[18rem] md:min-w-[18rem] xl:min-h-[39rem] xl:max-h-[39rem] lg:min-h-[26rem] lg:max-h-[26rem] md:min-h-[26rem] md:max-h-[26rem] routine">
-                <div className="flex justify-end -mr-12 -mt-8">
-                    <FloatingButton onClick={() => setShowOptions(!showOptions)}>
-                        <span className="flex items-center justify-center hover:cursor-pointer">
-                            <CogIcon className="h-[24px] w-[24px] text-white" />
-                        </span>
-                        {
-                            showOptions &&
-                            <OptionList
-                                resetCurrentStep={resetCurrentStep}
-                                openModal={openModal}
-                                onClose={() => setShowOptions(false)}
-                            />
-                        }
-                    </FloatingButton>
+                <div className="flex justify-end -mr-5 pt-1">
+                    <span onClick={() => setShowOptions(!showOptions)} className="flex items-center justify-center hover:cursor-pointer">
+                        <EllipsisVerticalIcon className="h-[24px] w-[24px] text-white" />
+                    </span>
+                    {
+                        showOptions &&
+                        <OptionList
+                            resetCurrentStep={resetCurrentStep}
+                            openModal={openModal}
+                            onClose={() => setShowOptions(false)}
+                        />
+                    }
                 </div>
                 <div className="flex justify-center font-bold mb-2 -mt-6">
                     <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Routine</h1>
                 </div>
                 <div className="xl:max-h-fit pb-3 xl:h-fit max-h-[64vh] overflow-y-auto flex flex-col no-scrollbar min-w-[16rem]">
                     <ArcherContainer>
-                        <div className="flex flex-col items-center gap-5 xl:max-w-[18rem] xl:min-w-[18rem] lg:max-w-[14rem] lg:min-w-[14rem]">
+                        <div className="flex flex-col items-center gap-5 xl:max-w-[20rem] xl:min-w-[20rem] lg:max-w-[15rem] lg:min-w-[15rem]">
                             {routine.map((step, index) => (
                                 <ArcherElement
                                     key={'step_arrow_' + index}
@@ -180,7 +210,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                 >
                                     <div
                                         key={'step_box_' + index}
-                                        className={`xl:ml-10 flex w-full xl:min-w-[19rem] xl:max-w-[19rem] lg:min-w-[14rem] lg:max-w-[14rem] bg-[#323333] rounded-xl p-3 ${index === currentStep && 'border-2 border-white'}`}
+                                        className={`flex w-full xl:min-w-[20rem] xl:max-w-[20rem] lg:min-w-[14rem] lg:max-w-[14rem] bg-[#323333] rounded-xl p-3 ${index === currentStep && 'border-2 border-white'}`}
                                         ref={(ref) => {
                                             taskRefs.current[index] = ref;
                                         }}
@@ -190,29 +220,39 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                                 <div className={` pie-wrapper pie-wrapper--solid ${'progress-' + getPercentage(step.currentPomodorosCount, step.pomodoros)}`}>
                                                 </div>
                                             </div>
+                                            <b className="m-1">{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
                                         </div>
-                                        <div className="flex flex-col w-6/12 ml-1">
+                                        <div className="flex flex-col w-8/12 ml-1">
                                             <h1 className="text-white font-bold xl:text-sm lg:text-xs md:text-xs">Work</h1>
                                             <h1 className="text-white font-bold xl:text-md lg:text-xs  mb-1">{step.header}</h1>
                                             <h1 className="text-white font-bold xl:text-xs lg:text-[0.6rem] max-w-fit py-1 px-2 rounded-2xl bg-[#73F1F3]/20">{getTaskListByIndex(step.assignedTaskList)}</h1>
                                         </div>
-                                        <div className="w-3/12 text-white xl:text-md lg:text-xs flex justify-center content-center py-2">
-                                            <b>{step.currentPomodorosCount + ' / ' + step.pomodoros}</b>
+                                        <div className="w-1/12 text-white xl:text-md lg:text-xs flex flex-col justify-center content-center gap-2">
+                                            <button className="h-[18px] w-[18px]" data-tooltip-id="selectStep" onClick={() => selectCurrentStep(index)}>
+                                                <ArrowsRightLeftIcon className="h-[18px] w-[18px]" />
+                                            </button >
+                                            <button className="h-[18px] w-[18px]" data-tooltip-id="editStep" onClick={() => handleOpenEditModal(index)}>
+                                                <PencilIcon className="h-[18px] w-[18px]" />
+                                            </button>
+                                            <button className="h-[18px] w-[18px]" data-tooltip-id="deleteStep" onClick={() => deleteCurrentStep(index)}>
+                                                <TrashIcon className="h-[18px] w-[18px]" />
+                                            </button>
+                                            <ReactTooltip
+                                                id="selectStep"
+                                                place="bottom"
+                                                content="Select this step as current step"
+                                            />
+                                            <ReactTooltip
+                                                id="editStep"
+                                                place="bottom"
+                                                content="Edit this step"
+                                            />
+                                            <ReactTooltip
+                                                id="deleteStep"
+                                                place="bottom"
+                                                content="Delete this step"
+                                            />
                                         </div>
-                                        <FloatingButton className="absolute right-0 xl:mr-1 lg:mr-3 xl:mt-10 lg:mt-8 bg-main-primary" onClick={() => setShowOptionStep(index)}>
-                                            <span className="flex items-center justify-center hover:cursor-pointer">
-                                                <CogIcon className="h-[24px] w-[24px] text-white" />
-                                            </span>
-                                            {
-                                                showOptionsStep === index ?
-                                                    <OptionListStep
-                                                        stepIndex={index}
-                                                        onClose={() => setShowOptionStep(null)}
-                                                        refreshRoutine={handleRefreshRoutine}
-                                                        openEditModal={() => handleOpenEditModal(index)}
-                                                    /> : null
-                                            }
-                                        </FloatingButton>
                                     </div>
                                 </ArcherElement>
                             ))}
