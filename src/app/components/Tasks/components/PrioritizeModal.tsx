@@ -22,9 +22,9 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
             newPriorityCalculationList.push({
                 taskIndex: index,
                 priority: 0,
-                benefit: null,
-                impact: null,
-                effort: null,
+                benefit: EvaluationType.Long,
+                impact: EvaluationType.Long,
+                effort: effortType.High,
             });
         });
         setPriorityCalculationList(newPriorityCalculationList);
@@ -154,26 +154,26 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
                                     <td className="border py-5 px-12">{taskList[task.taskIndex].header}</td>
                                     <td className="border p-2">
                                         <select onChange={(e) => updateBenefit(e, index)} className="bg-main-primary rounded-xl py-3 px-10 content-start focus:ring-0 border-1 italic border-white">
-                                            <option selected disabled>select an option</option>
+                                            <option disabled>select an option</option>
                                             <option value={EvaluationType.Immediate}>{EvaluationType.Immediate}</option>
                                             <option value={EvaluationType.Short}>{EvaluationType.Short}</option>
-                                            <option value={EvaluationType.Long}>{EvaluationType.Long}</option>
+                                            <option selected value={EvaluationType.Long}>{EvaluationType.Long}</option>
                                         </select>
                                     </td>
                                     <td className="border p-2">
                                         <select onChange={(e) => updateImpact(e, index)} className="bg-main-primary rounded-xl py-3 px-10 content-start focus:ring-0 border-1 italic border-white">
-                                            <option selected disabled>select an option</option>
+                                            <option disabled>select an option</option>
                                             <option value={EvaluationType.Immediate}>{EvaluationType.Immediate}</option>
                                             <option value={EvaluationType.Short}>{EvaluationType.Short}</option>
-                                            <option value={EvaluationType.Long}>{EvaluationType.Long}</option>
+                                            <option selected value={EvaluationType.Long}>{EvaluationType.Long}</option>
                                         </select>
                                     </td>
                                     <td className="border p-2">
                                         <select onChange={(e) => updateEffort(e, index)} className="bg-main-primary rounded-xl py-3 px-10 content-start focus:ring-0 border-1 italic border-white">
-                                            <option selected disabled>select an option</option>
+                                            <option disabled>select an option</option>
                                             <option value={effortType.Low}>{effortType.Low}</option>
                                             <option value={effortType.Medium}>{effortType.Medium}</option>
-                                            <option value={effortType.High}>{effortType.High}</option>
+                                            <option selected value={effortType.High}>{effortType.High}</option>
                                         </select>
                                     </td>
                                 </tr>
