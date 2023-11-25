@@ -148,7 +148,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                         setHighlightedTask={setHighlightedTask}
                     />
                 </div>
-                <div className="xl:pt-[21%] lg:pt-[26%] px-12">
+                <div className="xl:pt-[24%] lg:pt-[32%] px-12">
                     <TodoTasks
                         currentTaskListIndex={currentTaskListIndex}
                         taskList={currentTaskList || []}
