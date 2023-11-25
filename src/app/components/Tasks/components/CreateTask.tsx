@@ -252,11 +252,10 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
             {
                 (highlightedTask !== null && taskList[highlightedTask]) &&
                 <div className="flex gap-5 ">
-                    <div className="flex ml-1 xl:text-lg lg:text-xs md:text-xs w-2/12 animate-backInLeft gap-3">
+                    <div className="flex ml-1 xl:text-lg lg:text-xs md:text-xs w-1/12 animate-backInLeft gap-3 justify-end">
                         <div className="animate-heartBeat animate-infinite ">
                             🔥
                         </div>
-                        Focus on
                         <div className="animate-heartBeat animate-infinite ">
                             👉
                         </div>
