@@ -62,7 +62,7 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
     }
 
     return (
-        <div className="fixed top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
+        <div className="absolute top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
             <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white max-h-[90vh] overflow-auto">
                 <h2 className="text-xl font-bold mb-4">New habit tracker</h2>
                 <div className="flex flex-col gap-2 text-main-primary">
