@@ -10,9 +10,6 @@ import Routine from '../components/Routine/Routine';
 import DailyHabits from '../components/DailyHabits/DailyHabits';
 import HelpButton from '../components/HelpButton/HelpButton';
 import HelpOptionList from '../components/HelpButton/HelpOptionList';
-import TaskListSelector from '../components/TaskListSelector/TaskListSelector';
-import TodoTasks from '../components/TodoTasks/TodoTasks';
-import DoneTasks from '../components/DoneTasks/DoneTasks';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import Tasks from '../components/Tasks/Tasks';
 
@@ -36,6 +33,7 @@ export default function App() {
   const changeTaskList = (taskListIndex: number) => {
     if (taskListIndex >= 0 && taskListIndex < JSON.parse(localStorage.getItem('taskLists') || '[]').length) {
       setCurrentTaskList(taskListIndex);
+      setUpdateTaskList(!updateTaskList);
     }
   };
 
