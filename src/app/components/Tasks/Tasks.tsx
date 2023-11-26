@@ -8,9 +8,8 @@ import CreateTask from './components/CreateTask';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }) => {
+const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, changeTaskList }) => {
     const [lists, setLists] = useState<TaskList[]>();
-    const [currentTaskList, setCurrentTaskList] = useState<Task[]>();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
     const [highlightedTask, setHighlightedTask] = useState<number | null>(null);
@@ -26,7 +25,6 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     const renderTaskLists = (): void => {
         const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
         setLists(currentTaskLists);
-        setCurrentTaskList(currentTaskLists[currentTaskListIndex]);
     }
 
     const handleDeleteTaskList = (): void => {
@@ -73,22 +71,6 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
     useEffect(() => {
         renderTaskLists();
     }, []);
-
-    useEffect(() => {
-        const storedTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
-        if (storedTaskLists && storedTaskLists.length > 0 && currentTaskListIndex >= 0) {
-            setCurrentTaskList([]);
-            setTimeout(() => {
-                setCurrentTaskList(storedTaskLists[currentTaskListIndex].tasks);
-            }, 1);
-        }
-    }, [updateTaskList])
-
-    useEffect(() => {
-        if (lists && lists.length > 0 && currentTaskListIndex >= 0) {
-            setCurrentTaskList(lists[currentTaskListIndex]?.tasks || []);
-        }
-    }, [currentTaskListIndex])
 
     return (
         <>
@@ -141,7 +123,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                     </div>
                     <CreateTask
                         currentTaskListIndex={currentTaskListIndex}
-                        taskList={currentTaskList || []}
+                        taskList={taskList}
                         updateTaskList={updateTaskList}
                         setUpdateTaskList={setUpdateTaskList}
                         highlightedTask={highlightedTask}
@@ -151,7 +133,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                 <div className="xl:pt-[24%] lg:pt-[32%] px-12">
                     <TodoTasks
                         currentTaskListIndex={currentTaskListIndex}
-                        taskList={currentTaskList || []}
+                        taskList={taskList}
                         updateTaskList={updateTaskList}
                         setUpdateTaskList={setUpdateTaskList}
                         highlightedTask={highlightedTask}
@@ -159,7 +141,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
                     />
                     <DoneTasks
                         currentTaskListIndex={currentTaskListIndex}
-                        taskList={currentTaskList || []}
+                        taskList={taskList}
                         updateTaskList={updateTaskList}
                         setUpdateTaskList={setUpdateTaskList}
                         highlightedTask={highlightedTask}
