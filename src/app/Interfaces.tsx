@@ -64,6 +64,7 @@ interface PomodoroTimerProps {
 }
 
 interface TaskListProps {
+    taskList: Task[];
     currentTaskListIndex: number;
     changeTaskList(taskListIndex: number): void;
 }
