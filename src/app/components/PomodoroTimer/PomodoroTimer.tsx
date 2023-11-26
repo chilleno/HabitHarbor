@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
-import { PlayIcon, StopIcon, CogIcon, ForwardIcon } from '@heroicons/react/24/solid';
+import { EllipsisVerticalIcon, PlayIcon, StopIcon, ForwardIcon } from '@heroicons/react/24/solid';
 import useSound from 'use-sound';
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepCount }) => {
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
@@ -25,7 +27,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     const [formattedTime, setFormattedTime] = useState<string>('00:00');
     const [today] = useState<Date>(new Date());
     const [autoStart, setAutoStart] = useState<boolean>(false);
-    
+
     const [firstRender, setFirstRender] = useState<boolean>(false);
 
     //sfx
@@ -317,20 +319,28 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }, [autoStart]);
 
 
-    if(!firstRender){
+    if (!firstRender) {
         return null;
     }
 
     return (
         <ContentBox className="xl:min-w-[18rem] lg:min-w-[13rem] pomodoro-timer">
-            <div className="flex justify-end -mr-14 -mt-8">
-                <FloatingButton onClick={openModal}>
-                    <span className="flex items-center justify-center hover:cursor-pointer">
-                        <CogIcon className="h-[24px] w-[24px] text-white" />
-                    </span>
-                </FloatingButton>
+            <div className="flex justify-center font-bold gap-3">
+                <div className="text-white xl:text-xl lg:text-md md:tex-md w-9/12 justify-end flex">
+                    <h1 className="text-white xl:text-xl lg:text-md md:tex-md -mr-4">Pomodoro clock</h1>
+                </div>
+                <div className="flex justify-end w-3/12 gap-5 z-50">
+                    <button className="h-[18px] w-[18px] xl:-mr-2 lg:-mr-4" data-tooltip-id="newStep" onClick={() => openModal()}>
+                        <EllipsisVerticalIcon className="h-[30px] w-[30px]" />
+                    </button>
+                    <ReactTooltip
+                        id="configPomodoro"
+                        place="bottom"
+                        content="Poromodoro settings"
+                    />
+                </div>
             </div>
-            <div className="flex flex-col justify-center content-center">
+            <div className="flex flex-col justify-center content-center mt-10">
                 <div className="flex content-center justify-center text-main-primary -mt-5">
                     <div className={`rounded-full xl:w-[11rem] xl:h-[11rem] lg:w-[9rem] lg:h-[9rem] md:w-[9rem] md:h-[9rem] ${(isBreak == true ? (isLongBreak == true ? 'bg-pomodoro-green' : isShortBreak == true ? 'bg-pomodoro-green' : null) : 'bg-pomodoro-red')}`}>
                         <div className="flex flex-col items-center h-full justify-center leading-10 -mt-4">
@@ -370,7 +380,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                 </div>
             </div>
             {showModal && (
-                <div className="fixed top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
+                <div className="absolute top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
                     <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                         <h2 className="text-xl font-bold mb-4">Edit Durations</h2>
                         <div className="flex flex-col gap-2">
