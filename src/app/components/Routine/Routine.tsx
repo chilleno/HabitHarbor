@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef, use } from 'react';
 import { ArcherContainer, ArcherElement, } from 'react-archer';
-import { ArrowsRightLeftIcon, EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { ArrowPathIcon, ArrowsRightLeftIcon, PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 import NewRoutineStepModal from './components/NewRoutineStepModal';
 import ContentBox from '../../designComponent/ContentBox';
-import FloatingButton from '@/app/designComponent/FloatingButton';
-import OptionList from './components/OptionList';
-import OptionListStep from './components/OptionListStep';
 import EditRoutineStepModal from './components/EditRoutineStepModal';
 import './Routine.scss';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -17,8 +14,6 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     const taskRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
-    const [showOptions, setShowOptions] = useState<boolean>(false);
-    const [showOptionsStep, setShowOptionStep] = useState<number | null>(null);
     const [editStepIndex, setEditStepIndex] = useState<number | null>(0);
 
     const openModal = () => {
@@ -176,21 +171,28 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
     return (
         <>
             <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] lg:max-w-[18rem] md:min-w-[18rem] xl:min-h-[39rem] xl:max-h-[39rem] lg:min-h-[26rem] lg:max-h-[26rem] md:min-h-[26rem] md:max-h-[26rem] routine">
-                <div className="flex justify-end -mr-5 pt-1">
-                    <span onClick={() => setShowOptions(!showOptions)} className="flex items-center justify-center hover:cursor-pointer">
-                        <EllipsisVerticalIcon className="h-[24px] w-[24px] text-white" />
-                    </span>
-                    {
-                        showOptions &&
-                        <OptionList
-                            resetCurrentStep={resetCurrentStep}
-                            openModal={openModal}
-                            onClose={() => setShowOptions(false)}
+                <div className="flex justify-center font-bold gap-3">
+                    <div className="text-white xl:text-xl lg:text-md md:tex-md w-7/12 justify-end flex">
+                        <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Routine</h1>
+                    </div>
+                    <div className="flex justify-end w-4/12 gap-5 z-50">
+                        <button className="h-[18px] w-[18px]" data-tooltip-id="resetRoutine" onClick={() => resetCurrentStep()}>
+                            <ArrowPathIcon className="h-[18px] w-[18px]" />
+                        </button>
+                        <button className="h-[18px] w-[18px]" data-tooltip-id="newStep" onClick={() => openModal()}>
+                            <PlusIcon className="h-[18px] w-[18px]" />
+                        </button>
+                        <ReactTooltip
+                            id="resetRoutine"
+                            place="bottom"
+                            content="Reset the routine to the first step"
                         />
-                    }
-                </div>
-                <div className="flex justify-center font-bold mb-2 -mt-6">
-                    <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Routine</h1>
+                        <ReactTooltip
+                            id="newStep"
+                            place="bottom"
+                            content="Add new step to the routine"
+                        />
+                    </div>
                 </div>
                 <div className="xl:max-h-fit pb-3 xl:h-fit max-h-[64vh] overflow-y-auto flex flex-col no-scrollbar min-w-[16rem]">
                     <ArcherContainer>
