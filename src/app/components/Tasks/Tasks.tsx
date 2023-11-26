@@ -94,7 +94,7 @@ const Tasks: React.FC<TaskListProps> = ({ currentTaskListIndex, changeTaskList }
         <>
 
             <div className="min-w-full task-list-selector min-h-screen">
-                <div className="fixed min-w-[50%] bg-[#323333] border-b-2 border-gray z-50">
+                <div className="fixed min-w-[50%] bg-[#323333] border-b-2 border-gray z-40">
                     <div className="flex justify-center items-center font-bold py-4">
                         <h1 className="text-white xl:text-xl lg:text-md">Task lists</h1>
                     </div>
