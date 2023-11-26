@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
-import { CogIcon } from '@heroicons/react/24/solid';
+import { CogIcon, PlusIcon } from '@heroicons/react/24/solid';
 import OptionList from './components/OptionList';
 import NewHabitTrackerModal from './components/NewHabitTrackerModal';
 import Tracker from './components/Tracker';
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const DailyHabits = () => {
     const [showOptions, setShowOptions] = useState<boolean>(false);
@@ -75,22 +77,20 @@ const DailyHabits = () => {
     return (
         <>
             <ContentBox className="xl:min-w-[21rem] lg:min-w-[15rem] lg:max-w-[15rem] -mt-5 daily-habits md:max-h-[18rem] md:min-h-[18rem] lg:max-h-[19rem] lg:min-h-[19rem] xl:max-h-[27rem] xl:min-h-[27rem]">
-                <div className="flex justify-end -mr-12 -mt-6">
-                    <FloatingButton onClick={() => setShowOptions(!showOptions)}>
-                        <span className="flex items-center justify-center hover:cursor-pointer">
-                            <CogIcon className="h-[24px] w-[24px] text-white" />
-                        </span>
-                        {
-                            showOptions &&
-                            <OptionList
-                                onClose={() => setShowOptions(!showOptions)}
-                                openCreateModal={handleCreateModal}
-                            />
-                        }
-                    </FloatingButton>
-                </div>
-                <div className="flex justify-center font-bold mb-2 -mt-8">
-                    <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
+                <div className="flex justify-center font-bold gap-3">
+                    <div className="text-white xl:text-xl lg:text-md md:tex-md w-9/12 justify-end flex">
+                        <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
+                    </div>
+                    <div className="flex justify-end w-3/12 gap-5 z-50">
+                        <button className="h-[18px] w-[18px]" data-tooltip-id="newStep" onClick={() => handleCreateModal()}>
+                            <PlusIcon className="h-[18px] w-[18px]" />
+                        </button>
+                        <ReactTooltip
+                            id="newHabit"
+                            place="bottom"
+                            content="Add new habit tracker"
+                        />
+                    </div>
                 </div>
                 <div className="flex flex-col xl:gap-16 lg:gap-14 bg-main-primary rounded-xl xl:w-[17rem] lg:w-[13rem] overflow-y-scroll xl:max-h-[22rem] xl:min-h-[22rem] lg:min-h-[15rem] lg:max-h-[15rem] xl:-ml-0 lg:-ml-4 py-2 no-scrollbar">
                     {
