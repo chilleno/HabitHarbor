@@ -202,6 +202,7 @@ export default function App() {
           <MiddleScreen className="">
             <div className="flex justify-center content-center">
               <Tasks
+                taskList={taskList}
                 currentTaskListIndex={currentTaskList}
                 changeTaskList={setCurrentTaskList}
               />
