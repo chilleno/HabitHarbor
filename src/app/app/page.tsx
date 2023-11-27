@@ -205,6 +205,8 @@ export default function App() {
                 taskList={taskList}
                 currentTaskListIndex={currentTaskList}
                 changeTaskList={setCurrentTaskList}
+                updateTaskList={updateTaskList}
+                setUpdateTaskList={setUpdateTaskList}
               />
             </div>
           </MiddleScreen>
