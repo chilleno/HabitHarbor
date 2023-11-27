@@ -251,17 +251,9 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
             </div>
             {
                 (highlightedTask !== null && taskList[highlightedTask]) &&
-                <div className="flex gap-5 ">
-                    <div className="flex ml-1 xl:text-lg lg:text-xs md:text-xs w-1/12 animate-backInLeft gap-3 justify-end">
-                        <div className="animate-heartBeat animate-infinite ">
-                            🔥
-                        </div>
-                        <div className="animate-heartBeat animate-infinite ">
-                            👉
-                        </div>
-                    </div>
+                <div className="flex gap-5 before:content-['🔥'] before:animate-heartBeat before:animate-infinite pl-6">
                     <div
-                        className={`gap-1 group/item flex items-center bg-main-primary xl:mb-2 lg:mb-1 min-h-[32px] h-[32px] max-h-[32px] text-start py-3 px-3 rounded-3xl animate-backInUp w-10/12`}
+                        className={`gap-3 group/item flex items-center bg-main-primary xl:w-[92%] lg:w-[89%] xl:-ml-4 lg:-ml-4  xl:mb-2 lg:mb-1 md:mb-1 min-h-[2rem] h-[2rem] max-h-[2rem] text-start py-3 px-3 rounded-3xl`}
                     >
                         <input
                             checked={taskList[highlightedTask].checked || false}
@@ -302,7 +294,6 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                     taskList={taskList}
                 />
             }
-
             <ReactTooltip
                 id="prioritizeTooltip"
                 place="bottom"
