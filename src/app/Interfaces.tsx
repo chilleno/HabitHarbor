@@ -67,6 +67,8 @@ interface TaskListProps {
     taskList: Task[];
     currentTaskListIndex: number;
     changeTaskList(taskListIndex: number): void;
+    setUpdateTaskList: (newValue: boolean) => void;
+    updateTaskList: boolean;
 }
 interface TasksProps {
     currentTaskListIndex: number;
