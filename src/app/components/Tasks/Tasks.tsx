@@ -8,10 +8,9 @@ import CreateTask from './components/CreateTask';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, changeTaskList }) => {
+const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, changeTaskList, updateTaskList, setUpdateTaskList }) => {
     const [lists, setLists] = useState<TaskList[]>();
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
     const [highlightedTask, setHighlightedTask] = useState<number | null>(null);
 
     const openModal = () => {
@@ -71,6 +70,10 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
     useEffect(() => {
         renderTaskLists();
     }, []);
+
+    useEffect(() => {
+        renderTaskLists();
+    }, [updateTaskList]);
 
     return (
         <>
