@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
-import { EllipsisVerticalIcon, PlayIcon, StopIcon, ForwardIcon } from '@heroicons/react/24/solid';
+import { EllipsisVerticalIcon, PlayIcon, PauseIcon, StopIcon, ForwardIcon } from '@heroicons/react/24/solid';
 import useSound from 'use-sound';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -354,14 +354,14 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                     </div>
                 </div>
                 <div className="flex content-center justify-center xl:-mt-14 lg:-mt-11 md:-mt-11 gap-1">
-                    <FloatingButton className="xl:w-[50px] xl:h-[50px] lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px]" onClick={startTimer}>
+                    <FloatingButton className="xl:w-[50px] xl:h-[50px] lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px]" onClick={isActive ? stopTimer : startTimer}>
                         <span className="flex items-center justify-center hover:cursor-pointer">
-                            <PlayIcon className="xl:h-[24px] xl:w-[24px] lg:h-[20px] lg:w-[20px] md:h-[20px] md:w-[20px] text-white" />
-                        </span>
-                    </FloatingButton>
-                    <FloatingButton className="xl:w-[50px] xl:h-[50px] lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px]" onClick={stopTimer}>
-                        <span className="flex items-center justify-center hover:cursor-pointer">
-                            <StopIcon className="xl:h-[24px] xl:w-[24px] lg:h-[20px] lg:w-[20px] md:h-[20px] md:w-[20px] text-white" />
+                            {
+                                isActive === false ?
+                                    <PlayIcon className="xl:h-[24px] xl:w-[24px] lg:h-[20px] lg:w-[20px] md:h-[20px] md:w-[20px] text-white" />
+                                    :
+                                    <PauseIcon className="xl:h-[24px] xl:w-[24px] lg:h-[20px] lg:w-[20px] md:h-[20px] md:w-[20px] text-white" />
+                            }
                         </span>
                     </FloatingButton>
                     <FloatingButton className="xl:w-[50px] xl:h-[50px] lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px]" onClick={nextTimer}>
