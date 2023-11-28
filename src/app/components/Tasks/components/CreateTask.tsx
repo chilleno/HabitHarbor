@@ -221,37 +221,37 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
     }
 
     return (
-        <div className="mt-10">
-            <div className="flex justify-center items-center font-bold -mt-6 mb-2">
-                <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Tasks</h1>
-            </div>
-            <div className="flex flex-col justify-center content-center xl:ml-44 lg:ml-28">
-                <div className="flex justify-center content-center items-center gap-2">
-                    <InputText
-                        placeholder="Type and press enter to create a task..."
-                        value={newTask}
-                        id="newTaskInput"
-                        onChange={(value) => setNewTask(value)}
-                        onKeyDown={handlePressEnterButton}
-                        className="xl:w-6/12 lg:w-7/12 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
-                        name="task-name-new"
-                    />
-                    <div className="flex w-4/12 gap-3">
-                        <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
-                            <QueueListIcon className="h-[24px] w-[24px]" />
-                        </button>
-                        <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
-                            <InboxArrowDownIcon className="h-[24px] w-[24px]" />
-                        </button>
+        <>
+            <div className="flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5">
+                <h1 className="text-white xl:text-xl lg:text-md md:tex-md w-2/12">Tasks</h1>
+                <div className="flex flex-col justify-center content-center w-6/12">
+                    <div className="flex justify-center content-center items-center gap-2">
+                        <InputText
+                            placeholder="Type and press enter to create a task..."
+                            value={newTask}
+                            id="newTaskInput"
+                            onChange={(value) => setNewTask(value)}
+                            onKeyDown={handlePressEnterButton}
+                            className="w-full h-[50px] py-3 px-8 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
+                            name="task-name-new"
+                        />
                     </div>
+                    <b className={`xl:text-lg lg:text-md md:text-sm ml-5 text-[red] transition-opacity duration-250  ${showError ? 'opacity-100 animate-headShake mt-2 -mb-2' : 'opacity-0 h-0'}`}>
+                        <i>Please add a text longer than 3 characters.</i>
+                    </b>
                 </div>
-                <b className={`xl:text-md lg:text-xs md:text-xs ml-5 text-[red] transition-opacity duration-150 ${showError ? 'opacity-100 animate-headShake' : 'opacity-0'}`}>
-                    <i>Please add a text longer than 3 characters.</i>
-                </b>
+                <div className="w-2/12 gap-3 flex justify-center">
+                    <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
+                        <QueueListIcon className="h-[24px] w-[24px]" />
+                    </button>
+                    <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
+                        <InboxArrowDownIcon className="h-[24px] w-[24px]" />
+                    </button>
+                </div>
             </div>
             {
                 (highlightedTask !== null && taskList[highlightedTask]) &&
-                <div className="flex gap-5 before:content-['🔥'] before:animate-heartBeat before:animate-infinite pl-6">
+                <div className="flex gap-5 before:content-['🔥'] before:animate-heartBeat before:animate-infinite pl-6 animate-backInUp pt-2">
                     <div
                         className={`gap-3 group/item flex items-center bg-main-primary xl:w-[92%] lg:w-[89%] xl:-ml-4 lg:-ml-4  xl:mb-2 lg:mb-1 md:mb-1 min-h-[2rem] h-[2rem] max-h-[2rem] text-start py-3 px-3 rounded-3xl`}
                     >
@@ -304,8 +304,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                 place="bottom"
                 content="Delete finished tasks from current task list"
             />
-        </div>
-
+        </>
     );
 };
 
