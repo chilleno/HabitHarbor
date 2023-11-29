@@ -37,9 +37,24 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
 
                 localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
 
-                // fired custom event on localStorage data changed
-                const event = new CustomEvent('taskListdatachanged') as any;
-                document.dispatchEvent(event);
+                //check if the current task list index is the assignedTaskList of any routine step on localStorage
+                let localStorageRoutine = JSON.parse(localStorage.getItem('routines') || '[]');
+                let updatedLocalStorageRoutine = localStorageRoutine.map((routine) => {
+                    routine.steps = routine.steps.map((step) => {
+                        if (step.assignedTaskList === currentTaskListIndex) {
+                            step.assignedTaskList = -1;
+                        }
+                        return step;
+                    });
+                    return routine;
+                });
+                localStorage.setItem('routines', JSON.stringify(updatedLocalStorageRoutine));
+                
+                const eventRoutineChanged = new CustomEvent('routinedatachanged') as any;
+                document.dispatchEvent(eventRoutineChanged);
+
+                const eventTasnkListChanged = new CustomEvent('taskListdatachanged') as any;
+                document.dispatchEvent(eventTasnkListChanged);
 
                 renderTaskLists();
                 changeTaskList(updatedTaskLists.length - 1);
@@ -188,7 +203,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                                             defaultValue={lists && lists[currentTaskListIndex].name}
                                             name="task-list-name-new"
                                         />
-                                        
+
                                     </div>
                                     <div className="w-2/12 gap-3 flex justify-center">
                                         <button data-tooltip-id="cancelEditCurrentTaskList" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleEditTaskListName()}>
@@ -216,7 +231,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                         setHighlightedTask={setHighlightedTask}
                     />
                 </div>
-                <div className="xl:pt-[19%] lg:pt-[27%] px-12">
+                <div className={highlightedTask === null ? "xl:pt-[19%] lg:pt-[27%] px-12" : "xl:pt-[24%] lg:pt-[32%] px-12"}>
                     <TodoTasks
                         currentTaskListIndex={currentTaskListIndex}
                         taskList={taskList}
