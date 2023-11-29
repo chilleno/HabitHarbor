@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <EventProvider>
-          <div className="sm:inline xl:hidden lg:hidden md:inline">
+          <div className="sm:inline xl:hidden lg:hidden md:hidden">
             <h1 className="text-center">{"This webapp doesn't works on mobile screens, please try on a bigger screen"}</h1>
           </div>
           {children}
