@@ -1,16 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import ContentBox from '../../designComponent/ContentBox';
-import FloatingButton from '@/app/designComponent/FloatingButton';
-import { CogIcon, PlusIcon } from '@heroicons/react/24/solid';
-import OptionList from './components/OptionList';
+import { PlusIcon } from '@heroicons/react/24/solid';
 import NewHabitTrackerModal from './components/NewHabitTrackerModal';
 import Tracker from './components/Tracker';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const DailyHabits = () => {
-    const [showOptions, setShowOptions] = useState<boolean>(false);
     const [updateRender, setUpdateRender] = useState<boolean>(false);
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
     const [dailyHabits, setDailyHabits] = useState<HabitTracker[]>([]);
@@ -76,7 +73,7 @@ const DailyHabits = () => {
 
     return (
         <>
-            <ContentBox className="xl:min-w-[21rem] lg:min-w-[15rem] lg:max-w-[15rem] -mt-5 daily-habits md:max-h-[18rem] md:min-h-[18rem] lg:max-h-[19rem] lg:min-h-[19rem] xl:max-h-[27rem] xl:min-h-[27rem]">
+            <ContentBox className="xl:min-w-[21rem] lg:min-w-[15rem] lg:max-w-[15rem] -mt-5 daily-habits  min-h-fit">
                 <div className="flex justify-center font-bold gap-3">
                     <div className="text-white xl:text-xl lg:text-md md:tex-md w-9/12 justify-end flex">
                         <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
@@ -92,11 +89,11 @@ const DailyHabits = () => {
                         />
                     </div>
                 </div>
-                <div className="flex flex-col xl:gap-16 lg:gap-14 bg-main-primary rounded-xl xl:w-[17rem] lg:w-[13rem] overflow-y-scroll xl:max-h-[22rem] xl:min-h-[22rem] lg:min-h-[15rem] lg:max-h-[15rem] xl:-ml-0 lg:-ml-4 py-2 no-scrollbar">
+                <div className="flex flex-col  rounded-xl xl:w-[17rem] lg:w-[13rem] xl:-ml-0 lg:-ml-4 py-2 min-h-full">
                     {
                         dailyHabits.map((habit, index) => (
                             habit.currentValue < habit.maxValue &&
-                            <div key={'habit_' + index} className={`w-full relative flex-col gap-2 xl:ml-3 lg:ml-1`}>
+                            <div key={'habit_' + index} className={`w-full xl:h-[6.5vh] lg:h-[9vh] md:h-[9vh] flex-col gap-2 xl:ml-3 lg:ml-1`}>
                                 <Tracker tracker={habit} habitIndex={index} handleUpdateRender={handleUpdateRender} />
                             </div>
                         ))
@@ -104,7 +101,7 @@ const DailyHabits = () => {
                     {
                         dailyHabits.map((habit, index) => (
                             habit.currentValue === habit.maxValue &&
-                            <div key={'habit_' + index} className={`w-full relative flex-col gap-2 xl:ml-3 lg:ml-1`}>
+                            <div key={'habit_' + index} className={`w-full xl:h-[6.5vh] lg:h-[9vh] md:h-[9vh] flex-col gap-2 xl:ml-3 lg:ml-1`}>
                                 <Tracker tracker={habit} habitIndex={index} handleUpdateRender={handleUpdateRender} />
                             </div>
                         ))
