@@ -189,7 +189,7 @@ export default function App() {
           }}
         />
         <MainComponent>
-          <StartScreen className=''>
+          <StartScreen className="overflow-auto scrollbar-hidden">
             <div className="flex justify-center content-center mt-7 mb-5">
               <PomodoroTimer
                 handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
@@ -210,7 +210,7 @@ export default function App() {
               />
             </div>
           </MiddleScreen>
-          <EndScreen className=''>
+          <EndScreen className="overflow-auto">
             <div className="flex justify-center content-center mt-4 mb-6">
               <Clock />
             </div>
