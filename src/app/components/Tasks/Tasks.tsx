@@ -185,7 +185,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                                             id="editTaskListInput"
                                             onChange={(value) => setNewCurrentTaskListName(value)}
                                             className="w-full h-[50px] py-3 px-8 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
-                                            value={lists && lists[currentTaskListIndex].name}
+                                            defaultValue={lists && lists[currentTaskListIndex].name}
                                             name="task-list-name-new"
                                         />
                                         
