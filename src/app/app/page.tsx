@@ -137,7 +137,7 @@ export default function App() {
     return null
   } else {
     return (
-      <div className="sm:hidden xl:inline lg:inline md:hidden">
+      <div className="sm:hidden xl:inline lg:inline md:inline">
         <Joyride
           callback={handleJoyrideCallback}
           steps={[
