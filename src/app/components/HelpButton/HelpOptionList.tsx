@@ -2,7 +2,19 @@ import React, { useEffect, useRef } from 'react';
 
 const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionListProps> = ({ onClose, showTour }) => {
     const listRef = useRef<HTMLDivElement>(null);
+
+    const restartData = () => {
+        if (window.confirm("Are you sure you want to restart all data? (this action cannot be undone)")) {
+            localStorage.clear();
+            window.location.reload();
+        }
+    };
+
     const options: HelpButtonOption[] = [
+        {
+            text: 'Reset all data', 
+            clickFunction: restartData,
+        },
         {
             text: 'Feature Request',
             url: 'https://habitharbor.canny.io/issues',
