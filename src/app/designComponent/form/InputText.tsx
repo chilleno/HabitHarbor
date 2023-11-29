@@ -5,7 +5,7 @@ const InputText: React.FC<{ id?: string, name?: string, value?: string, defaultV
             name={name}
             id={id}
             value={value}
-            defaultValue={value}
+            defaultValue={defaultValue}
             hidden={hidden}
             onClick={onClick}
             placeholder={placeholder}
