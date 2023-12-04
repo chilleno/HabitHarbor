@@ -247,7 +247,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
     return (
         <>
             <div className="flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5">
-                <h1 className="text-white xl:text-xl lg:text-md md:tex-md w-2/12">Tasks</h1>
+                <h1 className="text-white xl:text-xl lg:text-md md:tex-md xl:w-2/12 lg:w-1/12">Tasks</h1>
                 <div className="flex flex-col justify-center content-center w-6/12">
                     <div className="flex justify-center content-center items-center gap-2">
                         <InputText
@@ -264,7 +264,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                         <i>Please add a text longer than 3 characters.</i>
                     </b>
                 </div>
-                <div className="w-2/12 gap-3 flex justify-center">
+                <div className="xl:w-2/12 lg:w-3/12 gap-3 flex justify-center">
                     <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
                         <QueueListIcon className="h-[24px] w-[24px]" />
                     </button>
