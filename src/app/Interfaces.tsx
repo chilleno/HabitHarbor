@@ -39,12 +39,14 @@ interface RoutineProps {
     setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
     currentTaskIndex: number;
+    updateTaskList:() => void;
 }
 
 interface NewRoutineStepModalProps {
     closeModal: () => void;
     setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
+    updateTaskList:() => void;
 }
 
 interface NewHabitTrackerModalProps {
