@@ -8,7 +8,7 @@ import './Routine.scss';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex }) => {
+const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineStep, currentTaskIndex, updateTaskList }) => {
     const [routine, setRoutine] = useState<Step[]>([])
     const [currentStep, setCurrentStep] = useState<number | null>(null);
     const taskRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -268,6 +268,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                         closeModal={closeModal}
                         setUpdateRoutineStep={setUpdateRoutineStep}
                         updateRoutineStep={updateRoutineStep}
+                        updateTaskList={updateTaskList}
                     />
                 )
             }
