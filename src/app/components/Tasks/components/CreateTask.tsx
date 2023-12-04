@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { QueueListIcon, TrashIcon, InboxArrowDownIcon } from '@heroicons/react/24/solid';
+import { QueueListIcon, TrashIcon, InboxArrowDownIcon, ArchiveBoxXMarkIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import InputText from '@/app/designComponent/form/InputText';
 import PrioritizeModal from './PrioritizeModal';
 import useSound from 'use-sound';
@@ -208,6 +208,30 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
         }
     }
 
+    //function that delete all the task on the current task list
+    const deleteAllTasks = (): void => {
+        //confirm if the user wants to delete all the tasks
+        if (!window.confirm('Are you sure you want to delete all the tasks?')) return;
+
+        if (typeof window !== 'undefined') {
+            const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+            const currentTaskList = currentTaskLists[currentTaskListIndex];
+            const newTaskList: TaskList = {
+                name: currentTaskList.name,
+                highlightedTask: currentTaskList.highlightedTask,
+                tasks: []
+            }
+            currentTaskLists[currentTaskListIndex] = newTaskList;
+            localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
+
+            // fired custom event on localStorage data changed
+            const event = new CustomEvent('tasksdatachanged') as any;
+            document.dispatchEvent(event);
+
+            handleRefreshList();
+        }
+    }
+
     const handleRefreshList = () => {
         setUpdateTaskList(!updateTaskList);
     }
@@ -246,6 +270,9 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                     </button>
                     <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
                         <InboxArrowDownIcon className="h-[24px] w-[24px]" />
+                    </button>
+                    <button data-tooltip-id="deleteAllTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllTasks()}>
+                        <XMarkIcon className="h-[24px] w-[24px]" />
                     </button>
                 </div>
             </div>
@@ -303,6 +330,11 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                 id="deleteFinishedTasksTooltip"
                 place="bottom"
                 content="Delete finished tasks from current task list"
+            />
+            <ReactTooltip
+                id="deleteAllTasksTooltip"
+                place="bottom"
+                content="Delete all tasks from current task list"
             />
         </>
     );
