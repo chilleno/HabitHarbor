@@ -124,6 +124,10 @@ export default function App() {
     localStorage.setItem('tour', JSON.stringify(true));
   }
 
+  const handleUpdateTaskList = () => {
+    setUpdateTaskList(!updateTaskList);
+  }
+
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { status, type } = data;
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
@@ -215,7 +219,11 @@ export default function App() {
               <Clock />
             </div>
             <div className="flex justify-center content-center mt-4">
-              <Routine setUpdateRoutineStep={setUpdateRoutineStep} updateRoutineStep={updateRoutineStep} currentTaskIndex={currentTaskList} />
+              <Routine
+                setUpdateRoutineStep={setUpdateRoutineStep}
+                updateRoutineStep={updateRoutineStep}
+                updateTaskList={handleUpdateTaskList}
+              />
             </div>
           </EndScreen>
           <div className="relative">
