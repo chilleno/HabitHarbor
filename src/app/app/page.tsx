@@ -222,6 +222,7 @@ export default function App() {
               <Routine
                 setUpdateRoutineStep={setUpdateRoutineStep}
                 updateRoutineStep={updateRoutineStep}
+                currentTaskIndex={currentTaskList}
                 updateTaskList={handleUpdateTaskList}
               />
             </div>
