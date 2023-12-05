@@ -237,7 +237,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                         handleMoveTaskMode={handleMoveTasksMode}
                     />
                 </div>
-                <div className={highlightedTask === null ? "xl:pt-[19%] lg:pt-[27%] px-12" : "xl:pt-[24%] lg:pt-[32%] px-12"}>
+                <div className={(highlightedTask === null || highlightedTask < 0) ? "xl:pt-[19%] lg:pt-[27%] px-12" : "xl:pt-[24%] lg:pt-[32%] px-12"}>
                     {
                         moveTasksMode === false &&
                         <>
