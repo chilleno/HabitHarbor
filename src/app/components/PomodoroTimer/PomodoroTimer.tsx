@@ -330,7 +330,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                     <h1 className="text-white xl:text-xl lg:text-md md:tex-md -mr-4">Pomodoro clock</h1>
                 </div>
                 <div className="flex justify-end w-3/12 gap-5 z-50">
-                    <button className="h-[18px] w-[18px] xl:-mr-2 lg:-mr-2" data-tooltip-id="newStep" onClick={() => openModal()}>
+                    <button className="h-[18px] w-[18px] xl:-mr-2 lg:-mr-2" data-tooltip-id="configPomodoro" onClick={() => openModal()}>
                         <EllipsisVerticalIcon className="h-[30px] w-[30px]" />
                     </button>
                     <ReactTooltip
