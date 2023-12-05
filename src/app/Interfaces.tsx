@@ -79,6 +79,7 @@ interface TasksProps {
     updateTaskList: boolean;
     highlightedTask: number | null;
     setHighlightedTask: (newValue: number | null) => void;
+    handleMoveTaskMode: () => void;
 }
 
 interface NewTaskListModalProps {
