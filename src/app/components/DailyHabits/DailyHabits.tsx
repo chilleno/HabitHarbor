@@ -79,7 +79,7 @@ const DailyHabits = () => {
                         <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
                     </div>
                     <div className="flex justify-end w-3/12 gap-5 z-50">
-                        <button className="h-[18px] w-[18px]" data-tooltip-id="newStep" onClick={() => handleCreateModal()}>
+                        <button className="h-[18px] w-[18px]" data-tooltip-id="newHabit" onClick={() => handleCreateModal()}>
                             <PlusIcon className="h-[18px] w-[18px]" />
                         </button>
                         <ReactTooltip
