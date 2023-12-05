@@ -15,6 +15,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
     const [highlightedTask, setHighlightedTask] = useState<number | null>(null);
     const [editModeTaskList, setEditModeTaskList] = useState<boolean>(false);
     const [newCurrentTaskListName, setNewCurrentTaskListName] = useState<string>('');
+    const [moveTasksMode, setMoveTasksMode] = useState<boolean>(false);
 
     const openModal = () => {
         setShowModal(true);
@@ -49,7 +50,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                     return routine;
                 });
                 localStorage.setItem('routines', JSON.stringify(updatedLocalStorageRoutine));
-                
+
                 const eventRoutineChanged = new CustomEvent('routinedatachanged') as any;
                 document.dispatchEvent(eventRoutineChanged);
 
@@ -97,6 +98,10 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                 setEditModeTaskList(false);
             }
         }
+    }
+
+    const handleMoveTasksMode = () => {
+        setMoveTasksMode(!moveTasksMode);
     }
 
     useEffect(() => {
@@ -229,25 +234,40 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                         setUpdateTaskList={setUpdateTaskList}
                         highlightedTask={highlightedTask}
                         setHighlightedTask={setHighlightedTask}
+                        handleMoveTaskMode={handleMoveTasksMode}
                     />
                 </div>
                 <div className={highlightedTask === null ? "xl:pt-[19%] lg:pt-[27%] px-12" : "xl:pt-[24%] lg:pt-[32%] px-12"}>
-                    <TodoTasks
-                        currentTaskListIndex={currentTaskListIndex}
-                        taskList={taskList}
-                        updateTaskList={updateTaskList}
-                        setUpdateTaskList={setUpdateTaskList}
-                        highlightedTask={highlightedTask}
-                        setHighlightedTask={setHighlightedTask}
-                    />
-                    <DoneTasks
-                        currentTaskListIndex={currentTaskListIndex}
-                        taskList={taskList}
-                        updateTaskList={updateTaskList}
-                        setUpdateTaskList={setUpdateTaskList}
-                        highlightedTask={highlightedTask}
-                        setHighlightedTask={setHighlightedTask}
-                    />
+                    {
+                        moveTasksMode === false &&
+                        <>
+                            <TodoTasks
+                                currentTaskListIndex={currentTaskListIndex}
+                                taskList={taskList}
+                                updateTaskList={updateTaskList}
+                                setUpdateTaskList={setUpdateTaskList}
+                                highlightedTask={highlightedTask}
+                                setHighlightedTask={setHighlightedTask}
+                                handleMoveTaskMode={handleMoveTasksMode}
+                            />
+                            <DoneTasks
+                                currentTaskListIndex={currentTaskListIndex}
+                                taskList={taskList}
+                                updateTaskList={updateTaskList}
+                                setUpdateTaskList={setUpdateTaskList}
+                                highlightedTask={highlightedTask}
+                                setHighlightedTask={setHighlightedTask}
+                                handleMoveTaskMode={handleMoveTasksMode}
+                            />
+                        </>
+                    }
+
+                    {
+                        moveTasksMode === true &&
+                        <>
+                            edit mode on!
+                        </>
+                    }
                 </div>
                 {showModal && (
                     <NewTaskListModal
