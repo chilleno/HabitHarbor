@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/supabase-adapter": "^0.1.10",
     "@heroicons/react": "^2.0.18",
+    "@supabase/supabase-js": "^2.39.0",
     "@tailwindcss/forms": "^0.5.4",
     "@types/node": "20.3.1",
     "@types/react": "18.2.12",
@@ -20,6 +22,7 @@
     "eslint": "8.42.0",
     "eslint-config-next": "^13.4.7",
     "next": "^13.4.7",
+    "next-auth": "^4.24.5",
     "postcss": "8.4.24",
     "react": "^18.2.0",
     "react-archer": "^4.2.3",
