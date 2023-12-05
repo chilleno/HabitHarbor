@@ -315,15 +315,16 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                             <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
                                 <QueueListIcon className="h-[24px] w-[24px]" />
                             </button>
-                            <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
-                                <InboxArrowDownIcon className="h-[24px] w-[24px]" />
-                            </button>
                             <button data-tooltip-id="moveTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleMoveTaskMode()}>
                                 <ArrowsRightLeftIcon className="h-[24px] w-[24px]" />
+                            </button>
+                            <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
+                                <InboxArrowDownIcon className="h-[24px] w-[24px]" />
                             </button>
                             <button data-tooltip-id="deleteAllTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllTasks()}>
                                 <XMarkIcon className="h-[24px] w-[24px]" />
                             </button>
+
                         </div>
                     </>
                 }
