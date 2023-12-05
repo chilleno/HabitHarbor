@@ -8,11 +8,12 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 
-const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask, handleMoveTaskMode }) => {
+const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask, handleMoveTaskMode, moveTasksMode, lists }) => {
     const [newTask, setNewTask] = useState<string>('');
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [showError, setShowError] = useState<boolean>(false);
     const [showPrioritizeModal, setShowPrioritizeModal] = useState<boolean>(false);
+    const [targetTaskList, setTargetTaskList] = useState<number>(-1);
 
     //sfx
     const [checkSound, { stop: stopCheckSound }] = useSound('/static/sounds/check.wav');
@@ -244,40 +245,128 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
         setShowPrioritizeModal(true);
     }
 
+    const transferTasks = (): void => {
+        if (targetTaskList === -1) {
+            window.alert('Please select a target task list to transfer the tasks to.')
+            return;
+        }
+
+        //confirm if the user want to move selected tasks
+        if (!window.confirm('Are you sure you want to move the selected tasks?')) return;
+
+        //get selected task to move from localStorage named moveTasks
+        const selectedTasksToMove = JSON.parse(localStorage.getItem('moveTasks') || '[]');
+        const currentTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
+        const currentTaskList = currentTaskLists[currentTaskListIndex];
+        const targetTaskListObject = currentTaskLists[targetTaskList];
+
+
+        //move selected tasks to target task list and remove them from current task list
+        const newTaskList: TaskList = {
+            name: currentTaskList.name,
+            highlightedTask: currentTaskList.highlightedTask,
+            tasks: currentTaskList.tasks.filter((task: Task, index: number) => !selectedTasksToMove.includes(index))
+        }
+        currentTaskLists[currentTaskListIndex] = newTaskList;
+
+        const newTargetTaskList: TaskList = {
+            name: targetTaskListObject.name,
+            highlightedTask: targetTaskListObject.highlightedTask,
+            tasks: targetTaskListObject.tasks.concat(currentTaskList.tasks.filter((task: Task, index: number) => selectedTasksToMove.includes(index)))
+        }
+        currentTaskLists[targetTaskList] = newTargetTaskList;
+
+        localStorage.setItem('taskLists', JSON.stringify(currentTaskLists));
+
+        // fired custom event on localStorage data changed
+        const event = new CustomEvent('tasksdatachanged') as any;
+        document.dispatchEvent(event);
+
+        handleRefreshList();
+
+        handleMoveTaskMode();
+    }
+
     return (
         <>
             <div className="flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5">
-                <h1 className="text-white xl:text-xl lg:text-md md:tex-md w-2/12">Tasks</h1>
-                <div className="flex flex-col justify-center content-center xl:w-6/12 lg:w-5/12">
-                    <div className="flex justify-center content-center items-center gap-2">
-                        <InputText
-                            placeholder="Type and press enter to create a task..."
-                            value={newTask}
-                            id="newTaskInput"
-                            onChange={(value) => setNewTask(value)}
-                            onKeyDown={handlePressEnterButton}
-                            className="w-full h-[50px] py-3 xl:px-8 lg:px-5 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
-                            name="task-name-new"
-                        />
-                    </div>
-                    <b className={`xl:text-lg lg:text-md md:text-sm ml-5 text-[red] transition-opacity duration-250  ${showError ? 'opacity-100 animate-headShake mt-2 -mb-2' : 'opacity-0 h-0'}`}>
-                        <i>Please add a text longer than 3 characters.</i>
-                    </b>
-                </div>
-                <div className="xl:w-2/12 lg:w-3/12 gap-1 flex justify-center">
-                    <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
-                        <QueueListIcon className="h-[24px] w-[24px]" />
-                    </button>
-                    <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
-                        <InboxArrowDownIcon className="h-[24px] w-[24px]" />
-                    </button>
-                    <button data-tooltip-id="moveTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleMoveTaskMode()}>
-                        <ArrowsRightLeftIcon className="h-[24px] w-[24px]" />
-                    </button>
-                    <button data-tooltip-id="deleteAllTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllTasks()}>
-                        <XMarkIcon className="h-[24px] w-[24px]" />
-                    </button>
-                </div>
+
+                {
+                    moveTasksMode === false &&
+                    <>
+                        <h1 className="text-white xl:text-xl lg:text-md md:tex-md w-2/12">Tasks</h1>
+                        <div className="flex flex-col justify-center content-center xl:w-6/12 lg:w-5/12">
+                            <div className="flex justify-center content-center items-center gap-2">
+                                <InputText
+                                    placeholder="Type and press enter to create a task..."
+                                    value={newTask}
+                                    id="newTaskInput"
+                                    onChange={(value) => setNewTask(value)}
+                                    onKeyDown={handlePressEnterButton}
+                                    className="w-full h-[50px] py-3 xl:px-8 lg:px-5 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
+                                    name="task-name-new"
+                                />
+                            </div>
+                            <b className={`xl:text-lg lg:text-md md:text-sm ml-5 text-[red] transition-opacity duration-250  ${showError ? 'opacity-100 animate-headShake mt-2 -mb-2' : 'opacity-0 h-0'}`}>
+                                <i>Please add a text longer than 3 characters.</i>
+                            </b>
+                        </div>
+                        <div className="xl:w-2/12 lg:w-3/12 gap-1 flex justify-center">
+                            <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
+                                <QueueListIcon className="h-[24px] w-[24px]" />
+                            </button>
+                            <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
+                                <InboxArrowDownIcon className="h-[24px] w-[24px]" />
+                            </button>
+                            <button data-tooltip-id="moveTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleMoveTaskMode()}>
+                                <ArrowsRightLeftIcon className="h-[24px] w-[24px]" />
+                            </button>
+                            <button data-tooltip-id="deleteAllTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllTasks()}>
+                                <XMarkIcon className="h-[24px] w-[24px]" />
+                            </button>
+                        </div>
+                    </>
+                }
+                {
+                    moveTasksMode === true &&
+                    <>
+                        <h1 className="text-white xl:text-xl lg:text-md md:tex-md w-2/12">Move tasks to:  </h1>
+                        <div className="flex flex-col justify-center content-center xl:w-6/12 lg:w-5/12">
+                            <select
+                                defaultValue={currentTaskListIndex}
+                                onChange={(e) => setTargetTaskList(Number(e.target.value))}
+                                className="w-full h-[50px] py-3 px-8 bg-main-primary rounded-3xl content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
+                            >
+                                <option disabled value={-1}>
+                                    No task list selected
+                                </option>
+                                {
+                                    lists &&
+                                    lists.length > 0 &&
+                                    lists.map((list, index) => (
+                                        index !== currentTaskListIndex &&
+                                        <option
+                                            key={'task_list_' + index}
+                                            value={index}
+
+                                        >
+                                            {list.name}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                        <div className="xl:w-2/12 lg:w-3/12 gap-2 flex justify-center">
+                            <button data-tooltip-id="prioritizeTooltip" className="h-9 px-3 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => transferTasks()}>
+                                Accept
+                            </button>
+                            <button data-tooltip-id="prioritizeTooltip" className="h-9 px-3 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleMoveTaskMode()}>
+                                Cancel
+                            </button>
+                        </div>
+                    </>
+
+                }
             </div>
             {
                 (highlightedTask !== null && taskList[highlightedTask]) &&
