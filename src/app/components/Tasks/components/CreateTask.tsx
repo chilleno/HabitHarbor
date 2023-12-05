@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { QueueListIcon, TrashIcon, InboxArrowDownIcon, ArchiveBoxXMarkIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { QueueListIcon, TrashIcon, InboxArrowDownIcon, ArchiveBoxXMarkIcon, XMarkIcon, PencilIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid';
 import InputText from '@/app/designComponent/form/InputText';
 import PrioritizeModal from './PrioritizeModal';
 import useSound from 'use-sound';
@@ -8,7 +8,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 
-const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask }) => {
+const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask, handleMoveTaskMode }) => {
     const [newTask, setNewTask] = useState<string>('');
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [showError, setShowError] = useState<boolean>(false);
@@ -264,12 +264,15 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                         <i>Please add a text longer than 3 characters.</i>
                     </b>
                 </div>
-                <div className="xl:w-2/12 lg:w-3/12 gap-3 flex justify-center">
+                <div className="xl:w-2/12 lg:w-3/12 gap-1 flex justify-center">
                     <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
                         <QueueListIcon className="h-[24px] w-[24px]" />
                     </button>
                     <button data-tooltip-id="deleteFinishedTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllDoneTasks()}>
                         <InboxArrowDownIcon className="h-[24px] w-[24px]" />
+                    </button>
+                    <button data-tooltip-id="moveTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => handleMoveTaskMode()}>
+                        <ArrowsRightLeftIcon className="h-[24px] w-[24px]" />
                     </button>
                     <button data-tooltip-id="deleteAllTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllTasks()}>
                         <XMarkIcon className="h-[24px] w-[24px]" />
@@ -330,6 +333,11 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                 id="deleteFinishedTasksTooltip"
                 place="bottom"
                 content="Delete finished tasks from current task list"
+            />
+            <ReactTooltip
+                id="moveTasksTooltip"
+                place="bottom"
+                content="Move tasks from current task list to another task list"
             />
             <ReactTooltip
                 id="deleteAllTasksTooltip"
