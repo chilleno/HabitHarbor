@@ -170,7 +170,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
 
     return (
         <>
-            <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] lg:max-w-[18rem] md:min-w-[18rem] xl:min-h-[39rem] xl:max-h-[39rem] lg:min-h-[26rem] lg:max-h-[26rem] md:min-h-[26rem] md:max-h-[26rem] routine">
+            <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] lg:max-w-[18rem] md:min-w-[18rem] min-h-fit routine">
                 <div className="flex justify-center font-bold gap-3">
                     <div className="text-white xl:text-xl lg:text-md md:tex-md w-7/12 justify-end flex">
                         <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Routine</h1>
@@ -196,7 +196,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                 </div>
                 <div className="xl:max-h-fit pb-3 xl:h-fit max-h-[64vh] overflow-y-auto flex flex-col no-scrollbar min-w-[16rem]">
                     <ArcherContainer>
-                        <div className="flex flex-col items-center gap-5 xl:max-w-[20rem] xl:min-w-[20rem] lg:max-w-[15rem] lg:min-w-[15rem]">
+                        <div className="flex flex-col items-center gap-5 w-full">
                             {routine.map((step, index) => (
                                 <ArcherElement
                                     key={'step_arrow_' + index}
@@ -212,7 +212,7 @@ const Routine: React.FC<RoutineProps> = ({ setUpdateRoutineStep, updateRoutineSt
                                 >
                                     <div
                                         key={'step_box_' + index}
-                                        className={`flex w-full xl:min-w-[20rem] xl:max-w-[20rem] lg:min-w-[14rem] lg:max-w-[14rem] bg-[#323333] rounded-xl p-3 ${index === currentStep && 'border-2 border-white'}`}
+                                        className={`flex w-full xl:-mr-10 lg:-ml-8 xl:min-w-[20rem] xl:max-w-[20rem] lg:min-w-[14rem] lg:max-w-[14rem] bg-[#323333] rounded-xl p-3 ${index === currentStep && 'border-2 border-white'}`}
                                         ref={(ref) => {
                                             taskRefs.current[index] = ref;
                                         }}
