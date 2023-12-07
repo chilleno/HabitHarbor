@@ -176,9 +176,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         return (
             <>
                 <div className="flex flex-col">
-                    <div style={{ borderColor: tracker.color }} className={`absolute xl:w-[16rem] lg:w-[12rem] md:w-[12rem] z-0 xl:h-14 lg:h-12 md:h-12 bg-white border-2 rounded-xl p-2`}>
+                    <div style={{ borderColor: tracker.color }} className={`absolute xl:w-[20rem] lg:w-[15rem] md:w-[15rem] z-0 xl:h-14 lg:h-12 md:h-12 bg-white border-2 rounded-xl p-2`}>
                     </div>
-                    <div className="absolute z-10 xl:h-14 lg:h-12 md:h-12 xl:w-[16rem] lg:w-[12rem] md:w-[12rem]">
+                    <div className="absolute z-10 xl:h-14 lg:h-12 md:h-12 xl:w-[20rem] lg:w-[15rem] md:w-[15rem]">
                         <div
                             className={`z-10 xl:h-14 lg:h-12 md:h-12 rounded-xl animate-fill-both duration-500 ${getPercentage(currentAmount, tracker.maxValue) === 0 && 'opacity-0'}`}
                             style={{
@@ -188,7 +188,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                         >
                         </div>
                     </div>
-                    <div className="absolute z-20 xl:h-14 lg:h-12 md:h-12 p-2 xl:w-[16rem] lg:w-[12rem] md:w-[12rem]">
+                    <div className="absolute z-20 xl:h-14 lg:h-12 md:h-12 p-2 xl:w-[20rem] lg:w-[15rem] md:w-[15rem]">
                         <div className="flex flex-row gap-3">
                             <div className="w-2/12">
                                 <div
