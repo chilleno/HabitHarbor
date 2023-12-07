@@ -73,9 +73,9 @@ const DailyHabits = () => {
 
     return (
         <>
-            <ContentBox className="xl:min-w-[21rem] lg:min-w-[15rem] lg:max-w-[15rem] -mt-5 daily-habits  min-h-fit">
+            <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] md:min-w-[18rem] -mt-5 daily-habits  min-h-fit">
                 <div className="flex justify-center font-bold gap-3">
-                    <div className="text-white xl:text-xl lg:text-md md:tex-md w-9/12 justify-end flex">
+                    <div className="text-white xl:text-xl lg:text-md md:tex-md w-8/12 justify-end flex">
                         <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
                     </div>
                     <div className="flex justify-end w-3/12 gap-5 z-50">
@@ -89,7 +89,7 @@ const DailyHabits = () => {
                         />
                     </div>
                 </div>
-                <div className="flex flex-col  rounded-xl xl:w-[17rem] lg:w-[13rem] xl:-ml-0 lg:-ml-4 py-2 min-h-full">
+                <div className="flex flex-col rounded-xl xl:-ml-0 lg:-ml-4 py-2 min-h-full">
                     {
                         dailyHabits.map((habit, index) => (
                             habit.currentValue < habit.maxValue &&
