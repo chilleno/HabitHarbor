@@ -194,13 +194,18 @@ export default function App() {
         />
         <MainComponent>
           <StartScreen className="overflow-auto scrollbar-hidden">
-            <div className="flex justify-center content-center mt-7 mb-5">
+            <div className="flex justify-center content-center mt-4 mb-5">
               <PomodoroTimer
                 handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
               />
             </div>
-            <div className="flex justify-center content-center mt-10 mb-5">
-              <DailyHabits />
+            <div className="flex justify-center content-center mt-4">
+              <Routine
+                setUpdateRoutineStep={setUpdateRoutineStep}
+                updateRoutineStep={updateRoutineStep}
+                currentTaskIndex={currentTaskList}
+                updateTaskList={handleUpdateTaskList}
+              />
             </div>
           </StartScreen>
           <MiddleScreen className="">
@@ -218,13 +223,8 @@ export default function App() {
             <div className="flex justify-center content-center mt-4 mb-6">
               <Clock />
             </div>
-            <div className="flex justify-center content-center mt-4">
-              <Routine
-                setUpdateRoutineStep={setUpdateRoutineStep}
-                updateRoutineStep={updateRoutineStep}
-                currentTaskIndex={currentTaskList}
-                updateTaskList={handleUpdateTaskList}
-              />
+            <div className="flex justify-center content-center mt-10 mb-5">
+              <DailyHabits />
             </div>
           </EndScreen>
           <div className="relative">
