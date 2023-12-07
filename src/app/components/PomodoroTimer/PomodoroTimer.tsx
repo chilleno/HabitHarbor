@@ -324,9 +324,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }
 
     return (
-        <ContentBox className="xl:min-w-[18rem] lg:min-w-[13rem] pomodoro-timer">
+        <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] md:min-w-[18rem] pomodoro-timer">
             <div className="flex justify-center font-bold gap-3">
-                <div className="text-white xl:text-xl lg:text-md md:tex-md w-9/12 justify-end flex">
+                <div className="text-white xl:text-xl lg:text-md md:tex-md w-8/12 justify-end flex">
                     <h1 className="text-white xl:text-xl lg:text-md md:tex-md -mr-4">Pomodoro clock</h1>
                 </div>
                 <div className="flex justify-end w-3/12 gap-5 z-50">
