@@ -187,7 +187,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                             <div className="w-2/12">
                                 <div
                                     style={{ backgroundColor: tracker.color }}
-                                    className={`h-[2rem] w-[2rem] rounded-md shadow-habit py-1 text-xl justify-center content-center flex`}
+                                    className={`xl:h-[2.5rem] lg:h-[2rem] xl:w-[2.5rem] lg:w-[2rem] rounded-md shadow-habit xl:py-2 lg:py-1 text-xl justify-center content-center flex`}
                                 >
                                     <Emoji unified={tracker.icon} size={20} />
                                 </div>
@@ -222,8 +222,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                         </div>
                     </div>
                 </div>
+
                 {showModal && (
-                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50">
+                    <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-[999999]">
                         <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                             <h2 className="text-xl font-bold mb-4 text-center">Edit Tacker</h2>
                             <div className="flex flex-col gap-3 text-main-primary">
@@ -246,10 +247,15 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                                 </div>
                                 {
                                     showEmojiPicker === true &&
-                                    <div className="absolute">
+                                    <div className="absolute z-50">
                                         <EmojiPicker
                                             emojiStyle={EmojiStyle.APPLE}
                                             onEmojiClick={(e) => handleSetEmoji(e.unified)}
+                                            lazyLoadEmojis={false}
+                                            searchDisabled={true}
+                                            skinTonesDisabled={true}
+                                            autoFocusSearch={false}
+                                            width={280}
                                         />
                                     </div>
                                 }
