@@ -14,6 +14,7 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import Tasks from '../components/Tasks/Tasks';
 import Image from 'next/image';
 import SigninButton from '../components/SigninButton/SigninButton';
+import { useSession, getSession, signIn } from "next-auth/react"
 
 export default function App() {
   const [currentTaskList, setCurrentTaskList] = useState<number>(-1);
@@ -27,6 +28,7 @@ export default function App() {
   const { EndScreen } = useEndScreen();
   const [finishRender, setFinishRender] = useState<boolean>(false);
   const [showTour, setShowTour] = useState<boolean>(false);
+  const { data: session, status } = useSession()
 
   const handleButtonClick = () => {
     setShowList(!showList);
@@ -142,6 +144,16 @@ export default function App() {
   if (!finishRender) {
     return null
   } else {
+
+    if (status === "loading") {
+      return <p>Loading...</p>
+    }
+
+    if (status === "unauthenticated") {
+      signIn('google', { callbackUrl: '/app' });
+      return <p>Loading...</p>
+    }
+
     return (
       <div className="sm:hidden xl:inline lg:inline md:inline">
         <Joyride
