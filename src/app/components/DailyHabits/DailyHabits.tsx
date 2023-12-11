@@ -40,7 +40,6 @@ const DailyHabits = () => {
         const example1: HabitTracker = {
             icon: '1f4a7',
             name: 'drink water',
-            unit: 'cups',
             color: '#68A0CA',
             maxValue: 3,
             currentValue: 0,
@@ -49,7 +48,6 @@ const DailyHabits = () => {
         const example2: HabitTracker = {
             icon: '1f9d8',
             name: 'meditate',
-            unit: 'sessions',
             color: '#7975D1',
             maxValue: 1,
             currentValue: 0,
@@ -58,7 +56,6 @@ const DailyHabits = () => {
         const example3: HabitTracker = {
             icon: '1f4d6',
             name: 'Reading',
-            unit: 'sessions',
             color: '#CE769C',
             maxValue: 1,
             currentValue: 0,
