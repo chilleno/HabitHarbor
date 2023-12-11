@@ -18,7 +18,6 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
     const [newMaxValue, setNewMaxValue] = useState<number>(tracker.maxValue);
     const [newIcon, setNewIcon] = useState<string>(tracker.icon);
     const [newColor, setNewColor] = useState<string>(tracker.color);
-    const [newUnit, setNewUnit] = useState<string>(tracker.unit);
     const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
     let colors = ['#CE769C', '#7975D1', '#68A0CA', '#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']
 
@@ -110,7 +109,6 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         dailyHabits[habitIndex].maxValue = newMaxValue;
         dailyHabits[habitIndex].icon = newIcon;
         dailyHabits[habitIndex].color = newColor;
-        dailyHabits[habitIndex].unit = newUnit;
         dailyHabits[habitIndex].currentValue = 0;
         dailyHabits[habitIndex].firstTrackerDate = today.toString();
         localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
@@ -129,10 +127,6 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         }
         if (newMaxValue === 0) {
             alert("Please enter a max value for your tracker");
-            return false;
-        }
-        if (newUnit === "") {
-            alert("Please enter a unit for your tracker");
             return false;
         }
         if (newIcon === "") {
@@ -200,7 +194,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                             </div>
                             <div className="xl:w-8/12 lg:w-10/12">
                                 <h1 className="text-main-primary font-bold xl:text-sm lg:text-[0.6rem] md:text-[0.6rem]">{tracker.name.toUpperCase()}</h1>
-                                <h1 className="text-gray font-bold xl:text-[0.6rem] lg:text-[0.6rem]"> {currentAmount}/{tracker.maxValue} {tracker.unit.toUpperCase()}</h1>
+                                <h1 className="text-gray font-bold xl:text-[0.7rem] lg:text-[0.6rem]">PROGRESS: {currentAmount}/{tracker.maxValue}</h1>
                             </div>
                             <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer">
                                 <CogIcon className="xl:h-[1.5rem] xl:w-[1.5rem] lg:h-[1.2rem] lg:w-[1.2rem] text-gray" />
@@ -239,13 +233,6 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                                     placeholder='Enter tracker name'
                                     className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
                                     value={newName} onChange={(e) => setNewName(e.target.value)}
-                                />
-                                <h3 className="text-lg font-bold px-1 text-white">Unit Name: </h3>
-                                <input
-                                    type='text'
-                                    placeholder='Enter unit name'
-                                    className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
-                                    value={newUnit} onChange={(e) => setNewUnit(e.target.value)}
                                 />
                                 <h3 className="text-lg font-bold px-1 text-white">Icon: </h3>
                                 <div className="flex flex-row gap-10 content-center justify-start">
