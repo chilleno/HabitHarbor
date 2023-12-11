@@ -28,7 +28,6 @@ interface HelpButtonOption {
 interface HabitTracker {
     icon: string; //example: '💧'
     name: string; //example: 'drink water'
-    unit: string; //example: 'cups'
     color: string; //example: '#3B82F6'
     maxValue: number; //example: 8
     currentValue: number;
