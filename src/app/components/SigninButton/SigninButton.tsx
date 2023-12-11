@@ -7,8 +7,8 @@ const SigninButton = () => {
     if (session && session.user) {
         return (
             <div>
-                <span className="mr-6">  <b>{session.user.name}</b></span>
-                <button className="py-2 px-4 text-black bg-white border-2 border-black rounded-3xl"
+                <span className="mr-6 xl:text-xl lg:text-xs">  <b>{session.user.name}</b></span>
+                <button className="py-2 px-4 text-black bg-white border-2 border-black rounded-3xl xl:text-lg lg:text-xs"
                     onClick={() => { signOut({ callbackUrl: '/' }) }}
                 >
                     Sign out
