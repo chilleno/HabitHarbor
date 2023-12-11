@@ -12,6 +12,8 @@ import HelpButton from '../components/HelpButton/HelpButton';
 import HelpOptionList from '../components/HelpButton/HelpOptionList';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import Tasks from '../components/Tasks/Tasks';
+import Image from 'next/image';
+import SigninButton from '../components/SigninButton/SigninButton';
 
 export default function App() {
   const [currentTaskList, setCurrentTaskList] = useState<number>(-1);
@@ -195,6 +197,9 @@ export default function App() {
         <MainComponent>
           <StartScreen className="overflow-auto scrollbar-hidden">
             <div className="flex justify-center content-center mt-4 mb-5">
+              <Image width={250} height={100} src='/assets/hh_logo_white.png' alt="Logo" className="hover:cursor-pointer" onClick={() => window.scrollTo(0, 0)} />
+            </div>
+            <div className="flex justify-center content-center mt-4 mb-5">
               <PomodoroTimer
                 handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
               />
@@ -220,6 +225,9 @@ export default function App() {
             </div>
           </MiddleScreen>
           <EndScreen className="overflow-auto">
+            <div className="flex justify-center content-center mt-4">
+              <SigninButton />
+            </div>
             <div className="flex justify-center content-center mt-4 mb-6">
               <Clock />
             </div>
