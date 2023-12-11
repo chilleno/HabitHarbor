@@ -56,8 +56,8 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
     }
 
     return (
-        <div className="absolute top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
-            <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white max-h-[90vh] overflow-auto">
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-[999999]">
+            <div className="bg-main-primary p-4 rounded-3xl shadow w-auto sm:w-80 text-white border-[2px] border-white">
                 <h2 className="text-xl font-bold mb-4">New habit tracker</h2>
                 <div className="flex flex-col gap-2 text-main-primary">
                     <h3 className="text-lg font-bold px-1 text-white">Name: </h3>
@@ -83,6 +83,11 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
                             <EmojiPicker
                                 emojiStyle={EmojiStyle.APPLE}
                                 onEmojiClick={(e) => handleSetEmoji(e.unified)}
+                                lazyLoadEmojis={false}
+                                searchDisabled={true}
+                                skinTonesDisabled={true}
+                                autoFocusSearch={false}
+                                width={280}
                             />
                         </div>
                     }
