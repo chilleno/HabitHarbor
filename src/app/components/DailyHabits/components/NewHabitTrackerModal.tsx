@@ -5,7 +5,6 @@ import { TwitterPicker } from 'react-color';
 const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal, updateHabits }) => {
     const [icon, setIcon] = useState<string>('');
     const [name, setName] = useState<string>('');
-    const [unit, setUnit] = useState<string>('');
     const [color, setColor] = useState<string>('');
     const [maxValue, setMaxValue] = useState<number>(0);
     const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
@@ -16,7 +15,6 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
             const newHabitTracker: HabitTracker = {
                 icon: icon,
                 name: name,
-                unit: unit,
                 color: color,
                 maxValue: maxValue,
                 currentValue: 0,
@@ -35,10 +33,6 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
     const validateForm = (): boolean => {
         if (name === '') {
             window.alert('Please enter a name for the tracker');
-            return false;
-        }
-        if (unit === '') {
-            window.alert('Please enter a unit name for the tracker');
             return false;
         }
         if (icon === '') {
@@ -73,13 +67,6 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
                         className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
                         value={name} onChange={(e) => setName(e.target.value)}
                     />
-                    <h3 className="text-lg font-bold px-1 text-white">Unit Name: </h3>
-                    <input
-                        type='text'
-                        placeholder='Enter unit name'
-                        className="text-primary-main rounded-full py-2 placeholder:px-3 px-3"
-                        value={unit} onChange={(e) => setUnit(e.target.value)}
-                    />
                     <h3 className="text-lg font-bold px-1 text-white">Icon: </h3>
                     <div className="flex flex-row gap-10 content-center justify-start">
                         <button
@@ -88,7 +75,7 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
                         >
                             Edit Icon
                         </button>
-                        <Emoji unified={icon} size={25}/>
+                        <Emoji unified={icon} size={25} />
                     </div>
                     {
                         showEmojiPicker === true &&
