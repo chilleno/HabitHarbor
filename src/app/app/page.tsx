@@ -212,6 +212,7 @@ export default function App() {
                 updateTaskList={handleUpdateTaskList}
               />
             </div>
+
           </StartScreen>
           <MiddleScreen className="">
             <div className="flex justify-center content-center">
@@ -234,11 +235,9 @@ export default function App() {
             <div className="flex justify-center content-center mt-10 mb-5">
               <DailyHabits />
             </div>
-          </EndScreen>
-          <div className="relative">
             <HelpButton onClick={handleButtonClick} />
             {showList && <HelpOptionList onClose={() => setShowList(false)} showTour={handleTourStart} />}
-          </div>
+          </EndScreen>
         </MainComponent>
       </div>
     )
