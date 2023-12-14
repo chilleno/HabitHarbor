@@ -134,7 +134,7 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
 
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-main-primary bg-opacity-90 flex items-center justify-center z-50">
-            <div className="bg-main-primary p-4 rounded-3xl shadow w-auto text-white border-[2px] border-white max-h-[40rem] overflow-auto">
+            <div className="bg-main-primary p-4 rounded-3xl shadow w-auto text-white border-[2px] border-white max-h-[90vh] overflow-auto">
                 <div className="flex justify-center">
                     <h2 className="text-xl font-bold mb-4">Prioritize Tasks</h2>
                 </div>
