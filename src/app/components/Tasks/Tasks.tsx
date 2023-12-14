@@ -147,7 +147,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                                 <div className="xl:w-6/12 lg:w-5/12">
                                     <select
                                         disabled={moveTasksMode}
-                                        defaultValue={currentTaskListIndex}
+                                        value={currentTaskListIndex}
                                         onChange={(e) => changeTaskList(Number(e.target.value))}
                                         className="w-full h-[50px] py-3 px-8 bg-main-primary rounded-3xl content-center focus:ring-0 border-0 justify-center flex text-center italic text-white xl:text-lg lg:text-xs md:text-xs"
                                     >
