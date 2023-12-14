@@ -76,7 +76,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
 
                 setTimeout(() => {
                     newTaskSound();
-                }, (600))
+                }, (200))
             } else {
                 window.alert('You need to create a new list first.')
             }
