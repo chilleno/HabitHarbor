@@ -41,6 +41,23 @@ interface RoutineProps {
     updateTaskList:() => void;
 }
 
+interface TaskListsProps {
+    updateTaskList:() => void;
+    currentTaskList: number;
+    changeTaskList: (taskListIndex: number) => void;
+}
+
+interface NewWorkspaceModalProps {
+    closeModal: () => void;
+    updateTaskList:() => void;
+}
+
+interface EditWorkspaceModalProps {
+    workspaceIndex: number;
+    closeModal: () => void;
+    updateTaskList:() => void;
+}
+
 interface NewRoutineStepModalProps {
     closeModal: () => void;
     setUpdateRoutineStep: (newValue: boolean) => void;
@@ -165,4 +182,9 @@ interface PriorityCalculation {
     benefit: EvaluationType | null;
     impact: EvaluationType | null;
     effort: effortType | null;
+}
+
+interface Workspace {
+    name: string;
+    taskLists: TaskList[];
 }
