@@ -6,7 +6,6 @@ import { useMiddleScreen } from '../layoutComponents/middleScreen';
 import { useEndScreen } from '../layoutComponents/endScreen';
 import Clock from '../components/Clock/Clock';
 import PomodoroTimer from '../components/PomodoroTimer/PomodoroTimer';
-import Routine from '../components/Routine/Routine';
 import DailyHabits from '../components/DailyHabits/DailyHabits';
 import HelpButton from '../components/HelpButton/HelpButton';
 import HelpOptionList from '../components/HelpButton/HelpOptionList';
@@ -15,9 +14,10 @@ import Tasks from '../components/Tasks/Tasks';
 import Image from 'next/image';
 import SigninButton from '../components/SigninButton/SigninButton';
 import { useSession, getSession, signIn } from "next-auth/react"
+import TaskLists from '../components/TaskLists/TaskLists';
 
 export default function App() {
-  const [currentTaskList, setCurrentTaskList] = useState<number>(-1);
+  const [currentTaskList, setCurrentTaskList] = useState<number>(0);
   const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
   const [updateRoutineStep, setUpdateRoutineStep] = useState<boolean>(false);
   const [taskList, setTaskList] = useState<Task[]>([]);
@@ -155,103 +155,101 @@ export default function App() {
     }
 
     return (
-      <div className="sm:hidden xl:inline lg:inline md:inline">
-        <Joyride
-          callback={handleJoyrideCallback}
-          steps={[
-            {
-              content: (<h2>{"Let's begin our journey!"}</h2>),
-              locale: { skip: (<strong aria-label="skip">{"S-K-I-P"}</strong>) },
-              placement: 'center',
-              target: 'body',
-            },
-            {
-              target: '.pomodoro-timer',
-              content: 'This is just a pomodoro timer, you can use it to focus on your tasks! You can also use it to track your pomodoros for your routines.  ',
-            },
-            {
-              target: '.daily-habits',
-              content: 'This is your daily habits tracker, you can use it to track your daily habits, like drinking water, meditating, reading, etc.',
-            },
-            {
-              target: '.task-list-selector',
-              content: 'This is your task list selector, you can use it to select your task list or create new ones.',
-            },
-            {
-              target: '.task-list-todo',
-              content: 'Here are your tasks to do, in the menu you can use our tool to add a priority to tasks. You can also pick one task and put it in the top with the fire button that appears when you hover over a task. You can also delete a task by clicking on the trash button.',
-            },
-            {
-              target: '.task-list-done',
-              content: 'Here are your done tasks, you can click on the task to mark it as done or undone. You can also delete a task by clicking on the trash button.',
-            },
-            {
-              target: '.routine',
-              content: 'This is your routine, you can use it to track your pomodoros for your routines. You can assign a task list to a routine step, so when you finish a step, the task list will be selected automatically.',
-            },
-            {
-              content: (<h2>{"That's it at the moment. I hope this tool help you as much as it helps me on my daily tasks. Have a productive day!"}</h2>),
-              placement: 'center',
-              target: 'body',
-            },
-          ]}
-          run={showTour}
-          showProgress
-          showSkipButton
-          continuous
-          hideCloseButton
-          styles={{
-            options: {
-              zIndex: 10000,
-            },
-          }}
-        />
-        <MainComponent>
-          <StartScreen className="overflow-auto scrollbar-hidden">
-            <div className="flex justify-center content-center mt-4 mb-5">
-              <Image width={250} height={100} src='/assets/hh_logo_white.png' alt="Logo" className="hover:cursor-pointer" onClick={() => window.scrollTo(0, 0)} />
-            </div>
-            <div className="flex justify-center content-center mt-4 mb-5">
-              <PomodoroTimer
-                handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
-              />
-            </div>
-            <div className="flex justify-center content-center mt-4">
-              <Routine
-                setUpdateRoutineStep={setUpdateRoutineStep}
-                updateRoutineStep={updateRoutineStep}
-                currentTaskIndex={currentTaskList}
-                updateTaskList={handleUpdateTaskList}
-              />
-            </div>
+      <>
+        <div className="sm:hidden xl:inline lg:inline md:inline">
+          <Joyride
+            callback={handleJoyrideCallback}
+            steps={[
+              {
+                content: (<h2>{"Let's begin our journey!"}</h2>),
+                locale: { skip: (<strong aria-label="skip">{"S-K-I-P"}</strong>) },
+                placement: 'center',
+                target: 'body',
+              },
+              {
+                target: '.pomodoro-timer',
+                content: 'This is just a pomodoro timer, you can use it to focus on your tasks! You can also use it to track your pomodoros for your routines.  ',
+              },
+              {
+                target: '.daily-habits',
+                content: 'This is your daily habits tracker, you can use it to track your daily habits, like drinking water, meditating, reading, etc.',
+              },
+              {
+                target: '.task-list-selector',
+                content: 'This is your task list selector, you can use it to select your task list or create new ones.',
+              },
+              {
+                target: '.task-list-todo',
+                content: 'Here are your tasks to do, in the menu you can use our tool to add a priority to tasks. You can also pick one task and put it in the top with the fire button that appears when you hover over a task. You can also delete a task by clicking on the trash button.',
+              },
+              {
+                target: '.task-list-done',
+                content: 'Here are your done tasks, you can click on the task to mark it as done or undone. You can also delete a task by clicking on the trash button.',
+              },
+              {
+                target: '.routine',
+                content: 'This is your routine, you can use it to track your pomodoros for your routines. You can assign a task list to a routine step, so when you finish a step, the task list will be selected automatically.',
+              },
+              {
+                content: (<h2>{"That's it at the moment. I hope this tool help you as much as it helps me on my daily tasks. Have a productive day!"}</h2>),
+                placement: 'center',
+                target: 'body',
+              },
+            ]}
+            run={showTour}
+            showProgress
+            showSkipButton
+            continuous
+            hideCloseButton
+            styles={{
+              options: {
+                zIndex: 10000,
+              },
+            }}
+          />
+          <MainComponent>
+            <StartScreen className="overflow-auto scrollbar-hidden">
+              <div className="flex justify-start xl:px-4 lg:px-3 content-center mt-4 mb-5">
+                <Image width={50} height={50} src='/assets/hh_ico_white.png' alt="Logo" className="hover:cursor-pointer" onClick={() => window.scrollTo(0, 0)} />
+              </div>
+              <div className="flex justify-center content-center mt-4">
+                <TaskLists
+                  updateTaskList={handleUpdateTaskList}
+                  currentTaskList={currentTaskList}
+                  changeTaskList={setCurrentTaskList}
+                />
+              </div>
+              <div className="absolute bottom-0 justify-center content-center p-5 border-t-2 border-gray w-full">
+                <SigninButton />
+              </div>
+            </StartScreen>
+            <MiddleScreen className="">
+              <div className="flex justify-center content-center">
+                <Tasks
+                  taskList={taskList}
+                  currentTaskListIndex={currentTaskList}
+                  changeTaskList={setCurrentTaskList}
+                  updateTaskList={updateTaskList}
+                  setUpdateTaskList={setUpdateTaskList}
+                />
+              </div>
+            </MiddleScreen>
+            <EndScreen className="overflow-auto scrollbar-hidden">
+              <div className="flex justify-center content-center mt-4 mb-5">
+                <PomodoroTimer
+                  handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
+                />
+              </div>
+              <div className="flex justify-center content-center mt-10 pb-10">
+                <DailyHabits />
+              </div>
+              <HelpButton onClick={handleButtonClick} />
+              {showList && <HelpOptionList onClose={() => setShowList(false)} showTour={handleTourStart} />}
+            </EndScreen>
+          </MainComponent>
+        </div>
 
-          </StartScreen>
-          <MiddleScreen className="">
-            <div className="flex justify-center content-center">
-              <Tasks
-                taskList={taskList}
-                currentTaskListIndex={currentTaskList}
-                changeTaskList={setCurrentTaskList}
-                updateTaskList={updateTaskList}
-                setUpdateTaskList={setUpdateTaskList}
-              />
-            </div>
-          </MiddleScreen>
-          <EndScreen className="overflow-auto">
-            <div className="flex justify-center content-center mt-4">
-              <SigninButton />
-            </div>
-            <div className="flex justify-center content-center mt-4 mb-6">
-              <Clock />
-            </div>
-            <div className="flex justify-center content-center mt-10 mb-5">
-              <DailyHabits />
-            </div>
-            <HelpButton onClick={handleButtonClick} />
-            {showList && <HelpOptionList onClose={() => setShowList(false)} showTour={handleTourStart} />}
-          </EndScreen>
-        </MainComponent>
-      </div>
+      </>
     )
   }
 }
