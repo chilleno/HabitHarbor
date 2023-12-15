@@ -70,9 +70,9 @@ const DailyHabits = () => {
 
     return (
         <>
-            <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] md:min-w-[18rem] -mt-5 daily-habits  min-h-fit">
-                <div className="flex justify-center font-bold gap-3">
-                    <div className="text-white xl:text-xl lg:text-md md:tex-md w-8/12 justify-end flex">
+            <div className="daily-habits w-full xl:px-10 lg:px-6 md:px-4">
+                <div className="flex font-bold gap-3">
+                    <div className="text-white xl:text-xl lg:text-md md:tex-md w-8/12 justify-start flex">
                         <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
                     </div>
                     <div className="flex justify-end w-3/12 gap-5 z-50">
@@ -86,11 +86,11 @@ const DailyHabits = () => {
                         />
                     </div>
                 </div>
-                <div className="flex flex-col rounded-xl xl:-ml-0 lg:-ml-4 py-2 min-h-full">
+                <div className="flex flex-col py-5 md:py-1 min-h-full w-full">
                     {
                         dailyHabits.map((habit, index) => (
                             habit.currentValue < habit.maxValue &&
-                            <div key={'habit_' + index} className={`w-full xl:h-[6.5vh] lg:h-[9vh] md:h-[9vh] flex-col gap-2 xl:ml-3 lg:ml-1`}>
+                            <div key={'habit_' + index} className={`w-full xl:h-[6.5vh] lg:h-[9vh] md:h-[9vh] flex-col gap-2 xl:mt-0 lg:mt-0 md:mt-3`}>
                                 <Tracker tracker={habit} habitIndex={index} handleUpdateRender={handleUpdateRender} />
                             </div>
                         ))
@@ -98,7 +98,7 @@ const DailyHabits = () => {
                     {
                         dailyHabits.map((habit, index) => (
                             habit.currentValue === habit.maxValue &&
-                            <div key={'habit_' + index} className={`w-full xl:h-[6.5vh] lg:h-[9vh] md:h-[9vh] flex-col gap-2 xl:ml-3 lg:ml-1`}>
+                            <div key={'habit_' + index} className={`w-full xl:h-[6.5vh] lg:h-[9vh] md:h-[9vh] flex-col gap-2 xl:mt-0 lg:mt-0 md:mt-3`}>
                                 <Tracker tracker={habit} habitIndex={index} handleUpdateRender={handleUpdateRender} />
                             </div>
                         ))
@@ -112,7 +112,7 @@ const DailyHabits = () => {
                         </div>
                     }
                 </div>
-            </ContentBox>
+            </div>
 
             {
                 showCreateModal &&
