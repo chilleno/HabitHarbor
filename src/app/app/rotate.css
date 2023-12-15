@@ -4,14 +4,12 @@
     border: 3px solid white;
     border-radius: 10px;
     animation: rotate 1.5s ease-in-out infinite alternate;
-    /* display: none; */
 }
 
 .message {
     color: white;
     font-size: 1em;
     margin-top: 40px;
-    /* display: none; */
 }
 
 @keyframes rotate {
@@ -29,6 +27,7 @@
 }
 
 @media only screen and (max-device-width: 812px) and (orientation: landscape) {
+
     .phone,
     .message {
         display: block;
