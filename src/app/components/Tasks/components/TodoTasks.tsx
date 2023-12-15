@@ -171,13 +171,13 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                             {task.priority}
                         </div>
                         <input
-                            className="w-10/12 xl:text-lg lg:text-xs md:text-xs bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white text-white"
+                            className="w-9/12 xl:text-lg lg:text-xs md:text-xs bg-[transparent] border-0 focus:ring-0 focus:border-b-2 focus:border-white text-white"
                             style={{ textDecoration: task.checked ? 'line-through' : 'none' }}
                             defaultValue={task.header}
                             onBlur={(e) => handleChangeTaskText(e.target.value, index, e)}
                             id={'task_' + currentTaskListIndex + '_content_' + index}
                         />
-                        <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-2">
+                        <div className="w-2/12 flex justify-end mr-3 gap-2">
                             <b
                                 onClick={() => handleHighlightTask(index)}
                                 className="text-xs text-white hover:cursor-pointer"
