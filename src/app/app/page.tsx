@@ -219,7 +219,7 @@ export default function App() {
                   changeTaskList={setCurrentTaskList}
                 />
               </div>
-              <div className="absolute bottom-0 justify-center content-center p-5 border-t-2 border-gray w-full">
+              <div className="absolute bottom-0 justify-center content-center p-5 border-t-2 border-gray w-full bg-[#323333]">
                 <SigninButton />
               </div>
             </StartScreen>
