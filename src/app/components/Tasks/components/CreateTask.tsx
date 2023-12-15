@@ -1,11 +1,12 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { QueueListIcon, TrashIcon, InboxArrowDownIcon, ArchiveBoxXMarkIcon, XMarkIcon, PencilIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid';
+import { QueueListIcon, TrashIcon, InboxArrowDownIcon, ArchiveBoxXMarkIcon, XMarkIcon, PencilIcon, ArrowsRightLeftIcon, CogIcon } from '@heroicons/react/24/solid';
 import InputText from '@/app/designComponent/form/InputText';
 import PrioritizeModal from './PrioritizeModal';
 import useSound from 'use-sound';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import OptionList from './OptionList';
 
 
 const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask, handleMoveTaskMode, moveTasksMode, lists }) => {
@@ -14,6 +15,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
     const [showError, setShowError] = useState<boolean>(false);
     const [showPrioritizeModal, setShowPrioritizeModal] = useState<boolean>(false);
     const [targetTaskList, setTargetTaskList] = useState<number>(-1);
+    const [showOptions, setShowOptions] = useState<boolean>(false);
 
     //sfx
     const [checkSound, { stop: stopCheckSound }] = useSound('/static/sounds/check.wav');
@@ -289,29 +291,42 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
 
     return (
         <>
-            <div className="flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5">
-
+            <div className="flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5 px-2">
                 {
                     moveTasksMode === false &&
                     <>
-                        <h1 className="text-white xl:text-xl lg:text-md md:tex-md w-2/12">Tasks</h1>
-                        <div className="flex flex-col justify-center content-center xl:w-6/12 lg:w-5/12">
-                            <div className="flex justify-center content-center items-center gap-2">
+                        <div className="flex flex-row items-center justify-center content-center xl:w-8/12 lg:w-7/12 md:w-full xl:ml-3 lg:ml-11 md:gap-3">
+                            <h1 className="text-white xl:text-xl lg:text-md md:tex-md w-1/6">Tasks</h1>
+                            <div className="flex flex-col justify-center content-center items-center gap-2 w-5/6 mt-2">
                                 <InputText
                                     placeholder="Type and press enter to create a task..."
                                     value={newTask}
                                     id="newTaskInput"
                                     onChange={(value) => setNewTask(value)}
                                     onKeyDown={handlePressEnterButton}
-                                    className="w-full h-[50px] py-3 xl:px-8 lg:px-5 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
+                                    className="w-full h-[50px] py-3 xl:px-8 lg:px-5 md:px-2 focus:ring-0 focus:border-main-primary xl:text-lg lg:text-xs md:text-xs"
                                     name="task-name-new"
                                 />
+                                <b className={`xl:text-lg lg:text-md md:text-sm ml-5 text-[red] transition-opacity duration-250  ${showError ? 'opacity-100 animate-headShake mt-2 -mb-2' : 'opacity-0 h-0'}`}>
+                                    <i>Please add a text longer than 3 characters.</i>
+                                </b>
                             </div>
-                            <b className={`xl:text-lg lg:text-md md:text-sm ml-5 text-[red] transition-opacity duration-250  ${showError ? 'opacity-100 animate-headShake mt-2 -mb-2' : 'opacity-0 h-0'}`}>
-                                <i>Please add a text longer than 3 characters.</i>
-                            </b>
                         </div>
-                        <div className="xl:w-2/12 lg:w-3/12 gap-1 flex justify-center">
+                        <div className="w-1/12 flex justify-center xl:mr-3 lg:mr-3 xl:hidden lg:hidden md:flex mr-6">
+                            <button className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => setShowOptions(!showOptions)}>
+                                <CogIcon className="h-[24px] w-[24px]" />
+                            </button>
+                            {
+                                showOptions &&
+                                <OptionList
+                                    openPrioritizeModal={() => {openPrioritizeModal(), setShowOptions(!showOptions)} }
+                                    handleMoveTaskMode={() => {handleMoveTaskMode(), setShowOptions(!showOptions)}}
+                                    deleteAllDoneTasks={() => {deleteAllDoneTasks(), setShowOptions(!showOptions)}}
+                                    deleteAllTasks={() => {deleteAllTasks(), setShowOptions(!showOptions)}}
+                                />
+                            }
+                        </div>
+                        <div className="xl:w-3/12 lg:w-4/12 gap-1 flex justify-center xl:flex lg:flex md:hidden xl:-mr-7 lg:mr-3">
                             <button data-tooltip-id="prioritizeTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => openPrioritizeModal()}>
                                 <QueueListIcon className="h-[24px] w-[24px]" />
                             </button>
@@ -324,8 +339,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                             <button data-tooltip-id="deleteAllTasksTooltip" className="h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full border bg-transparent hover:bg-indigo-600 border-indigo-600 text-indigo-600 hover:bg-white hover:text-black" onClick={() => deleteAllTasks()}>
                                 <XMarkIcon className="h-[24px] w-[24px]" />
                             </button>
-
                         </div>
+
                     </>
                 }
                 {
