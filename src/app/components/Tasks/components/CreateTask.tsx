@@ -371,9 +371,9 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
             </div>
             {
                 (highlightedTask !== null && taskList[highlightedTask]) &&
-                <div className="flex gap-5 before:content-['🔥'] before:animate-heartBeat before:animate-infinite pl-6 animate-backInUp pt-2">
+                <div className="flex gap-5 before:content-['🔥'] before:animate-heartBeat before:animate-infinite xl:pl-6 lg:pl-6 md:pl-3 animate-backInUp pt-2">
                     <div
-                        className={`gap-3 group/item flex items-center bg-main-primary xl:w-[92%] lg:w-[89%] xl:-ml-4 lg:-ml-4  xl:mb-2 lg:mb-1 md:mb-1 min-h-[2rem] h-[2rem] max-h-[2rem] text-start py-3 px-3 rounded-3xl`}
+                        className={`gap-3 group/item flex items-center bg-main-primary xl:w-[92%] lg:w-[89%] md:w-[80%] xl:-ml-4 lg:-ml-4  xl:mb-2 lg:mb-1 md:mb-1 min-h-[2rem] h-[2rem] max-h-[2rem] text-start py-3 px-3 rounded-3xl`}
                     >
                         <input
                             checked={taskList[highlightedTask].checked || false}
@@ -390,7 +390,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                             defaultValue={taskList[highlightedTask].header}
                             onBlur={(e) => handleChangeTaskText(e.target.value, highlightedTask, e)}
                         />
-                        <div className="invisible group-hover/item:visible w-1/12 flex justify-end mr-3 gap-3">
+                        <div className="w-2/12 flex justify-end mr-3 gap-3">
                             <b
                                 onClick={() => handleHighlightTask(null)}
                                 className="text-xs text-white hover:cursor-pointer"
