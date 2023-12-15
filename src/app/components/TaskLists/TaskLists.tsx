@@ -128,7 +128,7 @@ const TaskLists: React.FC<TaskListsProps> = ({ updateTaskList, currentTaskList, 
                     />
                 </div>
             </div>
-            <div className="flex flex-col py-5 list-disc w-full gap-1 max-h-[90%] overflow-y-auto">
+            <div className="flex flex-col py-5 list-disc w-full gap-1 xl:max-h-[80vh] lg:max-h-[69vh] md:max-h-[51.5vh] overflow-auto">
                 {
                     lists &&
                     lists.length > 0 &&
