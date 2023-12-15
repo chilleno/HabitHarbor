@@ -140,8 +140,6 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         return true;
     }
 
-
-
     //function deleteHabitTracker that delete the tracker on the local storage
     const deleteHabitTracker = () => {
         //add window confirm to delete the tracker
@@ -170,9 +168,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         return (
             <>
                 <div className="flex flex-col">
-                    <div style={{ borderColor: tracker.color }} className={`absolute xl:w-[20rem] lg:w-[15rem] md:w-[15rem] z-0 xl:h-14 lg:h-12 md:h-12 bg-white border-2 rounded-xl p-2`}>
+                    <div style={{ borderColor: tracker.color }} className={`absolute xl:w-[80%] lg:w-[83%] md:w-[85%] z-0 xl:h-14 lg:h-12 md:h-12 bg-white border-2 rounded-xl p-2`}>
                     </div>
-                    <div className="absolute z-10 xl:h-14 lg:h-12 md:h-12 xl:w-[20rem] lg:w-[15rem] md:w-[15rem]">
+                    <div className="absolute z-10 xl:h-14 lg:h-12 md:h-12 xl:w-[80%] lg:w-[83%] md:w-[85%]">
                         <div
                             className={`z-10 xl:h-14 lg:h-12 md:h-12 rounded-xl animate-fill-both duration-500 ${getPercentage(currentAmount, tracker.maxValue) === 0 && 'opacity-0'}`}
                             style={{
@@ -182,24 +180,24 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
                         >
                         </div>
                     </div>
-                    <div className="absolute z-20 xl:h-14 lg:h-12 md:h-12 p-2 xl:w-[20rem] lg:w-[15rem] md:w-[15rem]">
+                    <div className="absolute z-20 xl:h-14 lg:h-12 md:h-12 p-2 xl:w-[80%] lg:w-[83%] md:w-[85%]">
                         <div className="flex flex-row gap-3">
                             <div className="w-2/12">
                                 <div
                                     style={{ backgroundColor: tracker.color }}
-                                    className={`xl:h-[2.5rem] lg:h-[2rem] xl:w-[2.5rem] lg:w-[2rem] rounded-md shadow-habit xl:py-2 lg:py-1 text-xl justify-center content-center flex`}
+                                    className={`xl:h-[2.5rem] lg:h-[2rem] md:h-[2rem] xl:w-[2.5rem] lg:w-[2rem] md:w-[2rem] rounded-md shadow-habit xl:py-2 lg:py-1 md:py-2 text-xl justify-center content-center flex`}
                                 >
                                     <Emoji unified={tracker.icon} size={20} />
                                 </div>
                             </div>
                             <div className="xl:w-8/12 lg:w-10/12">
                                 <h1 className="text-main-primary font-bold xl:text-sm lg:text-[0.6rem] md:text-[0.6rem]">{tracker.name.toUpperCase()}</h1>
-                                <h1 className="text-gray font-bold xl:text-[0.7rem] lg:text-[0.6rem]">PROGRESS: {currentAmount}/{tracker.maxValue}</h1>
+                                <h1 className="text-gray font-bold xl:text-[0.7rem] lg:text-[0.6rem] md:text-[0.6rem]">PROGRESS: {currentAmount}/{tracker.maxValue}</h1>
                             </div>
-                            <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer">
-                                <CogIcon className="xl:h-[1.5rem] xl:w-[1.5rem] lg:h-[1.2rem] lg:w-[1.2rem] text-gray" />
+                            <span onClick={openModal} className="flex items-center justify-center hover:cursor-pointer xl:py-2 lg:py-1 md:py-1 w-1/12">
+                                <CogIcon className="xl:h-[1.5rem] xl:w-[1.5rem] lg:h-[1.2rem] lg:w-[1.2rem] md:h-[1.5rem] md:w-[1.5rem] text-gray" />
                             </span>
-                            <div className={`xl:w-2/12 lg:w-1/12 flex justify-center content-center xl:py-2 lg:py-1 md:py-1`}>
+                            <div className={`xl:w-2/12 lg:w-1/12 md:w-1/12 flex justify-center content-center xl:py-2 lg:py-1 md:py-1`}>
                                 <PlusIcon
                                     className={`animate-delay-100 animate-fadeIn ${currentAmount === tracker.maxValue && 'hidden'
                                         } ${isCooldown && 'opacity-0 animate-fadeOut'} h-[1.5rem] w-[1.5rem] text-gray hover:cursor-pointer`}
