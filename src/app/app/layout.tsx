@@ -2,6 +2,7 @@ import '../globals.css'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react';
 import EventProvider from '../components/Providers/EventProvider';
+import './rotate.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,8 +20,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <EventProvider>
-          <div className="sm:inline xl:hidden lg:hidden md:hidden">
-            <h1 className="text-center">{"This webapp doesn't works on mobile screens, please try on a bigger screen"}</h1>
+          <div className="sm:flex xl:hidden lg:hidden md:hidden w-full justify-center content-center">
+            <div className="flex flex-col">
+              <div className="flex pl-12">
+                <div className="phone">
+                </div>
+              </div>
+              <div className="message">
+                Please rotate your device!
+              </div>
+            </div>
           </div>
           {children}
         </EventProvider>

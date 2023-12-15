@@ -1,0 +1,50 @@
+html,
+body {
+    background: black;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.phone {
+    height: 50px;
+    width: 100px;
+    border: 3px solid white;
+    border-radius: 10px;
+    animation: rotate 1.5s ease-in-out infinite alternate;
+    /* display: none; */
+}
+
+.message {
+    color: white;
+    font-size: 1em;
+    margin-top: 40px;
+    /* display: none; */
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    50% {
+        transform: rotate(-90deg)
+    }
+
+    100% {
+        transform: rotate(-90deg)
+    }
+}
+
+@media only screen and (max-device-width: 812px) and (orientation: landscape) {
+    .phone,
+    .message {
+        display: block;
+    }
+}
