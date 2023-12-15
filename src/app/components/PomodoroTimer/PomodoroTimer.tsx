@@ -324,13 +324,13 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
     }
 
     return (
-        <ContentBox className="xl:min-w-[25rem] lg:min-w-[18rem] md:min-w-[18rem] pomodoro-timer">
+        <div className="pomodoro-timer w-full xl:px-10 lg:px-6 md:px-4">
             <div className="flex justify-center font-bold gap-3">
-                <div className="text-white xl:text-xl lg:text-md md:tex-md w-8/12 justify-end flex">
+                <div className="text-white xl:text-xl lg:text-md md:tex-md w-8/12 justify-start flex">
                     <h1 className="text-white xl:text-xl lg:text-md md:tex-md -mr-4">Pomodoro clock</h1>
                 </div>
                 <div className="flex justify-end w-3/12 gap-5 z-50">
-                    <button className="h-[18px] w-[18px] xl:-mr-2 lg:-mr-2" data-tooltip-id="configPomodoro" onClick={() => openModal()}>
+                    <button className="h-[18px] w-[18px] -mr-2" data-tooltip-id="configPomodoro" onClick={() => openModal()}>
                         <EllipsisVerticalIcon className="h-[30px] w-[30px]" />
                     </button>
                     <ReactTooltip
@@ -370,7 +370,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                         </span>
                     </FloatingButton>
                 </div>
-                <div className="lg:text-xs md:text-xs lg:mt-6 xl:text-lg xl:mb-5 text-white">
+                <div className="lg:text-xs md:text-xs mt-2 xl:text-lg xl:mb-5 text-white">
                     <div className="w-full flex justify-center items-center">
                         Pomodoros: {pomodoroTotalCount}
                     </div>
@@ -453,7 +453,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepC
                     </div>
                 </div>
             )}
-        </ContentBox>
+        </div>
     );
 };
 
