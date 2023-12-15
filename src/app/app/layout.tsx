@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <EventProvider>
-          <div className="sm:flex xl:hidden lg:hidden md:hidden w-full justify-center content-center">
+          <div className="sm:flex xl:hidden lg:hidden md:hidden w-full justify-center content-center min-h-[100vh] items-center">
             <div className="flex flex-col">
               <div className="flex pl-12">
                 <div className="phone">
