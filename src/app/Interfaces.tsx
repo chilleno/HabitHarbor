@@ -38,31 +38,31 @@ interface RoutineProps {
     setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
     currentTaskIndex: number;
-    updateTaskList:() => void;
+    updateTaskList: () => void;
 }
 
 interface TaskListsProps {
-    updateTaskList:() => void;
+    updateTaskList: () => void;
     currentTaskList: number;
     changeTaskList: (taskListIndex: number) => void;
 }
 
 interface NewWorkspaceModalProps {
     closeModal: () => void;
-    updateTaskList:() => void;
+    updateTaskList: () => void;
 }
 
 interface EditWorkspaceModalProps {
     workspaceIndex: number;
     closeModal: () => void;
-    updateTaskList:() => void;
+    updateTaskList: () => void;
 }
 
 interface NewRoutineStepModalProps {
     closeModal: () => void;
     setUpdateRoutineStep: (newValue: boolean) => void;
     updateRoutineStep: boolean;
-    updateTaskList:() => void;
+    updateTaskList: () => void;
 }
 
 interface NewHabitTrackerModalProps {
@@ -124,6 +124,13 @@ interface TaskListOptionListProps {
     currentSelection: number;
     handleChangeTaskList: (taskListIndex: number) => void;
     renderTaskLists: () => void;
+}
+
+interface TasksCreationOptionList {
+    openPrioritizeModal: () => void;
+    handleMoveTaskMode: () => void;
+    deleteAllDoneTasks: () => void;
+    deleteAllTasks: () => void;
 }
 
 interface TodoTasksOptionListProps {
