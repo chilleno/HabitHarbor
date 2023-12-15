@@ -234,7 +234,7 @@ export default function App() {
                 />
               </div>
             </MiddleScreen>
-            <EndScreen className="overflow-auto scrollbar-hidden">
+            <EndScreen className="overflow-y-auto scrollbar-hidden pb-[30px]">
               <div className="flex justify-center content-center mt-4 mb-5">
                 <PomodoroTimer
                   handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
