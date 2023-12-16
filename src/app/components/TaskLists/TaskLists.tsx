@@ -96,7 +96,7 @@ const TaskLists: React.FC<TaskListsProps> = ({ updateTaskList, currentTaskList, 
     }, []);
 
     return (
-        <div className="w-full px-2">
+        <div className="w-full px-2 task-list-selector">
             <div className="flex justify-center font-bold gap-3">
                 <div className="text-white xl:text-xl lg:text-md md:tex-md w-7/12 justify-start flex">
                     <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Task Lists</h1>
