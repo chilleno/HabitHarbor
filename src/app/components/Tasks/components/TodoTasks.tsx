@@ -152,7 +152,7 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
     }
 
     return (
-        <div className="flex flex-col h-fit">
+        <div className="flex flex-col h-fit tasks-list">
             {
                 taskList && taskList.length > 0 ? taskList.map((task, index) => (
                     (task.checked == false && index !== highlightedTask) &&
