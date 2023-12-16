@@ -59,7 +59,7 @@ const HelpOptionList: React.ForwardRefRenderFunction<HTMLDivElement, HelpOptionL
     }, []);
 
     return (
-        <div ref={listRef} className="absolute bottom-16 right-4 bg-main-primary border-2 w-40 rounded-lg shadow-md z-50">
+        <div ref={listRef} className="fixed bottom-16 right-4 bg-main-primary border-2 w-40 rounded-lg shadow-md z-50">
             {options.map((option, index) => (
                 <div key={'help_option_' + index}>
                     {option.text === "Twitter" && <hr />}
