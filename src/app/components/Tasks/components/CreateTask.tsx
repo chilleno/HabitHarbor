@@ -291,7 +291,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
 
     return (
         <>
-            <div className="flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5 px-2">
+            <div className="toolbar-tasks flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5 px-2">
                 {
                     moveTasksMode === false &&
                     <>
