@@ -28,7 +28,6 @@ const DailyHabits = () => {
         }, 100);
     }, [updateRender]);
 
-
     useEffect(() => {
         const dailyHabits: HabitTracker[] = JSON.parse(localStorage.getItem('dailyHabits') || '[]');
         setDailyHabits(dailyHabits);
