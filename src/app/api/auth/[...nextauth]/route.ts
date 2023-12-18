@@ -1,10 +1,10 @@
-import NextAuth from "next-auth"
+import NextAuth, { AuthOptions } from "next-auth"
 import { SupabaseAdapter } from "@auth/supabase-adapter"
 import GoogleProvider from "next-auth/providers/google";
 import { Adapter } from "next-auth/adapters";
 import { createClient } from "@supabase/supabase-js"
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
