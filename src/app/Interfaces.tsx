@@ -183,6 +183,12 @@ enum effortType {
     High = "High",
 }
 
+enum UpdatedObjects {
+    Pomodoro = "Pomodoro",
+    TaskLists = "TaskLists",
+    Habits = "Habits",
+}
+
 interface PriorityCalculation {
     taskIndex: number;
     priority: number;
