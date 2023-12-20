@@ -4,7 +4,6 @@ import { useMainComponent } from '../layoutComponents/mainComponent';
 import { useStartScreen } from '../layoutComponents/startScreen';
 import { useMiddleScreen } from '../layoutComponents/middleScreen';
 import { useEndScreen } from '../layoutComponents/endScreen';
-import Clock from '../components/Clock/Clock';
 import PomodoroTimer from '../components/PomodoroTimer/PomodoroTimer';
 import DailyHabits from '../components/DailyHabits/DailyHabits';
 import HelpButton from '../components/HelpButton/HelpButton';
@@ -244,7 +243,6 @@ export default function App() {
             </EndScreen>
           </MainComponent>
         </div>
-
       </>
     )
   }
