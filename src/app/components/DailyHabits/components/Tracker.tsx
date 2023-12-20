@@ -41,11 +41,11 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             if (effectReset) {
                 trackResetSfx();
             }
-
-            const event = new CustomEvent('habitsdatachanged') as any;
-            document.dispatchEvent(event);
-
+          
             setTimeout(() => {
+                const event = new CustomEvent('habitsdatachanged') as any;
+                document.dispatchEvent(event);
+    
                 setIsCooldown(false);
             }, 1000);
         }
@@ -82,8 +82,6 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             dailyHabits[habitIndex].currentValue = 0;
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
 
-            const event = new CustomEvent('habitsdatachanged') as any;
-            document.dispatchEvent(event);
         }
         setInitialRenderComplete(true);
     }, []);
