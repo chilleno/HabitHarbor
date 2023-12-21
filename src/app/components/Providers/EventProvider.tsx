@@ -16,57 +16,58 @@ const EventProvider = (props: EventProviderProps) => {
     const { data: session, status } = useSession()
 
     const startCountdown = () => {
+
         setIsActive(true);
         setSaveCooldown(1);
+
     }
 
     const saveData = async () => {
-        const pomodoroData = {
-            'isShortBreak': localStorage.getItem('isShortBreak'),
-            'pomodoroTotalCount': localStorage.getItem('pomodoroTotalCount'),
-            'autoStart': localStorage.getItem('autoStart'),
-            'longBreakDuration': localStorage.getItem('longBreakDuration'),
-            'pomodoroDuration': localStorage.getItem('pomodoroDuration'),
-            'shortBreakDuration': localStorage.getItem('shortBreakDuration'),
-            'firstPomodoroCountDate': localStorage.getItem('firstPomodoroCountDate'),
-            'shortBreakCount': localStorage.getItem('shortBreakCount'),
-            'isBreak': localStorage.getItem('isBreak'),
-            'pomodorosForLongBreak': localStorage.getItem('pomodorosForLongBreak'),
-            'pomodoroCount': localStorage.getItem('pomodoroCount'),
-            'isLongBreak': localStorage.getItem('isLongBreak'),
-            'longBreakCount': localStorage.getItem('longBreakCount'),
-        }
+        if (session?.user?.profile_id === '966536f3-a528-4754-a474-2b7be0cff440') {
+            const pomodoroData = {
+                'isShortBreak': localStorage.getItem('isShortBreak'),
+                'pomodoroTotalCount': localStorage.getItem('pomodoroTotalCount'),
+                'autoStart': localStorage.getItem('autoStart'),
+                'longBreakDuration': localStorage.getItem('longBreakDuration'),
+                'pomodoroDuration': localStorage.getItem('pomodoroDuration'),
+                'shortBreakDuration': localStorage.getItem('shortBreakDuration'),
+                'firstPomodoroCountDate': localStorage.getItem('firstPomodoroCountDate'),
+                'shortBreakCount': localStorage.getItem('shortBreakCount'),
+                'isBreak': localStorage.getItem('isBreak'),
+                'pomodorosForLongBreak': localStorage.getItem('pomodorosForLongBreak'),
+                'pomodoroCount': localStorage.getItem('pomodoroCount'),
+                'isLongBreak': localStorage.getItem('isLongBreak'),
+                'longBreakCount': localStorage.getItem('longBreakCount'),
+            }
 
-        // request to /sync endpoint with jwt token
-        const response = await fetch('/api/sync', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                pomodoro: pomodoroData,
-                taskLists: JSON.parse(localStorage.getItem('taskLists') || '[]'),
-                habits: JSON.parse(localStorage.getItem('dailyHabits') || '[]'),
+            // request to /sync endpoint with jwt token
+            const response = await fetch('/api/sync', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pomodoro: pomodoroData,
+                    taskLists: JSON.parse(localStorage.getItem('taskLists') || '[]'),
+                    habits: JSON.parse(localStorage.getItem('dailyHabits') || '[]'),
+                })
             })
-        })
-        toast("data saved!");
+            toast("data saved!");
+        }
     }
 
     const loadData = async () => {
-        toast("data loaded!");
-        console.log(session)
+        if (session?.user?.profile_id === '966536f3-a528-4754-a474-2b7be0cff440') {
+            toast("data loaded!");
+        }
     }
 
     useEffect(() => {
-        if (session?.user?.profile_id === '966536f3-a528-4754-a474-2b7be0cff440') {
-            document.addEventListener('pomodorodatachanged', startCountdown);
-            document.addEventListener('routinedatachanged', startCountdown);
-            document.addEventListener('taskListdatachanged', startCountdown);
-            document.addEventListener('tasksdatachanged', startCountdown);
-            document.addEventListener('habitsdatachanged', startCountdown);
-        }else{
-            setFirstRender(false);
-        }
+        document.addEventListener('pomodorodatachanged', startCountdown);
+        document.addEventListener('routinedatachanged', startCountdown);
+        document.addEventListener('taskListdatachanged', startCountdown);
+        document.addEventListener('tasksdatachanged', startCountdown);
+        document.addEventListener('habitsdatachanged', startCountdown);
     }, []);
 
     useEffect(() => {
@@ -77,10 +78,10 @@ const EventProvider = (props: EventProviderProps) => {
                 if (saveCooldown === 0) {
                     if (firstRender === true) {
                         loadData();
-                        setFirstRender(false);
                     } else {
                         saveData();
                     }
+                    setFirstRender(false);
                     clearInterval(interval);
                     setIsActive(false);
                     setSaveCooldown(-1);
