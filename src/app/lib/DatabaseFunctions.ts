@@ -1,17 +1,41 @@
+import supabase from '../utils/supabase';
 
-
-export const savePomodoro = (pomodoro: any, user: any): boolean => {
-    console.log("savePomodoro", pomodoro);
-    return true;
+export const savePomodoro = async (pomodoro: any, user: any): Promise<Boolean> => {
+    const { data, error, status } = await supabase
+        .from('config')
+        .upsert({ pomodoro: pomodoro, user_id: user.id, updated_at: new Date() })
+        .select()
+    if (status === 201) {
+        return true;
+    } else {
+        console.log(error);
+        return false;
+    }
 }
 
-export const saveTaskLists = (taskList: any, user: any): boolean => {
-    console.log("saveTaskList", taskList);
-    return true;
+export const saveTaskLists = async (taskList: any, user: any): Promise<Boolean> => {
+    const { data, error, status } = await supabase
+        .from('task_lists')
+        .upsert({ lists: taskList, user_id: user.id, updated_at: new Date() })
+        .select()
+    if (status === 201) {
+        return true;
+    } else {
+        console.log(error);
+        return false;
+    }
 }
 
-export const saveHabits = (habits: any, user: any): boolean => {
-    console.log("saveHabits", habits);
-    return true;
+export const saveHabits = async (habits: any, user: any): Promise<Boolean> => {
+    const { data, error, status } = await supabase
+        .from('habits')
+        .upsert({ trackers: habits, user_id: user.id, updated_at: new Date() })
+        .select()
+    if (status === 201) {
+        return true;
+    } else {
+        console.log(error);
+        return false;
+    }
 }
 
