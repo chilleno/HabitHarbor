@@ -206,7 +206,7 @@ export default function Home() {
             <div>
               <h3 className="font-semibold text-2xl">Daily Habits</h3>
               <p>
-                {" Form positive habits that stick. Whether it's drinking more water or reducing your daily indulgences, HabitHarbor.app helps you stay on track."}
+                {"Form positive habits that stick. Whether it's drinking more water or reducing your daily indulgences, HabitHarbor.app helps you stay on track."}
               </p>
             </div>
           </div>
@@ -248,20 +248,6 @@ export default function Home() {
           </div>
         </div>
         <hr className="w-full bg-white" />
-
-        <div className="w-full py-4 toggleElement">
-          <div className="flex justify-between items-center">
-            <div className="font-montserrat font-medium mr-auto question">
-              {"What's opulency plan mean?"}
-            </div>
-            <Image width={57} height={57} src='/assets/logos/CaretRight.svg' alt="" className="transform transition-transform" />
-          </div>
-          <div className="font-montserrat text-sm font-extralight pb-8 hidden answer">
-            Opulency plan is a funny way to give a tip to the developer (me 😀), if you think that the app is worth more than the price of the HabitHarbor+ plan.
-          </div>
-        </div>
-        <hr className="w-full bg-white" />
-
       </section>
 
       <section className="bg-black sectionSize">
