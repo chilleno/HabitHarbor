@@ -20,9 +20,9 @@ const handler = async (
 
     if (savePomodoroResponse && saveTaskListsResponse && saveHabitsResponse) {
       return new Response(JSON.stringify({ code: 200, message: "Success" }));
+    }else{
+      return new Response(JSON.stringify({ code: 420, message: "Please try again in a while" }));
     }
-
-    return new Response("Hello World");
   } else {
     return new Response("No session");
   }
