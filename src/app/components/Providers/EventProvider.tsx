@@ -16,10 +16,8 @@ const EventProvider = (props: EventProviderProps) => {
     const { data: session, status } = useSession()
 
     const startCountdown = () => {
-
         setIsActive(true);
         setSaveCooldown(1);
-
     }
 
     const saveData = async () => {
