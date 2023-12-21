@@ -14,9 +14,9 @@ const handler = async (
     const { pomodoro, taskLists, habits } = body;
     const user = session.user;
 
-    const savePomodoroResponse = savePomodoro(pomodoro, user)
-    const saveTaskListsResponse = saveTaskLists(taskLists, user)
-    const saveHabitsResponse = saveHabits(habits, user)
+    const savePomodoroResponse = await savePomodoro(pomodoro, user)
+    const saveTaskListsResponse = await saveTaskLists(taskLists, user)
+    const saveHabitsResponse = await saveHabits(habits, user)
 
     if (savePomodoroResponse && saveTaskListsResponse && saveHabitsResponse) {
       return new Response(JSON.stringify({ code: 200, message: "Success" }));
