@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import ContentBox from '../../designComponent/ContentBox';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import NewHabitTrackerModal from './components/NewHabitTrackerModal';
 import Tracker from './components/Tracker';
