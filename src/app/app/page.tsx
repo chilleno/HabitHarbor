@@ -27,13 +27,62 @@ export default function App() {
   const { EndScreen } = useEndScreen();
   const [finishRender, setFinishRender] = useState<boolean>(false);
   const [showTour, setShowTour] = useState<boolean>(false);
-  const { data: session, status } = useSession()
+  const [loadingDB, setLoadingDB] = useState<boolean>(true);
+  const { data: session, status } = useSession();
+
+  const loadData = async () => {
+    if (session?.user?.profile_id === '966536f3-a528-4754-a474-2b7be0cff440') {
+      // request to /sync endpoint with jwt token
+      const response = await fetch('/api/load', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if (response.status === 200) {
+        const { habits, pomodoro, taskLists } = await response.json();
+
+        if (habits !== undefined && habits !== null && habits.length > 0) {
+          localStorage.setItem('dailyHabits', JSON.stringify(habits));
+        }
+        if (pomodoro !== undefined && pomodoro !== null) {
+          localStorage.setItem('isShortBreak', pomodoro.isShortBreak);
+          localStorage.setItem('pomodoroTotalCount', pomodoro.pomodoroTotalCount);
+          localStorage.setItem('autoStart', pomodoro.autoStart);
+          localStorage.setItem('longBreakDuration', pomodoro.longBreakDuration);
+          localStorage.setItem('pomodoroDuration', pomodoro.pomodoroDuration);
+          localStorage.setItem('shortBreakDuration', pomodoro.shortBreakDuration);
+          localStorage.setItem('firstPomodoroCountDate', pomodoro.firstPomodoroCountDate);
+          localStorage.setItem('shortBreakCount', pomodoro.shortBreakCount);
+          localStorage.setItem('isBreak', pomodoro.isBreak);
+          localStorage.setItem('pomodorosForLongBreak', pomodoro.pomodorosForLongBreak);
+          localStorage.setItem('pomodoroCount', pomodoro.pomodoroCount);
+          localStorage.setItem('isLongBreak', pomodoro.isLongBreak);
+          localStorage.setItem('longBreakCount', pomodoro.longBreakCount);
+        }
+        if (taskLists !== undefined && taskLists !== null && taskLists.length > 0) {
+          localStorage.setItem('taskLists', JSON.stringify(taskLists));
+          localStorage.setItem('currentTaskList', '0');
+        }
+        setShowTour(false);
+        setLoadingDB(false);
+      }
+    }
+    if(session?.user?.profile_id === '06966125-4262-4947-97e4-82caa9572616'){
+      setLoadingDB(false);
+    }
+  }
+
+  useEffect(() => {
+    loadData();
+  }, [session])
 
   const handleButtonClick = () => {
     setShowList(!showList);
   };
 
   const changeTaskList = (taskListIndex: number) => {
+    setCurrentTaskList(-1);
     if (taskListIndex >= 0 && taskListIndex < JSON.parse(localStorage.getItem('taskLists') || '[]').length) {
       setCurrentTaskList(taskListIndex);
       setUpdateTaskList(!updateTaskList);
@@ -140,6 +189,15 @@ export default function App() {
     }
   };
 
+  if (status === "unauthenticated") {
+    signIn('google', { callbackUrl: '/app' });
+    return <p>Loading...</p>
+  }
+
+  if (loadingDB === true) {
+    return <p>Loading data...</p>
+  }
+
   if (!finishRender) {
     return null
   } else {
@@ -148,10 +206,7 @@ export default function App() {
       return <p>Loading...</p>
     }
 
-    if (status === "unauthenticated") {
-      signIn('google', { callbackUrl: '/app' });
-      return <p>Loading...</p>
-    }
+   
 
     return (
       <>
