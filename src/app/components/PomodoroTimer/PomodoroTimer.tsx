@@ -8,7 +8,7 @@ import useSound from 'use-sound';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ handleCurrentRoutineStepCount }) => {
+const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
     const [shortBreakDuration, setShortBreakDuration] = useState<number>(5);
     const [longBreakDuration, setLongBreakDuration] = useState<number>(15);
