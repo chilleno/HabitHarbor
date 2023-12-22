@@ -263,7 +263,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
                 setIsBreak(true);
                 setPomodoroCount(0);
                 setPomodoroTotalCount(pomodoroTotalCount + 1);
-                handleCurrentRoutineStepCount();
             }
             if (newPomodoroCount.toString() !== pomodorosForLongBreak.toString()) {
                 setMinutes(shortBreakDuration);
@@ -272,7 +271,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
                 setIsBreak(true);
                 setPomodoroCount(newPomodoroCount);
                 setPomodoroTotalCount(pomodoroTotalCount + 1);
-                handleCurrentRoutineStepCount();
             }
         }
     };
