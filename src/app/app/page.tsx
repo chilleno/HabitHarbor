@@ -18,7 +18,6 @@ import TaskLists from '../components/TaskLists/TaskLists';
 export default function App() {
   const [currentTaskList, setCurrentTaskList] = useState<number>(0);
   const [updateTaskList, setUpdateTaskList] = useState<boolean>(false);
-  const [updateRoutineStep, setUpdateRoutineStep] = useState<boolean>(false);
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [showList, setShowList] = useState(false);
   const { MainComponent } = useMainComponent();
@@ -81,14 +80,6 @@ export default function App() {
     setShowList(!showList);
   };
 
-  const changeTaskList = (taskListIndex: number) => {
-    setCurrentTaskList(-1);
-    if (taskListIndex >= 0 && taskListIndex < JSON.parse(localStorage.getItem('taskLists') || '[]').length) {
-      setCurrentTaskList(taskListIndex);
-      setUpdateTaskList(!updateTaskList);
-    }
-  };
-
   useEffect(() => {
     const currentStoredTaskLists = JSON.parse(localStorage.getItem('taskLists') || '[]');
     if (currentStoredTaskLists && currentStoredTaskLists.length > 0) {
@@ -121,41 +112,6 @@ export default function App() {
       }, 1);
     }
   }, [currentTaskList, updateTaskList])
-
-  const handleCurrentRoutineStepCount = (): void => {
-    if (typeof window !== 'undefined') {
-      let currentRoutine: Step[] = JSON.parse(localStorage.getItem('routine') || '[]');
-      let currentRoutineStep: number = Number(localStorage.getItem('currentRoutineStep') || '-1');
-
-      if (currentRoutineStep > -1) {
-        let step: Step = currentRoutine[currentRoutineStep];
-        if (step && step.currentPomodorosCount < step.pomodoros) {
-          step.currentPomodorosCount = step.currentPomodorosCount + 1;
-          currentRoutine[currentRoutineStep] = step;
-          localStorage.setItem('routine', JSON.stringify(currentRoutine));
-
-          // fired custom event on localStorage data changed
-          const event = new CustomEvent('routinedatachanged') as any;
-          document.dispatchEvent(event);
-
-          if (step.currentPomodorosCount === step.pomodoros) {
-            currentRoutineStep = currentRoutineStep + 1;
-            localStorage.setItem('currentRoutineStep', currentRoutineStep.toString());
-
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('routinedatachanged') as any;
-            document.dispatchEvent(event);
-
-            let newSelectedStep: Step = currentRoutine[currentRoutineStep];
-            if (newSelectedStep && newSelectedStep.assignedTaskList > -1) {
-              changeTaskList(newSelectedStep.assignedTaskList);
-            }
-          }
-        }
-        setUpdateRoutineStep(!updateRoutineStep);
-      }
-    }
-  }
 
   const handleTour = () => {
     const storedTour = localStorage.getItem('tour');
