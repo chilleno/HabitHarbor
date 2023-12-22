@@ -195,7 +195,7 @@ export default function App() {
   }
 
   if (loadingDB === true) {
-    return <p>Loading data...</p>
+    return <p>Loading...</p>
   }
 
   if (!finishRender) {
@@ -205,8 +205,6 @@ export default function App() {
     if (status === "loading") {
       return <p>Loading...</p>
     }
-
-   
 
     return (
       <>
@@ -287,7 +285,6 @@ export default function App() {
             <EndScreen className="overflow-y-auto scrollbar-hidden pb-[30px]">
               <div className="flex justify-center content-center mt-4 mb-5">
                 <PomodoroTimer
-                  handleCurrentRoutineStepCount={handleCurrentRoutineStepCount}
                 />
               </div>
               <div className="flex justify-center content-center mt-10 pb-10">
