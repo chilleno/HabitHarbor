@@ -78,7 +78,6 @@ interface EditRoutineStepModalProps {
 }
 
 interface PomodoroTimerProps {
-    handleCurrentRoutineStepCount: () => void;
 }
 
 interface TaskListProps {
