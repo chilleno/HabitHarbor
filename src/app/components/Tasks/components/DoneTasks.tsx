@@ -2,9 +2,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import useSound from 'use-sound';
+import { useSession } from "next-auth/react"
+import { saveTasks } from '../../PostRequests/PostRequests'
 
 const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList }) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const { data: session } = useSession()
 
     //sfx
     const [playSoundCheckbox] = useSound('/static/sounds/uncheck.wav');
@@ -29,9 +32,8 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             setUpdateTaskList(!updateTaskList);
 
@@ -49,9 +51,8 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             setUpdateTaskList(!updateTaskList);
         }
@@ -82,9 +83,8 @@ const DoneTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                 currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
                 localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-                // fired custom event on localStorage data changed
-                const event = new CustomEvent('tasksdatachanged') as any;
-                document.dispatchEvent(event);
+                //save in database
+                saveTasks(session);
 
                 setUpdateTaskList(!updateTaskList);
             }
