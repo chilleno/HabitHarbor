@@ -137,8 +137,8 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
     }, [updateTaskList]);
 
     return (
-        <div className="min-w-full task-list-selector min-h-screen">
-            <div className="fixed min-w-[50%] max-w-[50%] bg-[#323333] border-b-2 border-gray z-40">
+        <div className="task-list-selector min-h-screen flex-1">
+            <div className="flex-1 w-full bg-[#323333] border-b-2 border-gray z-40">
                 {
                     !true && <div className="flex flex-grid justify-center items-center font-bold py-4 border-b-2 border-gray gap-5">
                         <h1 className="text-white xl:text-xl lg:text-md xl:w-2/12 lg:w-2/12">Task lists </h1>
@@ -247,7 +247,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                     lists={lists}
                 />
             </div>
-            <div className={(highlightedTask === null || highlightedTask < 0) ? "xl:pt-[11%] lg:pt-[16%] md:pt-[23%] px-12" : "xl:pt-[16%] lg:pt-[22%] md:pt-[32%] px-12"}>
+            <div className={"py-2 px-12"}>
                 {
                     moveTasksMode === false &&
                     <>
