@@ -4,10 +4,11 @@ import { QueueListIcon, TrashIcon, InboxArrowDownIcon, ArchiveBoxXMarkIcon, XMar
 import InputText from '@/app/designComponent/form/InputText';
 import PrioritizeModal from './PrioritizeModal';
 import useSound from 'use-sound';
-import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import OptionList from './OptionList';
-
+import { useSession } from "next-auth/react"
+import { saveTasks } from '../../PostRequests/PostRequests';
+import 'react-tooltip/dist/react-tooltip.css';
 
 const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask, handleMoveTaskMode, moveTasksMode, lists }) => {
     const [newTask, setNewTask] = useState<string>('');
@@ -16,6 +17,7 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
     const [showPrioritizeModal, setShowPrioritizeModal] = useState<boolean>(false);
     const [targetTaskList, setTargetTaskList] = useState<number>(-1);
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const { data: session } = useSession()
 
     //sfx
     const [checkSound, { stop: stopCheckSound }] = useSound('/static/sounds/check.wav');
@@ -66,9 +68,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
 
                 localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
 
-                // fired custom event on localStorage data changed
-                const event = new CustomEvent('tasksdatachanged') as any;
-                document.dispatchEvent(event);
+                //save in database
+                saveTasks(session);
 
                 handleRefreshList();
 
@@ -117,9 +118,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             handleRefreshList();
 
@@ -145,9 +145,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             handleRefreshList();
         }
@@ -178,9 +177,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                 currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
                 localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-                // fired custom event on localStorage data changed
-                const event = new CustomEvent('tasksdatachanged') as any;
-                document.dispatchEvent(event);
+                 //save in database
+                 saveTasks(session);
 
                 handleRefreshList();
             }
@@ -203,9 +201,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
             currentTaskLists[currentTaskListIndex] = newTaskList;
             localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+             //save in database
+             saveTasks(session);
 
             handleRefreshList();
         }
@@ -227,9 +224,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
             currentTaskLists[currentTaskListIndex] = newTaskList;
             localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+             //save in database
+             saveTasks(session);
 
             handleRefreshList();
         }
@@ -280,9 +276,8 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
 
         localStorage.setItem('taskLists', JSON.stringify(currentTaskLists));
 
-        // fired custom event on localStorage data changed
-        const event = new CustomEvent('tasksdatachanged') as any;
-        document.dispatchEvent(event);
+        //save in database
+        saveTasks(session);
 
         handleRefreshList();
 
@@ -319,10 +314,10 @@ const CreateTask: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, upda
                             {
                                 showOptions &&
                                 <OptionList
-                                    openPrioritizeModal={() => {openPrioritizeModal(), setShowOptions(!showOptions)} }
-                                    handleMoveTaskMode={() => {handleMoveTaskMode(), setShowOptions(!showOptions)}}
-                                    deleteAllDoneTasks={() => {deleteAllDoneTasks(), setShowOptions(!showOptions)}}
-                                    deleteAllTasks={() => {deleteAllTasks(), setShowOptions(!showOptions)}}
+                                    openPrioritizeModal={() => { openPrioritizeModal(), setShowOptions(!showOptions) }}
+                                    handleMoveTaskMode={() => { handleMoveTaskMode(), setShowOptions(!showOptions) }}
+                                    deleteAllDoneTasks={() => { deleteAllDoneTasks(), setShowOptions(!showOptions) }}
+                                    deleteAllTasks={() => { deleteAllTasks(), setShowOptions(!showOptions) }}
                                 />
                             }
                         </div>
