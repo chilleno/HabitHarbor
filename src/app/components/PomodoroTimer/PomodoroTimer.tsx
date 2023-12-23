@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import ContentBox from '../../designComponent/ContentBox';
 import FloatingButton from '@/app/designComponent/FloatingButton';
 import { EllipsisVerticalIcon, PlayIcon, PauseIcon, StopIcon, ForwardIcon } from '@heroicons/react/24/solid';
 import useSound from 'use-sound';
