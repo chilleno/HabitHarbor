@@ -6,9 +6,11 @@ import MoveTasks from './components/MoveTasks';
 import TodoTasks from './components/TodoTasks';
 import DoneTasks from './components/DoneTasks';
 import CreateTask from './components/CreateTask';
-import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import InputText from '@/app/designComponent/form/InputText';
+import { useSession } from "next-auth/react"
+import { saveTasks } from '../PostRequests/PostRequests'
+import 'react-tooltip/dist/react-tooltip.css';
 
 const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, changeTaskList, updateTaskList, setUpdateTaskList }) => {
     const [lists, setLists] = useState<TaskList[]>();
@@ -17,6 +19,7 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
     const [editModeTaskList, setEditModeTaskList] = useState<boolean>(false);
     const [newCurrentTaskListName, setNewCurrentTaskListName] = useState<string>('');
     const [moveTasksMode, setMoveTasksMode] = useState<boolean>(false);
+    const { data: session } = useSession()
 
     const openModal = () => {
         setShowModal(true);
@@ -52,11 +55,8 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                 });
                 localStorage.setItem('routines', JSON.stringify(updatedLocalStorageRoutine));
 
-                const eventRoutineChanged = new CustomEvent('routinedatachanged') as any;
-                document.dispatchEvent(eventRoutineChanged);
-
-                const eventTasnkListChanged = new CustomEvent('taskListdatachanged') as any;
-                document.dispatchEvent(eventTasnkListChanged);
+                //save in database
+                saveTasks(session);
 
                 renderTaskLists();
                 changeTaskList(updatedTaskLists.length - 1);
@@ -70,9 +70,8 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
             currentStoredTaskLists[currentTaskListIndex].name = value;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('taskListdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             renderTaskLists();
         }
@@ -121,9 +120,8 @@ const Tasks: React.FC<TaskListProps> = ({ taskList, currentTaskListIndex, change
                 localStorageTaskLists[currentTaskListIndex].highlightedTask = highlightedTask;
                 localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
 
-                // fired custom event on localStorage data changed
-                const event = new CustomEvent('tasksdatachanged') as any;
-                document.dispatchEvent(event);
+                //save in database
+                saveTasks(session);
             }
         }
     }, [highlightedTask]);
