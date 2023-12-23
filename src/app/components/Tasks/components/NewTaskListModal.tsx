@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useSession } from "next-auth/react"
+import { saveTasks } from '../../PostRequests/PostRequests'
 
 const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderList, handleChangeTaskList }) => {
     const [name, setName] = useState('');
+    const { data: session } = useSession()
 
     const createNewTaskList = (): void => {
         if (name === '') return;
@@ -15,9 +18,8 @@ const NewTaskListModal: React.FC<NewTaskListModalProps> = ({ closeModal, renderL
             currentTaskLists.push(newTaskList);
             localStorage.setItem('taskLists', JSON.stringify(currentTaskLists))
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('taskListdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             handleChangeTaskList(currentTaskLists.length - 1)
             renderList();
