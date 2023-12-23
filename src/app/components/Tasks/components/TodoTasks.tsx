@@ -2,17 +2,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import useSound from 'use-sound';
-
+import { useSession } from "next-auth/react"
+import { saveTasks } from '../../PostRequests/PostRequests'
 
 const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask }) => {
-    const [newTask, setNewTask] = useState<string>('');
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const [showError, setShowError] = useState<boolean>(false);
+    const { data: session } = useSession()
 
     //sfx
     const [checkSound, { stop: stopCheckSound }] = useSound('/static/sounds/check.wav');
-    const [newTaskSound, { stop: stopNewTaskSound }] = useSound('/static/sounds/newTask.wav');
-    const [errorSound, { stop: stopErrorSound }] = useSound('/static/sounds/error1.wav');
 
     const handleHighlightTask = (taskIndex: number | null) => {
         if (timeoutRef.current) {
@@ -36,10 +34,8 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                 localStorageTaskLists[currentTaskListIndex].highlightedTask = highlightedTask;
                 localStorage.setItem('taskLists', JSON.stringify(localStorageTaskLists));
 
-                // fired custom event on localStorage data changed
-                const event = new CustomEvent('tasksdatachanged') as any;
-                document.dispatchEvent(event);
-
+                //save in database
+                saveTasks(session);
             }
         }
     }, [highlightedTask]);
@@ -77,9 +73,8 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             handleRefreshList();
 
@@ -105,9 +100,8 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('tasksdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             handleRefreshList();
         }
@@ -138,9 +132,8 @@ const TodoTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
                 currentStoredTaskLists[currentTaskListIndex].tasks = updatedTasks;
                 localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-                // fired custom event on localStorage data changed
-                const event = new CustomEvent('tasksdatachanged') as any;
-                document.dispatchEvent(event);
+                //save in database
+                saveTasks(session);
 
                 handleRefreshList();
             }
