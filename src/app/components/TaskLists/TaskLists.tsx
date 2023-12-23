@@ -4,16 +4,18 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import NewTaskListModal from './components/NewTaskListModal';
 import useSound from 'use-sound';
-
+import { useSession } from "next-auth/react"
+import { saveTasks } from '../PostRequests/PostRequests';
 
 const TaskLists: React.FC<TaskListsProps> = ({ updateTaskList, currentTaskList, changeTaskList }) => {
-    const [lists, setLists] = useState<TaskList[]>();
-    const [showModal, setShowModal] = useState<boolean>(false);
-    const [editMode, setEditMode] = useState<boolean>(false);
-    const [newTaskListName, setNewTaskListName] = useState<string>('');
+    const [lists, setLists] = useState<TaskList[]>()
+    const [showModal, setShowModal] = useState<boolean>(false)
+    const [editMode, setEditMode] = useState<boolean>(false)
+    const [newTaskListName, setNewTaskListName] = useState<string>('')
+    const { data: session } = useSession()
 
     //sfx
-    const [switchListSound, { stop: stopSwitchListSound }] = useSound('/static/sounds/changeList.wav');
+    const [switchListSound, { stop: stopSwitchListSound }] = useSound('/static/sounds/changeList.wav')
 
     const handleChangeTaskList = (index: number): void => {
         changeTaskList(index);
@@ -23,7 +25,7 @@ const TaskLists: React.FC<TaskListsProps> = ({ updateTaskList, currentTaskList, 
 
     const openModal = () => {
         setShowModal(true);
-    };
+    }
 
     const closeModal = () => {
         setShowModal(false);
@@ -55,17 +57,14 @@ const TaskLists: React.FC<TaskListsProps> = ({ updateTaskList, currentTaskList, 
                 });
                 localStorage.setItem('routines', JSON.stringify(updatedLocalStorageRoutine));
 
-                const eventRoutineChanged = new CustomEvent('routinedatachanged') as any;
-                document.dispatchEvent(eventRoutineChanged);
-
-                const eventTasnkListChanged = new CustomEvent('taskListdatachanged') as any;
-                document.dispatchEvent(eventTasnkListChanged);
+                //save in database
+                saveTasks(session);
 
                 renderTaskLists();
                 changeTaskList(updatedTaskLists.length - 1);
             }
         }
-    };
+    }
 
     const editTaskListName = (value: string): void => {
         //check if the value length is greater than 3 and alert the user
@@ -78,9 +77,8 @@ const TaskLists: React.FC<TaskListsProps> = ({ updateTaskList, currentTaskList, 
             currentStoredTaskLists[currentTaskList].name = value;
             localStorage.setItem('taskLists', JSON.stringify(currentStoredTaskLists));
 
-            // fired custom event on localStorage data changed
-            const event = new CustomEvent('taskListdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveTasks(session);
 
             renderTaskLists();
             handleEditMode();
@@ -93,7 +91,7 @@ const TaskLists: React.FC<TaskListsProps> = ({ updateTaskList, currentTaskList, 
 
     useEffect(() => {
         renderTaskLists();
-    }, []);
+    }, [])
 
     return (
         <div className="w-full task-list-selector">
