@@ -68,7 +68,7 @@ const DailyHabits = () => {
 
     return (
         <>
-            <div className="daily-habits w-full xl:px-10 lg:px-6 md:px-4">
+            <div className="daily-habits flex-1 w-full xl:px-10 lg:px-6 md:px-4">
                 <div className="flex font-bold gap-3">
                     <div className="text-white xl:text-xl lg:text-md md:tex-md w-8/12 justify-start flex">
                         <h1 className="text-white xl:text-xl lg:text-md md:tex-md">Daily habits</h1>
