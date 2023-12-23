@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSession } from "next-auth/react"
+import { saveTasks } from '../../PostRequests/PostRequests'
 
 enum EvaluationType {
     Immediate = "Immediate",
@@ -12,8 +14,8 @@ enum effortType {
     High = "High",
 }
 const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderList, currentTaskListIndex, taskList }) => {
-
     const [priorityCalculationList, setPriorityCalculationList] = useState<PriorityCalculation[]>([]);
+    const { data: session } = useSession()
 
     //useEffect that initialize the priorityCalculationList state with the taskList state
     useEffect(() => {
@@ -124,9 +126,8 @@ const PrioritizeModal: React.FC<PrioritizedModalProps> = ({ closeModal, renderLi
 
         localStorage.setItem("taskLists", JSON.stringify(taskLists));
 
-        // fired custom event on localStorage data changed
-        const event = new CustomEvent('tasksdatachanged') as any;
-        document.dispatchEvent(event);
+        //save in database
+        saveTasks(session);
 
         renderList();
         closeModal();
