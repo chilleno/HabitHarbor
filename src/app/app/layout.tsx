@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="">
         <Providers >
           <div className="sm:flex xl:hidden lg:hidden md:hidden w-full justify-center content-center min-h-[100vh] items-center">
             <div className="flex flex-col">
