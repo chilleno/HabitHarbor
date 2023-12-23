@@ -1,12 +1,9 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { TrashIcon } from '@heroicons/react/24/solid';
 import useSound from 'use-sound';
-
 
 const MoveTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updateTaskList, setUpdateTaskList, highlightedTask, setHighlightedTask }) => {
     const [moveTasksArray, setMoveTasksArray] = useState<Number[]>([]);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     //sfx
     const [checkSound, { stop: stopCheckSound }] = useSound('/static/sounds/checkMoveTask.wav');
@@ -25,9 +22,6 @@ const MoveTasks: React.FC<TasksProps> = ({ currentTaskListIndex, taskList, updat
             stopUnCheckSound();
             checkSound();
         }
-
-        //store the moveTasks array in localstorage
-
     }
 
     return (
