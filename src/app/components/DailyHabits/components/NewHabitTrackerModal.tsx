@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import EmojiPicker, { EmojiStyle, Emoji } from 'emoji-picker-react';
 import { TwitterPicker } from 'react-color';
+import { saveHabits } from '../../PostRequests/PostRequests';
+import { useSession } from "next-auth/react"
 
 const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal, updateHabits }) => {
     const [icon, setIcon] = useState<string>('');
@@ -8,6 +10,7 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
     const [color, setColor] = useState<string>('');
     const [maxValue, setMaxValue] = useState<number>(0);
     const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
+    const { data: session } = useSession()
     let colors = ['#CE769C', '#7975D1', '#68A0CA', '#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']
 
     const addHabitTracker = () => {
@@ -26,6 +29,10 @@ const NewHabitTrackerModal: React.FC<NewHabitTrackerModalProps> = ({ closeModal,
             dailyHabits.push(newHabitTracker);
 
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+
+            //save in database
+            saveHabits(session);
+
             closeModal();
         }
     }
