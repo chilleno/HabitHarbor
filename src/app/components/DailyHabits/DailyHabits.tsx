@@ -5,11 +5,14 @@ import NewHabitTrackerModal from './components/NewHabitTrackerModal';
 import Tracker from './components/Tracker';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { saveHabits } from '../PostRequests/PostRequests';
+import { useSession } from "next-auth/react"
 
 const DailyHabits = () => {
     const [updateRender, setUpdateRender] = useState<boolean>(false);
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
     const [dailyHabits, setDailyHabits] = useState<HabitTracker[]>([]);
+    const { data: session } = useSession()
 
     const handleUpdateRender = () => {
         setUpdateRender(!updateRender);
@@ -63,7 +66,12 @@ const DailyHabits = () => {
         dailyHabits.push(example2);
         dailyHabits.push(example3);
         localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
+
+        //save in database
+        saveHabits(session);
+
         setUpdateRender(!updateRender);
+        
     }
 
     return (
