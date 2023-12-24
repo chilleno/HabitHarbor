@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SigninButton from "./components/SigninButton/SigninButton";
 import Pricing from "./landingComponents/Pricing";
 
@@ -32,7 +32,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="scroll-smooth scroll-p-[20rem]">
       <nav className="fixed flex justify-between py-5 w-full lg:px-48 md:px-12 px-4 content-center bg-secondary z-10">
         <div className="flex items-center">
           <Image width={200} height={100} src='/assets/hh_logo.png' alt="Logo" className="hover:cursor-pointer" onClick={() => window.scrollTo(0, 0)} />
@@ -264,6 +264,6 @@ export default function Home() {
           © {new Date().getFullYear()} with ❤️ by <a href="https://twitter.com/chill__eno" className="hover:font-bold" target="_blank">@chill__eno</a>
         </div>
       </section>
-    </>
+    </div>
   )
 }
