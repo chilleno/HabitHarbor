@@ -6,6 +6,8 @@ import { EllipsisVerticalIcon, PlayIcon, PauseIcon, StopIcon, ForwardIcon } from
 import useSound from 'use-sound';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { savePomodoro } from '../PostRequests/PostRequests';
+import { useSession } from "next-auth/react"
 
 const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
     const [pomodoroDuration, setPomodoroDuration] = useState<number>(25);
@@ -26,6 +28,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
     const [formattedTime, setFormattedTime] = useState<string>('00:00');
     const [today] = useState<Date>(new Date());
     const [autoStart, setAutoStart] = useState<boolean>(false);
+    const { data: session } = useSession()
 
     const [firstRender, setFirstRender] = useState<boolean>(false);
 
@@ -138,6 +141,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
         if (pomodoroCount === 1) {
             localStorage.setItem('firstPomodoroCountDate', today.toString());
         }
+         //save data on database
+         savePomodoro(session)
     }, [
         pomodoroDuration,
         shortBreakDuration,
@@ -165,9 +170,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
         localStorage.setItem('shortBreakCount', shortBreakCount.toString());
         localStorage.setItem('longBreakCount', longBreakCount.toString());
 
-        // fired custom event on localStorage data changed
-        const event = new CustomEvent('pomodorodatachanged') as any;
-        document.dispatchEvent(event);
+        //save data on database
+        savePomodoro(session)
     }
 
     useEffect(() => {
@@ -224,8 +228,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
             setPomodoroTotalCount(0);
             setShortBreakCount(0);
             setLongBreakCount(0);
-            updateLocalStorageData();
             localStorage.setItem('firstPomodoroCountDate', today.toString());
+            updateLocalStorageData();
         }
     };
 
@@ -313,6 +317,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
     //useEffect when autoStart is changed save on localstorage
     useEffect(() => {
         localStorage.setItem('autoStart', autoStart.toString());
+        
+        //save data on database
+        savePomodoro(session)
     }, [autoStart]);
 
 
