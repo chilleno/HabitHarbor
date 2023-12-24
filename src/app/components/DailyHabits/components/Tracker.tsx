@@ -4,6 +4,8 @@ import Image from 'next/image';
 import EmojiPicker, { EmojiStyle, Emoji } from 'emoji-picker-react';
 import { TwitterPicker } from 'react-color';
 import useSound from 'use-sound';
+import { saveHabits } from '../../PostRequests/PostRequests';
+import { useSession } from "next-auth/react"
 
 const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRender }) => {
     const [today] = useState(new Date());
@@ -11,6 +13,7 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
     const [isCooldown, setIsCooldown] = useState<boolean>(false);
     const [initialRenderComplete, setInitialRenderComplete] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const { data: session } = useSession()
 
 
     //states for the edit modal
@@ -41,11 +44,11 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             if (effectReset) {
                 trackResetSfx();
             }
-          
+
             setTimeout(() => {
-                const event = new CustomEvent('habitsdatachanged') as any;
-                document.dispatchEvent(event);
-    
+                //save in database
+                saveHabits(session);
+
                 setIsCooldown(false);
             }, 1000);
         }
@@ -60,15 +63,15 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             dailyHabits[habitIndex].currentValue = 0;
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
 
-            const event = new CustomEvent('habitsdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveHabits(session);
         }
         if (currentAmount === 1) {
             dailyHabits[habitIndex].firstTrackerDate = today.toString();
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
 
-            const event = new CustomEvent('habitsdatachanged') as any;
-            document.dispatchEvent(event);
+            //save in database
+            saveHabits(session);
         }
 
     }, [currentAmount]);
@@ -82,6 +85,8 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
             dailyHabits[habitIndex].currentValue = 0;
             localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
 
+            //save in database
+            saveHabits(session);
         }
         setInitialRenderComplete(true);
     }, []);
@@ -111,8 +116,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         dailyHabits[habitIndex].firstTrackerDate = today.toString();
         localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
 
-        const event = new CustomEvent('habitsdatachanged') as any;
-        document.dispatchEvent(event);
+        //save in database
+        saveHabits(session);
+
         handleUpdateRender();
         closeModal();
     }
@@ -146,8 +152,9 @@ const Tracker: React.FC<TrackerProps> = ({ habitIndex, tracker, handleUpdateRend
         let dailyHabits = JSON.parse(localStorage.dailyHabits);
         dailyHabits.splice(habitIndex, 1);
         localStorage.setItem('dailyHabits', JSON.stringify(dailyHabits));
-        const event = new CustomEvent('habitsdatachanged') as any;
-        document.dispatchEvent(event);
+
+        //save in database
+        saveHabits(session);
 
         handleUpdateRender();
         setInterval(() => {
