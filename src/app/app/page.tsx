@@ -1,9 +1,5 @@
 "use client"
-import { useState, useEffect, use } from 'react';
-import { useMainComponent } from '../layoutComponents/mainComponent';
-import { useStartScreen } from '../layoutComponents/startScreen';
-import { useMiddleScreen } from '../layoutComponents/middleScreen';
-import { useEndScreen } from '../layoutComponents/endScreen';
+import { useState, useEffect } from 'react';
 import PomodoroTimer from '../components/PomodoroTimer/PomodoroTimer';
 import DailyHabits from '../components/DailyHabits/DailyHabits';
 import HelpButton from '../components/HelpButton/HelpButton';
@@ -12,7 +8,7 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import Tasks from '../components/Tasks/Tasks';
 import Image from 'next/image';
 import SigninButton from '../components/SigninButton/SigninButton';
-import { useSession, getSession, signIn } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import TaskLists from '../components/TaskLists/TaskLists';
 
 export default function App() {
