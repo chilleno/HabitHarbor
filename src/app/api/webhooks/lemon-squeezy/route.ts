@@ -6,7 +6,9 @@ const handler = async (
 ) => {
   console.log("Webhook hit")
   //log body
-  console.log(req.body)
+  console.log(req.json())
+  //log request
+  console.log(req)
   return new Response(JSON.stringify({ code: 200, message: "Success" }));
 }
 
