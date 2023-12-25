@@ -17,6 +17,8 @@ const handler = async (
   if (!crypto.timingSafeEqual(digest, signature)) {
     throw new Error('Invalid signature.');
   }
+
+  console.log('Valid signature.');
   const data = req.body
   const eventName = data && data['meta']['event_name']
   const obj = data && data['data']['attributes']
