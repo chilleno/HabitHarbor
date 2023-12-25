@@ -5,6 +5,7 @@ const handler = async (
   res: NextApiResponse
 ) => {
   console.log("Webhook hit");
+  console.log(req)
 }
 
 export { handler as POST } 
