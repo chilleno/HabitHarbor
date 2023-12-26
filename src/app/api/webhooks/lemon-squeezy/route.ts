@@ -14,7 +14,9 @@ const handler = async (
   const digest = Buffer.from(hmac.update(req.body).digest('hex'), 'utf8');
   const signature = Buffer.from(req.headers.get('X-Signature') || '', 'utf8');
 
+  console.log("1");
   if (!crypto.timingSafeEqual(digest, signature)) {
+    console.log("2");
     throw new Error('Invalid signature.');
   }
 
