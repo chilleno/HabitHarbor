@@ -6,17 +6,20 @@ const handler = async (
   res: NextApiResponse
 ) => {
   console.log("Webhook hit")
-
   const crypto = require('crypto');
   //get secret from env
-  const secret = process.env.LEMON_SQUEEZY_SECRET;
-  const hmac = crypto.createHmac('sha256', secret);
-  const digest = Buffer.from(hmac.update(req.body).digest('hex'), 'utf8');
-  const signature = Buffer.from(req.headers.get('X-Signature') || '', 'utf8');
-
   console.log("1");
+  const secret = process.env.LEMON_SQUEEZY_SECRET;
+  console.log("2");
+  const hmac = crypto.createHmac('sha256', secret);
+  console.log("3");
+  const digest = Buffer.from(hmac.update(req.body).digest('hex'), 'utf8');
+  console.log("4");
+  const signature = Buffer.from(req.headers.get('X-Signature') || '', 'utf8');
+  console.log("5");
+  
   if (!crypto.timingSafeEqual(digest, signature)) {
-    console.log("2");
+    console.log("6");
     throw new Error('Invalid signature.');
   }
 
