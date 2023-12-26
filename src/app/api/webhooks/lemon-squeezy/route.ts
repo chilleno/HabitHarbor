@@ -9,7 +9,7 @@ const handler = async (
   const crypto = require('crypto');
   //get secret from env
   console.log("1");
-  const secret = process.env.LEMON_SQUEEZY_SECRET;
+  const secret = process.env.LEMONSQUEEZY_SIGNING_SECRET;
   console.log("2");
   const hmac = crypto.createHmac('sha256', secret);
   console.log("3");
