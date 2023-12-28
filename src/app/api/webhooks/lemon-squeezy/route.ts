@@ -22,12 +22,13 @@ const handler = async (
     throw new Error('Invalid signature.');
   }
 
-  const data = JSON.parse(rawBody)
+  const response = JSON.parse(rawBody)
+  const data = response && response['data']
+  const eventName = response && response['meta']['event_name']
+  const obj = response && response['data']['attributes']
+  const objId = response && response['data']['id']
+  
   console.log(data)
-  const eventName = data && data['meta']['event_name']
-  const obj = data && data['data']['attributes']
-  const objId = data && data['data']['id']
-
   return new Response(JSON.stringify({ code: 200, message: "Success" }));
 }
 
