@@ -17,7 +17,7 @@ const handler = async (
   const hmac = crypto.createHmac('sha256', secret);
   const digest = Buffer.from(hmac.update(rawBody).digest('hex'), 'utf8');
   const signature = Buffer.from(req.headers.get('X-Signature') || '', 'utf8');
-  
+
   if (!crypto.timingSafeEqual(digest, signature)) {
     throw new Error('Invalid signature.');
   }
@@ -27,8 +27,28 @@ const handler = async (
   const eventName = response && response['meta']['event_name']
   const obj = response && response['data']['attributes']
   const objId = response && response['data']['id']
-  
-  console.log(data)
+
+  if (eventName === WebhookEvent.subscriptionCreated) {
+    const subscription: SubscriptionObject = data;
+    console.log('subscription created');
+    console.log(subscription);
+  }
+  if (eventName === WebhookEvent.subscriptionUpdated) {
+    const subscription: SubscriptionObject = data;
+    console.log('subscription updated')
+    console.log(subscription);
+  }
+  if (eventName === WebhookEvent.subscriptionExpired) {
+    const subscription: SubscriptionObject = data;
+    console.log('subscription expired')
+    console.log(subscription);
+  }
+  if (eventName === WebhookEvent.subscriptionPaymentSuccess) {
+    const subscriptionInvoice: SubscriptionInvoiceObject = data;
+    console.log('subscription payment success')
+    console.log(subscriptionInvoice);
+  }
+
   return new Response(JSON.stringify({ code: 200, message: "Success" }));
 }
 
