@@ -10,9 +10,9 @@ export const updateProfileOrder = async (OrderObject: OrderObject, userId: strin
     if (OrderObject.attributes.first_order_item.variant_id === 191246) {
         if (OrderObject.attributes.status === 'paid') {
             const { error, status } = await supabaseAuth
-                .from('config')
+                .from('users')
                 .update({ profile_id: Profiles.pro, updated_at: new Date() })
-                .eq('user_id', userId)
+                .eq('id', userId)
             if (status === 201) {
                 return true;
             } else {
@@ -31,9 +31,9 @@ export const updateProfileSubscription = async (SubscriptionObject: Subscription
     const profile = checkSubscription(SubscriptionObject);
 
     const { error, status } = await supabaseAuth
-        .from('config')
+        .from('users')
         .update({ profile_id: profile, updated_at: new Date() })
-        .eq('user_id', userId)
+        .eq('id', userId)
 
     if (status === 201) {
         return true;
