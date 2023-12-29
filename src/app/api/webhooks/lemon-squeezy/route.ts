@@ -1,6 +1,9 @@
 import type { NextApiResponse } from 'next'
+import { createInvoice, updateProfileSubscription } from './DatabaseFunctions'
 
 enum WebhookEvent {
+  orderCreated = 'order_created',
+  orderRefounded = 'order_refounded',
   subscriptionCreated = 'subscription_created',
   subscriptionUpdated = 'subscription_updated',
   subscriptionPaymentSuccess = 'subscription_payment_success',
@@ -27,26 +30,71 @@ const handler = async (
   const eventName = response && response['meta']['event_name']
   const obj = response && response['data']['attributes']
   const objId = response && response['data']['id']
+  console.log(response);
+
+  if (eventName === WebhookEvent.orderCreated) {
+    const subscription: OrderObject = data;
+    console.log('order created');
+    console.log(subscription);
+  }
+
+  if (eventName === WebhookEvent.orderRefounded) {
+    const subscription: OrderObject = data;
+    console.log('order refounded');
+    console.log(subscription);
+  }
 
   if (eventName === WebhookEvent.subscriptionCreated) {
     const subscription: SubscriptionObject = data;
+    const updated = await updateProfileSubscription(subscription);
     console.log('subscription created');
     console.log(subscription);
+    if (updated === true) {
+      return { status: 200, message: "success" };
+    } else {
+      return { status: 420, messsage: "something went wrong" };
+    }
   }
+
   if (eventName === WebhookEvent.subscriptionUpdated) {
     const subscription: SubscriptionObject = data;
-    console.log('subscription updated')
+    const updated = await updateProfileSubscription(subscription);
+    console.log('subscription created');
     console.log(subscription);
+    if (updated === true) {
+      return { status: 200, message: "success" };
+    } else {
+      return { status: 420, messsage: "something went wrong" };
+    }
   }
+
   if (eventName === WebhookEvent.subscriptionExpired) {
     const subscription: SubscriptionObject = data;
-    console.log('subscription expired')
+    const updated = await updateProfileSubscription(subscription);
+    console.log('subscription created');
     console.log(subscription);
+    if (updated === true) {
+      return { status: 200, message: "success" };
+    } else {
+      return { status: 420, messsage: "something went wrong" };
+    }
   }
+
   if (eventName === WebhookEvent.subscriptionPaymentSuccess) {
     const subscriptionInvoice: SubscriptionInvoiceObject = data;
-    console.log('subscription payment success')
-    console.log(subscriptionInvoice);
+    const newInvoiceResponse = await createInvoice(subscriptionInvoice);
+
+    if (newInvoiceResponse.status === 200) {
+      console.log('subscription payment success')
+      console.log(newInvoiceResponse);
+
+      return new Response(JSON.stringify({ code: 200, message: "subscription payment success" }));
+
+    } else if (newInvoiceResponse.status === 420) {
+      console.log('Something went wront on request')
+      console.log(newInvoiceResponse);
+      return new Response(JSON.stringify({ code: 420, message: "Something went wrong on request" }));
+    }
   }
 
   return new Response(JSON.stringify({ code: 200, message: "Success" }));
