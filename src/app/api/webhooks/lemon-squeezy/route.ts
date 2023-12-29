@@ -28,6 +28,7 @@ const handler = async (
   const response = JSON.parse(rawBody)
   const data = response && response['data']
   const eventName = response && response['meta']['event_name']
+  const customData = response && response['meta']['custom_data']
   const obj = response && response['data']['attributes']
   const objId = response && response['data']['id']
   console.log(response);
@@ -46,7 +47,7 @@ const handler = async (
 
   if (eventName === WebhookEvent.subscriptionCreated) {
     const subscription: SubscriptionObject = data;
-    const updated = await updateProfileSubscription(subscription);
+    const updated = await updateProfileSubscription(subscription, customData.user_id);
     console.log('subscription created');
     console.log(subscription);
     if (updated === true) {
@@ -58,7 +59,7 @@ const handler = async (
 
   if (eventName === WebhookEvent.subscriptionUpdated) {
     const subscription: SubscriptionObject = data;
-    const updated = await updateProfileSubscription(subscription);
+    const updated = await updateProfileSubscription(subscription, customData.user_id);
     console.log('subscription created');
     console.log(subscription);
     if (updated === true) {
@@ -70,7 +71,7 @@ const handler = async (
 
   if (eventName === WebhookEvent.subscriptionExpired) {
     const subscription: SubscriptionObject = data;
-    const updated = await updateProfileSubscription(subscription);
+    const updated = await updateProfileSubscription(subscription, customData.user_id);
     console.log('subscription created');
     console.log(subscription);
     if (updated === true) {
@@ -82,7 +83,7 @@ const handler = async (
 
   if (eventName === WebhookEvent.subscriptionPaymentSuccess) {
     const subscriptionInvoice: SubscriptionInvoiceObject = data;
-    const newInvoiceResponse = await createInvoice(subscriptionInvoice);
+    const newInvoiceResponse = await createInvoice(subscriptionInvoice, customData.user_id);
 
     if (newInvoiceResponse.status === 200) {
       console.log('subscription payment success')
