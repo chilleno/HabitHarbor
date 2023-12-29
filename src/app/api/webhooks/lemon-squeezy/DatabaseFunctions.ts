@@ -1,9 +1,8 @@
 import supabase from '../../../utils/supabase';
 import supabaseAuth from '../../../utils/supabaseAuth';
 
-export const updateProfileSubscription = async (SubscriptionObject: SubscriptionObject): Promise<Boolean> => {
+export const updateProfileSubscription = async (SubscriptionObject: SubscriptionObject, userId: string): Promise<Boolean> => {
     const profile = checkSubscription(SubscriptionObject);
-    const userId = await getUserId(SubscriptionObject.attributes.user_email);
 
     const { error, status } = await supabaseAuth
         .from('config')
@@ -18,9 +17,7 @@ export const updateProfileSubscription = async (SubscriptionObject: Subscription
     }
 }
 
-export const createInvoice = async (SubscriptionInvoiceObject: SubscriptionInvoiceObject): Promise<any> => {
-    const userId = await getUserId(SubscriptionInvoiceObject.attributes.user_email);
-
+export const createInvoice = async (SubscriptionInvoiceObject: SubscriptionInvoiceObject, userId: string): Promise<any> => {
     const { data, error, status } = await supabase
         .from('invoices')
         .insert({ ...SubscriptionInvoiceObject.attributes, userId })
@@ -37,19 +34,5 @@ const checkSubscription = (SubscriptionObject: SubscriptionObject): Profiles => 
         return Profiles.pro;
     } else {
         return Profiles.free;
-    }
-}
-
-const getUserId = async (email: string): Promise<any> => {
-    const { data, error, status } = await supabaseAuth
-        .from('users')
-        .select('id')
-        .eq('email', email)
-        .single()
-    if (status === 200) {
-        return { status: 200, data: data?.id };
-    } else {
-        console.log(error);
-        return { status: 420 };
     }
 }
