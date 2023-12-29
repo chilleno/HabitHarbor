@@ -1,5 +1,5 @@
 import type { NextApiResponse } from 'next'
-import { createInvoice, updateProfileSubscription } from './DatabaseFunctions'
+import { createInvoice, updateProfileSubscription, updateProfileOrder } from './DatabaseFunctions'
 
 enum WebhookEvent {
   orderCreated = 'order_created',
@@ -34,15 +34,27 @@ const handler = async (
   console.log(response);
 
   if (eventName === WebhookEvent.orderCreated) {
-    const subscription: OrderObject = data;
-    console.log('order created');
-    console.log(subscription);
+    const order: OrderObject = data;
+    const updated = await updateProfileOrder(order, customData.user_id);
+    console.log('order refounded');
+    console.log(order);
+    if (updated === true) {
+      return { status: 200, message: "success" };
+    } else {
+      return { status: 420, messsage: "something went wrong" };
+    }
   }
 
   if (eventName === WebhookEvent.orderRefounded) {
-    const subscription: OrderObject = data;
+    const order: OrderObject = data;
+    const updated = await updateProfileOrder(order, customData.user_id);
     console.log('order refounded');
-    console.log(subscription);
+    console.log(order);
+    if (updated === true) {
+      return { status: 200, message: "success" };
+    } else {
+      return { status: 420, messsage: "something went wrong" };
+    }
   }
 
   if (eventName === WebhookEvent.subscriptionCreated) {
@@ -98,7 +110,7 @@ const handler = async (
     }
   }
 
-  return new Response(JSON.stringify({ code: 200, message: "Success" }));
+  return new Response(JSON.stringify({ code: 420, message: "Wrong payload" }));
 }
 
 export { handler as POST } 
