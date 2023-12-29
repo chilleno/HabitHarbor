@@ -36,7 +36,7 @@ const handler = async (
   if (eventName === WebhookEvent.orderCreated) {
     const order: OrderObject = data;
     const updated = await updateProfileOrder(order, customData.user_id);
-    console.log('order refounded');
+    console.log('order created');
     console.log(order);
     if (updated === true) {
       return { status: 200, message: "success" };
