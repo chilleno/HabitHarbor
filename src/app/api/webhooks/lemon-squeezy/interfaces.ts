@@ -46,7 +46,7 @@ interface SubscriptionInvoiceObject {
     attributes: {
         store_id: number;
         subscription_id: number;
-        customer_id: number; z
+        customer_id: number;
         user_name: string;
         user_email: string;
         billing_reason: string;
@@ -101,4 +101,61 @@ interface SubscriptionInvoiceObject {
         self: string;
     };
 
+}
+
+interface OrderObject {
+    type: string;
+    id: string;
+    attributes: {
+        store_id: number;
+        customer_id: number;
+        identifier: string;
+        order_number: number;
+        user_name: string;
+        user_email: string;
+        currency: string;
+        currency_rate: string;
+        subtotal: number;
+        discount_total: number;
+        tax: number;
+        total: number;
+        subtotal_usd: number;
+        discount_total_usd: number;
+        tax_usd: number;
+        total_usd: number;
+        tax_name: string;
+        tax_rate: string;
+        status: string;
+        status_formatted: string;
+        refunded: boolean;
+        refunded_at: string,
+        subtotal_formatted: string;
+        discount_total_formatted: string;
+        tax_formatted: string;
+        total_formatted: string;
+        first_order_item: {
+            id: number;
+            order_id: number;
+            product_id: number;
+            variant_id: number;
+            product_name: string;
+            variant_name: string;
+            price: number;
+            created_at: string;
+            updated_at: string;
+            test_mode: boolean;
+        }
+        urls: {
+            update_payment_method: string;
+            customer_portal: string;
+        };
+        created_at: string;
+        updated_at: string;
+        test_mode: boolean;
+    };
+}
+
+enum Profiles {
+    free = '06966125-4262-4947-97e4-82caa9572616',
+    pro = '966536f3-a528-4754-a474-2b7be0cff440'
 }
