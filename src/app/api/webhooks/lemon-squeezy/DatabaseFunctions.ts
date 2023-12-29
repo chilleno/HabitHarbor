@@ -1,6 +1,27 @@
 import supabase from '../../../utils/supabase';
 import supabaseAuth from '../../../utils/supabaseAuth';
 
+export const updateProfileOrder = async (OrderObject: OrderObject, userId: string): Promise<Boolean> => {
+    if (OrderObject.attributes.first_order_item.variant_id === 191246) {
+        if (OrderObject.attributes.status === 'paid') {
+            const { error, status } = await supabaseAuth
+                .from('config')
+                .update({ profile_id: Profiles.pro, updated_at: new Date() })
+                .eq('user_id', userId)
+            if (status === 201) {
+                return true;
+            } else {
+                console.log(error);
+                return false;
+            }
+        }else{
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
 export const updateProfileSubscription = async (SubscriptionObject: SubscriptionObject, userId: string): Promise<Boolean> => {
     const profile = checkSubscription(SubscriptionObject);
 
