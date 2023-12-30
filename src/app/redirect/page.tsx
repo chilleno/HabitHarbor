@@ -12,15 +12,15 @@ const Redirect = ({
     const id = searchParams?.id;
 
     if (urlParam === 'monthly') {
-        return redirect('https://habitharbor.lemonsqueezy.com/checkout/buy/52533b6f-60a2-4aad-a75a-7c94c1e7574e?checkout[custom][user_id]='+id)
+        return redirect('https://habitharbor.lemonsqueezy.com/checkout/buy/49db8caf-69df-44c8-85be-9460b0131666?checkout[custom][user_id]='+id)
     }
 
     if (urlParam === 'yearly') {
-        return redirect('https://habitharbor.lemonsqueezy.com/checkout/buy/f3610d3e-4942-4274-882c-55d8111a6dff?checkout[custom][user_id]='+id)
+        return redirect('https://habitharbor.lemonsqueezy.com/checkout/buy/a4c419e3-b99a-4ad8-a3b4-0e0efd654fa4?checkout[custom][user_id]='+id)
     }
 
     if (urlParam === 'founder') {
-        return redirect('https://habitharbor.lemonsqueezy.com/checkout/buy/357a35c3-2586-4c2d-9c6c-28d8132219a3?checkout[custom][user_id]='+id)
+        return redirect('https://habitharbor.lemonsqueezy.com/checkout/buy/e5382f9c-c1ba-448e-9b3d-73d62b88b746?checkout[custom][user_id]='+id)
     }
 
     return redirect('/app');
