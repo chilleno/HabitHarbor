@@ -100,7 +100,7 @@ export default function Home() {
             <Image height={113} width={89} src='/assets/Highlight1.svg' alt="" className="absolute -top-16 -left-10" />
           </div>
           <div className="animate-glowing z-20 mx-auto max-w-screen-2xl overflow-hidden rounded-xl border-2 border-slate-800">
-            <video  loop muted autoPlay src="/assets/videos/Hero-Video-Final.mp4">
+            <video loop muted autoPlay src="/assets/videos/Hero-Video-Final.mp4">
             </video>
           </div>
           <Image className="w-full p-5 hidden" height={285} width={465} src='/assets/homeSS.png' alt="Macbook" />
@@ -196,7 +196,7 @@ export default function Home() {
             <div>
               <h3 className="font-semibold text-2xl">Routine Tracker</h3>
               <p>
-                Build and maintain effective routines effortlessly. Break your day into manageable steps, track your progress, and stay committed to your goals.
+                {" Build and maintain effective routines effortlessly. Break your day into manageable steps, track your progress, and stay committed to your goals."}
               </p>
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function Home() {
             <Image width={57} height={57} src='/assets/logos/CaretRight.svg' alt="" className="transform transition-transform" />
           </div>
           <div className="font-montserrat text-sm font-extralight pb-8 hidden answer">
-            Yes, you can use HabitHarbor without a log in. But you need to use the public repository on github and host it yourself.
+            {"No, you can't use HabitHarbor without a log in. You need to login with a google account to use HabitHarbor."}
           </div>
         </div>
         <hr className="w-full bg-white" />
@@ -257,7 +257,7 @@ export default function Home() {
         <div className="flex mb-8 text-white">
           <a href="https://twitter.com/chill__eno" target="_blank" className="flex hover:font-bold">
             <Image width={24} height={24} src='/assets/logos/Twitter.svg' alt="Twitter logo" className="mx-4" />
-            Join the conversation on Twitter! 🚀
+            {"Join the conversation on X (ex Twitter)! 🚀"}
           </a>
         </div>
         <div className="text-white font-montserrat text-sm">
