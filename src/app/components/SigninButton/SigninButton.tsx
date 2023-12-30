@@ -13,13 +13,16 @@ const SigninButton = () => {
             <div className="flex gap-3">
                 {
                     session.user.image &&
-                    <div className="xl:text-lg lg:text-xs md:text-xs w-1/12 flex items-center">
+                    <div className="xl:text-lg lg:text-xs md:text-xs w-2/12 flex items-center">
                         <img width="50" height="50" className="rounded-full" src={session.user.image} alt="user_profile_image" />
                     </div>
                 }
-                <span className="xl:text-lg lg:text-xs md:text-xs w-8/12 flex items-center"> <b className="">{session.user.name}</b></span>
-                <div className="w-1/12 flex items-center justify-end">
-                    <button className="py-2 px-2 text-black hover:text-white bg-white hover:bg-black border-2 border-black hover:border-white rounded-3xl xl:text-lg lg:text-xs" data-tooltip-id="logoutButton" 
+                <span className="w-8/12 flex flex-col content-center py-3">
+                    <b className="xl:text-md lg:text-sm md:text-sm">{session.user.name}</b>
+                    <b className="xl:text-md lg:text-sm md:text-sm">{session.user.profile_id === '966536f3-a528-4754-a474-2b7be0cff440' ? 'PRO USER' : 'FREE USER'}</b>
+                </span>
+                <div className="w-2/12 flex items-center justify-end">
+                    <button className="py-3 px-3 text-black hover:text-white bg-white hover:bg-black border-2 border-black hover:border-white rounded-3xl xl:text-lg lg:text-xs" data-tooltip-id="logoutButton"
                         onClick={() => { signOut({ callbackUrl: '/' }) }}
                     >
                         <ArrowLeftOnRectangleIcon className="h-5 w-5" />
