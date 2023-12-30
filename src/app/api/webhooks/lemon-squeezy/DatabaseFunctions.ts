@@ -7,22 +7,14 @@ enum Profiles {
 }
 
 export const updateProfileOrder = async (OrderObject: OrderObject, userId: string): Promise<Boolean> => {
-    if (OrderObject.attributes.first_order_item.variant_id === 191246) {
-        if (OrderObject.attributes.status === 'paid') {
-            const { error, status } = await supabaseAuth
-                .from('users')
-                .update({ profile_id: Profiles.pro })
-                .eq('id', userId)
-            if (status === 201) {
-                return true;
-            } else {
-                console.log(error);
-                return false;
-            }
-        }else{
-            return false;
-        }
+    const { error, status } = await supabaseAuth
+        .from('users')
+        .update({ profile_id: Profiles.pro })
+        .eq('id', userId)
+    if (status === 204) {
+        return true;
     } else {
+        console.log(error);
         return false;
     }
 }
@@ -46,7 +38,7 @@ export const updateProfileSubscription = async (SubscriptionObject: Subscription
 export const createInvoice = async (SubscriptionInvoiceObject: SubscriptionInvoiceObject, userId: string): Promise<any> => {
     const { data, error, status } = await supabase
         .from('invoices')
-        .insert({ 
+        .insert({
             user_id: userId,
             store_id: SubscriptionInvoiceObject.attributes.store_id,
             subscription_id: SubscriptionInvoiceObject.attributes.subscription_id,
@@ -77,7 +69,7 @@ export const createInvoice = async (SubscriptionInvoiceObject: SubscriptionInvoi
             urls: SubscriptionInvoiceObject.attributes.urls,
             created_at: SubscriptionInvoiceObject.attributes.created_at,
             updated_at: SubscriptionInvoiceObject.attributes.updated_at,
-         })
+        })
     if (status === 200) {
         return { status: 200 };
     } else {
