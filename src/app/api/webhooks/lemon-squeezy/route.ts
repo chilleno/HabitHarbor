@@ -34,7 +34,7 @@ const handler = async (
 
   if (eventName === WebhookEvent.orderCreated) {
     const order: OrderObject = data;
-    if (order.attributes.first_order_item.variant_id === 191246) {
+    if (order.attributes.first_order_item.variant_id === 196927) {
       if (order.attributes.status === 'paid') {
         const updated = await updateProfileOrder(order, customData.user_id);
         console.log('order created');
