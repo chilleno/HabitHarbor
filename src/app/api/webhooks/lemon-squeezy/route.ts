@@ -95,6 +95,8 @@ const handler = async (
       } else {
         return new Response(JSON.stringify({ code: 200, message: "request ok" }));
       }
+    }else{
+      return new Response(JSON.stringify({ code: 200, message: "request ok" }));
     }
   }
 
