@@ -97,16 +97,16 @@ const handler = async (
       }
     }
   }
-  
+
   if (eventName === WebhookEvent.orderRefounded) {
     const order: OrderObject = data;
     const updated = await updateProfileOrder(order, customData.user_id);
     console.log('order refounded');
     console.log(order);
     if (updated === true) {
-      return { status: 200, message: "success" };
+      return new Response(JSON.stringify({ code: 200, message: "success order refounded" }));
     } else {
-      return { status: 420, messsage: "something went wrong" };
+      return new Response(JSON.stringify({ code: 420, message: "something went wrong" }));
     }
   }
 
@@ -116,21 +116,21 @@ const handler = async (
     console.log('subscription created');
     console.log(subscription);
     if (updated === true) {
-      return { status: 200, message: "success" };
+      return new Response(JSON.stringify({ code: 200, message: "success suscription created" }));
     } else {
-      return { status: 420, messsage: "something went wrong" };
+      return new Response(JSON.stringify({ code: 420, message: "something went wrong" }));
     }
   }
 
   if (eventName === WebhookEvent.subscriptionUpdated) {
     const subscription: SubscriptionObject = data;
     const updated = await updateProfileSubscription(subscription, customData.user_id);
-    console.log('subscription created');
+    console.log('subscription updated');
     console.log(subscription);
     if (updated === true) {
-      return { status: 200, message: "success" };
+      return new Response(JSON.stringify({ code: 200, message: "subscription updated success" }));
     } else {
-      return { status: 420, messsage: "something went wrong" };
+      return new Response(JSON.stringify({ code: 420, message: "something went wrong" }));
     }
   }
 
@@ -140,9 +140,9 @@ const handler = async (
     console.log('subscription created');
     console.log(subscription);
     if (updated === true) {
-      return { status: 200, message: "success" };
+      return new Response(JSON.stringify({ code: 200, message: "subscription created success" }));
     } else {
-      return { status: 420, messsage: "something went wrong" };
+      return new Response(JSON.stringify({ code: 420, message: "subscription created error" }));
     }
   }
 
