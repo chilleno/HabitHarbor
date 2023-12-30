@@ -71,13 +71,13 @@ interface SubscriptionInvoiceObject {
         tax_formatted: string;
         total_formatted: string;
         urls: {
-            invoice_url: string;
+            invoice_url?: string;
         };
         created_at: string;
         updated_at: string;
         test_mode: boolean;
     };
-    relationships: {
+    relationships?: {
         store: {
             links: {
                 related: string;
@@ -97,7 +97,7 @@ interface SubscriptionInvoiceObject {
             };
         };
     };
-    links: {
+    links?: {
         self: string;
     };
 
@@ -146,8 +146,9 @@ interface OrderObject {
             test_mode: boolean;
         }
         urls: {
-            update_payment_method: string;
-            customer_portal: string;
+            update_payment_method?: string;
+            customer_portal?: string;
+            invoice_url?: string;
         };
         created_at: string;
         updated_at: string;
