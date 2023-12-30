@@ -75,10 +75,21 @@ const handler = async (
           test_mode: order.attributes.test_mode,
         },
       }
-      createInvoice(newInvoice, customData.user_id);
-      return { status: 200, message: "success" };
+      const newInvoiceResponse = await createInvoice(newInvoice, customData.user_id);
+
+      if (newInvoiceResponse.status === 200) {
+        console.log('subscription payment success')
+        console.log(newInvoiceResponse);
+
+        return new Response(JSON.stringify({ code: 200, message: "subscription payment success" }));
+
+      } else if (newInvoiceResponse.status === 420) {
+        console.log('Something went wront on request')
+        console.log(newInvoiceResponse);
+        return new Response(JSON.stringify({ code: 420, message: "Something went wrong on request" }));
+      }
     } else {
-      return { status: 420, messsage: "something went wrong" };
+      return new Response(JSON.stringify({ code: 420, message: "Something went wrong on request" }));
     }
   }
 
