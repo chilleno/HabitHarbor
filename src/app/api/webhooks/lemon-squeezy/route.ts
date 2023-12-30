@@ -31,7 +31,6 @@ const handler = async (
   const customData = response && response['meta']['custom_data']
   const obj = response && response['data']['attributes']
   const objId = response && response['data']['id']
-  console.log(response);
 
   if (eventName === WebhookEvent.orderCreated) {
     const order: OrderObject = data;
@@ -82,7 +81,7 @@ const handler = async (
         console.log(newInvoiceResponse);
 
         return new Response(JSON.stringify({ code: 200, message: "subscription payment success" }));
-
+        
       } else if (newInvoiceResponse.status === 420) {
         console.log('Something went wront on request')
         console.log(newInvoiceResponse);

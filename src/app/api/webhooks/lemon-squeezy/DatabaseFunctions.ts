@@ -50,6 +50,7 @@ export const createInvoice = async (SubscriptionInvoiceObject: SubscriptionInvoi
     if (status === 200) {
         return { status: 200 };
     } else {
+        console.log('error creating invoice')
         console.log(error);
         return { status: 420 };
     }
