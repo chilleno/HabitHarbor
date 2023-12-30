@@ -1,10 +1,13 @@
 "use client"
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SigninButton from "./components/SigninButton/SigninButton";
 import Pricing from "./landingComponents/Pricing";
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 export default function Home() {
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.querySelector("#showMenu")?.addEventListener("click", function (event) {
@@ -28,8 +31,18 @@ export default function Home() {
         }
       });
     });
-
   }, []);
+
+  useEffect(() => {
+    if(session !== undefined){
+      setLoading(false)
+    }
+    console.log(session)
+  }, [session])
+
+  if (loading) {
+    return (<div className="text-center">{"Loading...."}</div>)
+  }
 
   return (
     <div className="scroll-smooth scroll-p-[20rem]">
@@ -90,9 +103,19 @@ export default function Home() {
             <a href="#pricing" className="bg-black px-6 py-4 rounded-lg border-2 border-black border-solid text-white mr-2 mb-2">
               {"Go Premium"}
             </a>
-            <a href="/app" className="px-6 py-4 border-2 border-black border-solid rounded-lg">
-              Start for free
-            </a>
+            {
+              session && session.user ?
+                (
+                  <a href={'/app'} className="px-6 py-4 border-2 border-black border-solid rounded-lg">
+                    Start for free
+                  </a>
+
+                ) : (
+                  <button onClick={() => { signIn('google', { callbackUrl: '/app' }) }} className="px-6 py-4 border-2 border-black border-solid rounded-lg">
+                    Start for free
+                  </button>
+                )
+            }
           </div>
         </div>
         <div className="flex justify-around md:block mt-8 md:mt-0 md:flex-1">
