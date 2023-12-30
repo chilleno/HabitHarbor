@@ -39,6 +39,43 @@ const handler = async (
     console.log('order created');
     console.log(order);
     if (updated === true) {
+      const newInvoice: SubscriptionInvoiceObject = {
+        type: "founder_invoice",
+        id: objId,
+        attributes: {
+          store_id: order.attributes.store_id,
+          subscription_id: objId,
+          customer_id: order.attributes.customer_id,
+          user_name: order.attributes.user_name,
+          user_email: order.attributes.user_email,
+          billing_reason: 'founder habbit harbor',
+          card_brand: 'not informed',
+          card_last_four: 'not informed',
+          currency: order.attributes.currency,
+          currency_rate: order.attributes.currency_rate,
+          status: order.attributes.status,
+          status_formatted: order.attributes.status_formatted,
+          refunded: false,
+          refunded_at: null,
+          subtotal: order.attributes.total,
+          discount_total: order.attributes.discount_total,
+          tax: order.attributes.tax,
+          total: order.attributes.total,
+          subtotal_usd: order.attributes.total_usd,
+          discount_total_usd: order.attributes.discount_total_usd,
+          tax_usd: order.attributes.tax_usd,
+          total_usd: order.attributes.total_usd,
+          subtotal_formatted: order.attributes.total_formatted,
+          discount_total_formatted: order.attributes.discount_total_formatted,
+          tax_formatted: order.attributes.tax_formatted,
+          total_formatted: order.attributes.total_formatted,
+          urls: order.attributes.urls,
+          created_at: order.attributes.created_at,
+          updated_at: order.attributes.updated_at,
+          test_mode: order.attributes.test_mode,
+        },
+      }
+      createInvoice(newInvoice, customData.user_id);
       return { status: 200, message: "success" };
     } else {
       return { status: 420, messsage: "something went wrong" };
