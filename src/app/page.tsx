@@ -34,7 +34,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if(session !== undefined){
+    if (session !== undefined) {
       setLoading(false)
     }
     console.log(session)
@@ -62,6 +62,18 @@ export default function Home() {
           <li className="growing-underline mx-3">
             <a href="#pricing">Pricing</a>
           </li>
+          <li className="growing-underline mx-3">
+            <a target="_blank" href="https://habitharbor.canny.io/feature-requests">Bug / Feature request</a>
+          </li>
+          <li className="growing-underline mx-3">
+            <a target="_blank" href="https://habitharbor.canny.io/changelog">Changelog</a>
+          </li>
+          {
+            session && session.user && session.user.profile_id === '966536f3-a528-4754-a474-2b7be0cff440' &&
+            <li className="growing-underline mx-3">
+              <a href="mailto:antonio@ticroom.cl">Contact</a>
+            </li>
+          }
         </ul>
         <div className="font-montserrat hidden md:block">
           <SigninButton />
@@ -84,6 +96,18 @@ export default function Home() {
           <li className="my-6">
             <a href="pricing">Pricing</a>
           </li>
+          <li className="my-6">
+            <a target="_blank" href="https://habitharbor.canny.io/feature-requests">Bug / Feature request</a>
+          </li>
+          <li className="my-6">
+            <a target="_blank" href="https://habitharbor.canny.io/changelog">Changelog</a>
+          </li>
+          {
+            session && session.user && session.user.profile_id === '966536f3-a528-4754-a474-2b7be0cff440' &&
+            <li className="my-6">
+              <a href="mailto:antonio@ticroom.cl">Contact</a>
+            </li>
+          }
         </ul>
       </div>
 
@@ -96,7 +120,7 @@ export default function Home() {
               right to the action
             </span>
           </h1>
-          <p className="font-pt-serif font-normal mb-7">
+          <p className="font-pt-serif font-normal pb-10 pt-5 text-justify">
             Welcome to HabitHarbor.app, where productivity meets precision. Say goodbye to distractions and hello to focused action. Our all-in-one productivity platform empowers you to take control of your day like never before.
           </p>
           <div className="font-montserrat">
@@ -144,7 +168,7 @@ export default function Home() {
             </div>
             <h3 className="font-montserrat font-medium text-xl mb-2">Plan</h3>
             <p className="text-justify font-montserrat">
-              Start by planning your day and setting clear objectives. Organize your tasks, set priorities, and create routines that align with your goals. With HabitHarbor.app, planning has never been easier.
+              Start by planning your day and setting clear objectives. Organize your tasks and set priorities that align with your goals. With HabitHarbor.app, planning has never been easier.
             </p>
           </div>
           <div className="flex-1 mx-8 flex flex-col items-center my-4">
@@ -177,8 +201,8 @@ export default function Home() {
           <div className="flex items-start font-montserrat my-6 mr-10">
             <Image width={24} height={24} src='/assets/logos/Heart.svg' alt='' className="mr-4" />
             <div>
-              <h3 className="font-semibold text-2xl">Pomodoro Timer</h3>
-              <p>
+              <h3 className="font-semibold text-2xl pb-1">Pomodoro Timer</h3>
+              <p className="text-justify">
                 Boost your productivity with the renowned Pomodoro Technique. Work in focused bursts and achieve more in less time.
               </p>
             </div>
@@ -187,8 +211,8 @@ export default function Home() {
           <div className="flex items-start font-montserrat my-6 mr-10">
             <Image width={24} height={24} src='/assets/logos/Heart.svg' alt='' className="mr-4" />
             <div>
-              <h3 className="font-semibold text-2xl">Task Management</h3>
-              <p>
+              <h3 className="font-semibold text-2xl pb-1">Task Management</h3>
+              <p className="text-justify">
                 Organize your tasks effortlessly. Keep track of your to-dos, deadlines, and progress at a glance.
               </p>
             </div>
@@ -197,8 +221,8 @@ export default function Home() {
           <div className="flex items-start font-montserrat my-6 mr-10">
             <Image width={24} height={24} src='/assets/logos/Heart.svg' alt='' className="mr-4" />
             <div>
-              <h3 className="font-semibold text-2xl">Task Highlighting</h3>
-              <p>
+              <h3 className="font-semibold text-2xl pb-1">Task Highlighting</h3>
+              <p className="text-justify">
                 Identify your most crucial tasks with ease. Stay on top of your priorities and supercharge your productivity.
               </p>
             </div>
@@ -207,8 +231,8 @@ export default function Home() {
           <div className="flex items-start font-montserrat my-6 mr-10">
             <Image width={24} height={24} src='/assets/logos/Heart.svg' alt='' className="mr-4" />
             <div>
-              <h3 className="font-semibold text-2xl">Task Prioritization</h3>
-              <p>
+              <h3 className="font-semibold text-2xl pb-1">Task Prioritization</h3>
+              <p className="text-justify">
                 {"Make informed decisions about what to tackle next. Our prioritization feature ensures you're always working on what matters most."}
               </p>
             </div>
@@ -217,9 +241,9 @@ export default function Home() {
           <div className="flex items-start font-montserrat my-6 mr-10">
             <Image width={24} height={24} src='/assets/logos/Heart.svg' alt='' className="mr-4" />
             <div>
-              <h3 className="font-semibold text-2xl">Routine Tracker</h3>
-              <p>
-                {" Build and maintain effective routines effortlessly. Break your day into manageable steps, track your progress, and stay committed to your goals."}
+              <h3 className="font-semibold text-2xl pb-1">Daily Habits</h3>
+              <p className="text-justify">
+                {"Form positive habits that stick. Whether it's drinking more water or reducing your daily indulgences, HabitHarbor.app helps you stay on track."}
               </p>
             </div>
           </div>
@@ -227,9 +251,9 @@ export default function Home() {
           <div className="flex items-start font-montserrat my-6 mr-10">
             <Image width={24} height={24} src='/assets/logos/Heart.svg' alt='' className="mr-4" />
             <div>
-              <h3 className="font-semibold text-2xl">Daily Habits</h3>
-              <p>
-                {"Form positive habits that stick. Whether it's drinking more water or reducing your daily indulgences, HabitHarbor.app helps you stay on track."}
+              <h3 className="font-semibold text-2xl pb-1">{"Integrations (soon)"}</h3>
+              <p className="text-justify">
+                {" I'm working on integrations with Canny, Github, Gitlab and more. Stay tuned!"}
               </p>
             </div>
           </div>
@@ -268,6 +292,8 @@ export default function Home() {
           </div>
           <div className="font-montserrat text-sm font-extralight pb-8 hidden answer">
             {" All features are available for free. However, your data will be saved locally on your device, specifically in your browser's local storage."}
+            <br />
+            {" All new features will be studied if they will be for free tier or pro one."}
           </div>
         </div>
         <hr className="w-full bg-white" />
@@ -286,6 +312,12 @@ export default function Home() {
         <div className="text-white font-montserrat text-sm">
           © {new Date().getFullYear()} with ❤️ by <a href="https://twitter.com/chill__eno" className="hover:font-bold" target="_blank">@chill__eno</a>
         </div>
+        {
+          session && session.user && session.user.profile_id === '966536f3-a528-4754-a474-2b7be0cff440' &&
+          <div className="text-white font-montserrat text-sm mt-5">
+            <a href="mailto:antonio@ticroom.cl" className="hover:font-bold">Need help? contact me!</a>
+          </div>
+        }
       </section>
     </div>
   )
