@@ -37,7 +37,6 @@ export default function Home() {
     if (session !== undefined) {
       setLoading(false)
     }
-    console.log(session)
   }, [session])
 
   if (loading) {
