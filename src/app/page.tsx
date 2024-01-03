@@ -308,6 +308,16 @@ export default function Home() {
             {"Join the conversation on X (ex Twitter)! 🚀"}
           </a>
         </div>
+        <div className="flex mb-8 text-white">
+          <a href="https://amzn.to/4aJHZ1n" target="_blank" className="flex hover:font-bold">
+            {'Buy the "Atomic Habits" book on Amazon'}
+          </a>
+        </div>
+        <div className="flex mb-8 text-white">
+          <a href="https://amzn.to/47sy6Cl" target="_blank" className="flex hover:font-bold">
+            {'Buy the "Atomic Habits" e-book for Amazon Kindle'}
+          </a>
+        </div>
         <div className="text-white font-montserrat text-sm">
           © {new Date().getFullYear()} with ❤️ by <a href="https://twitter.com/chill__eno" className="hover:font-bold" target="_blank">@chill__eno</a>
         </div>
