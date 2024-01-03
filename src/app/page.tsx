@@ -318,6 +318,10 @@ export default function Home() {
           </div>
         }
       </section>
+
+      <div className="fixed bottom-4 right-4 flex justify-center items-center cursor-pointer z-40">
+        <a href="https://www.producthunt.com/posts/habit-harbor?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-habit&#0045;harbor" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=432560&theme=light" alt="Habit&#0032;Harbor - Say&#0032;goodbye&#0032;to&#0032;distractions&#0032;and&#0032;hello&#0032;to&#0032;focused&#0032;action | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" /></a>
+      </div>
     </div>
   )
 }
