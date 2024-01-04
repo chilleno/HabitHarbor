@@ -270,7 +270,7 @@ export default function Home() {
         </div>
 
         <div className="w-full py-4 toggleElement">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center hover:cursor-pointer">
             <div className="font-montserrat font-medium mr-auto question">
               Can I use HabitHarbor without a log in?
             </div>
@@ -283,7 +283,7 @@ export default function Home() {
         <hr className="w-full bg-white" />
 
         <div className="w-full py-4 toggleElement">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center hover:cursor-pointer">
             <div className="font-montserrat font-medium mr-auto question">
               How does the free plan work?
             </div>
