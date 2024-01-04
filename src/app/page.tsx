@@ -8,8 +8,11 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 export default function Home() {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
+  const [triggerEvents, setTriggerEvents] = useState(false);
 
   useEffect(() => {
+    if(!triggerEvents) return;
+
     document.querySelector("#showMenu")?.addEventListener("click", function (event) {
       document.querySelector("#mobileNav")?.classList.remove("hidden");
     });
@@ -31,11 +34,13 @@ export default function Home() {
         }
       });
     });
-  }, []);
+
+  }, [triggerEvents]);
 
   useEffect(() => {
     if (session !== undefined) {
       setLoading(false)
+      setTriggerEvents(true)
     }
   }, [session])
 
@@ -283,7 +288,7 @@ export default function Home() {
         <hr className="w-full bg-white" />
 
         <div className="w-full py-4 toggleElement">
-          <div className="flex justify-between items-center hover:cursor-pointer">
+          <div className="flex justify-between items-center hover:cursor-pointer toggleElement">
             <div className="font-montserrat font-medium mr-auto question">
               How does the free plan work?
             </div>
