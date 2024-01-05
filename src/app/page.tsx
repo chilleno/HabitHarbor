@@ -11,7 +11,7 @@ export default function Home() {
   const [triggerEvents, setTriggerEvents] = useState(false);
 
   useEffect(() => {
-    if(!triggerEvents) return;
+    if (!triggerEvents) return;
 
     document.querySelector("#showMenu")?.addEventListener("click", function (event) {
       document.querySelector("#mobileNav")?.classList.remove("hidden");
@@ -124,8 +124,13 @@ export default function Home() {
               right to the action
             </span>
           </h1>
-          <p className="font-pt-serif font-normal pb-10 pt-5 text-justify">
+          <p className="font-pt-serif font-normal pb-3 pt-5">
             Welcome to HabitHarbor.app, where productivity meets precision. Say goodbye to distractions and hello to focused action. Our all-in-one productivity platform empowers you to take control of your day like never before.
+          </p>
+          <p className="font-pt-serif font-normal pb-10 text-justify">
+            <a href="https://amzn.to/4aJHZ1n" target="_blank" className="flex hover:font-bold underline text-xl">
+              {'Buy the "Atomic Habits" book where this app was based'}
+            </a>
           </p>
           <div className="font-montserrat">
             <a href="#pricing" className="bg-black px-6 py-4 rounded-lg border-2 border-black border-solid text-white mr-2 mb-2">
