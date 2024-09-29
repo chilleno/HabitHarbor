@@ -155,7 +155,7 @@ export default function Home() {
           <div className="relative">
             <Image height={113} width={89} src='/assets/Highlight1.svg' alt="" className="absolute -top-16 -left-10" />
           </div>
-          <div className="animate-glowing z-20 mx-auto max-w-screen-2xl overflow-hidden rounded-xl border-2 border-slate-800">
+          <div className="animate-glowing mb-10 mx-auto max-w-screen-2xl overflow-hidden rounded-xl border-2 border-slate-800">
             <video loop muted autoPlay src="/assets/videos/Hero-Video-Final.mp4">
             </video>
           </div>
@@ -338,10 +338,6 @@ export default function Home() {
           </div>
         }
       </section>
-
-      <div className="fixed bottom-4 right-4 flex justify-center items-center cursor-pointer z-40">
-        <a href="https://www.producthunt.com/posts/habit-harbor?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-habit&#0045;harbor" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=432560&theme=light" alt="Habit&#0032;Harbor - Say&#0032;goodbye&#0032;to&#0032;distractions&#0032;and&#0032;hello&#0032;to&#0032;focused&#0032;action | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" /></a>
-      </div>
     </div>
   )
 }
