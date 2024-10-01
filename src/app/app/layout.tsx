@@ -1,18 +1,9 @@
 import '../globals.css'
-import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react';
-import EventProvider from '../components/Providers/EventProvider';
 import './rotate.css';
 import Providers from '../components/Providers/Providers';
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata = {
-  title: 'Habit Harbor',
-  description: 'App inspired by Atomic Habits book',
-}
-
-export default function RootLayout({
+export default function Layout({
   children,
 }: {
   children: React.ReactNode
