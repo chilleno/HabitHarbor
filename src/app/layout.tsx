@@ -31,7 +31,7 @@ export default function RootLayout({
             initLuckatMe(
                 "Hello there! My name is Antonio Gonzalez A.K.A Chilleno, creator of HabitHarbor, I hope you like this tool. If you have any questions or suggestions, please click on the link below to connect! I would be happy do add new features to the app!",
                 "follow me on x!",
-                "https://x.com/chill__eno",
+                "https://x.com/chillenow",
                 "https://avatars.githubusercontent.com/u/127969843?v=4",
             );
           };
